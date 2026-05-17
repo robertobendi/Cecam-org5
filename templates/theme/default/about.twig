@@ -1,0 +1,425 @@
+{% extends '@theme/layout.twig' %}
+{% set nav_active = 'about' %}
+
+{% block title %}About — CECAM, Centre Européen de Calcul Atomique et Moléculaire{% endblock %}
+{% block meta_description %}CECAM is a non-profit European research network, anchored at EPFL Lausanne, that promotes fundamental research in computational atomic, molecular and materials simulation across twenty-two nodes.{% endblock %}
+
+{% block styles %}
+        .page-hero {
+            padding: clamp(3.5rem, 7vw, 6rem) 0 clamp(2.5rem, 4vw, 3.5rem);
+            border-bottom: 1px solid var(--hairline);
+        }
+        .page-hero h1 {
+            font-size: clamp(2.5rem, 6vw, 4.2rem);
+            line-height: 1.02;
+            letter-spacing: -0.022em;
+            margin-bottom: 1.25rem;
+            max-width: 14ch;
+            font-weight: 500;
+            color: var(--navy);
+            font-variation-settings: "opsz" 144, "SOFT" 30;
+        }
+        .page-hero p.lede { max-width: 36em; }
+        .page-hero__crumb {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+            border-top: 1px solid var(--hairline);
+            padding-top: 1rem;
+        }
+
+        .about-hero-img {
+            margin-top: clamp(2rem, 4vw, 3rem);
+            position: relative;
+            aspect-ratio: 16 / 7;
+            overflow: hidden;
+            border-radius: var(--radius);
+        }
+        .about-hero-img img {
+            width: 100%; height: 100%; object-fit: cover;
+            filter: saturate(0.95);
+        }
+        .about-hero-img figcaption {
+            position: absolute;
+            bottom: 1rem;
+            left: 1rem;
+            background: rgba(15,42,92,0.85);
+            color: var(--paper);
+            padding: 0.5rem 0.9rem;
+            font-size: 0.78rem;
+            letter-spacing: 0.06em;
+            border-radius: var(--radius);
+            font-family: 'JetBrains Mono', monospace;
+        }
+
+        .mission {
+            padding: var(--section-y) 0 var(--section-y-sm);
+        }
+        .mission__grid {
+            display: grid;
+            grid-template-columns: 240px 1fr;
+            gap: clamp(2rem, 5vw, 5rem);
+            align-items: start;
+        }
+        .mission__label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--navy);
+            border-top: 1px solid var(--navy);
+            padding-top: 1rem;
+            position: sticky;
+            top: 90px;
+        }
+        .mission__body {
+            max-width: 38em;
+        }
+        .mission__body p {
+            font-family: 'Fraunces', serif;
+            font-weight: 400;
+            font-size: clamp(1.15rem, 1.55vw, 1.35rem);
+            line-height: 1.55;
+            color: var(--ink);
+            margin-bottom: 1.3em;
+            font-variation-settings: "opsz" 60, "SOFT" 20;
+        }
+        .mission__body p:first-child::first-letter {
+            font-size: 3.2em;
+            float: left;
+            line-height: 0.95;
+            padding-right: 0.06em;
+            padding-top: 0.04em;
+            font-weight: 500;
+            color: var(--navy);
+        }
+
+        .network {
+            background: var(--paper-warm);
+            padding: var(--section-y) 0;
+            border-top: 1px solid var(--hairline);
+            border-bottom: 1px solid var(--hairline);
+        }
+        .network__head { margin-bottom: 2.5rem; max-width: 36em; }
+        .network__grid {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: clamp(2rem, 5vw, 4rem);
+            align-items: center;
+        }
+        .network-map {
+            background: var(--paper);
+            border: 1px solid var(--hairline);
+            border-radius: var(--radius);
+            padding: 2rem;
+            aspect-ratio: 5 / 4;
+            position: relative;
+        }
+        .network-map svg { width: 100%; height: 100%; display: block; }
+
+        .nodes-list {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.5rem 1.5rem;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .nodes-list li {
+            padding: 0.55rem 0;
+            border-bottom: 1px solid var(--hairline);
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            color: var(--ink);
+        }
+        .nodes-list li span {
+            color: var(--muted);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.04em;
+        }
+
+        .governance { padding: var(--section-y) 0; }
+        .governance__grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 2.5rem;
+        }
+        .role-card {
+            background: rgba(255,255,255,0.6);
+            border: 1px solid var(--hairline);
+            border-radius: var(--radius);
+            padding: 1.6rem 1.5rem;
+        }
+        .role-card .role {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: var(--signal);
+            margin-bottom: 0.6rem;
+        }
+        .role-card h3 {
+            font-family: 'Fraunces', serif;
+            font-weight: 500;
+            font-size: 1.2rem;
+            line-height: 1.25;
+            color: var(--navy);
+            margin: 0 0 0.4rem;
+        }
+        .role-card p { color: var(--ink-soft); font-size: 0.9rem; margin: 0; line-height: 1.55; }
+
+        .timeline {
+            background: var(--navy);
+            color: var(--paper);
+            padding: var(--section-y) 0;
+        }
+        .timeline h2 { color: var(--paper); max-width: 18ch; margin-bottom: 3rem; }
+        .timeline__list {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem 4rem;
+            counter-reset: t;
+        }
+        .timeline__item {
+            position: relative;
+            padding-left: 4.2rem;
+        }
+        .timeline__item::before {
+            counter-increment: t;
+            content: counter(t, decimal-leading-zero);
+            position: absolute;
+            left: 0;
+            top: 0.4rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            color: rgba(246,244,238,0.65);
+        }
+        .timeline__year {
+            font-family: 'Fraunces', serif;
+            font-size: 2.2rem;
+            line-height: 1;
+            font-weight: 500;
+            color: var(--paper);
+            margin-bottom: 0.5rem;
+            font-variation-settings: "opsz" 144;
+        }
+        .timeline__title {
+            font-family: 'Inter', sans-serif;
+            font-weight: 600;
+            font-size: 1rem;
+            color: var(--paper);
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.01em;
+        }
+        .timeline__body {
+            color: rgba(246,244,238,0.82);
+            font-size: 0.95rem;
+            line-height: 1.55;
+            max-width: 30em;
+        }
+
+        .cta-strip {
+            padding: var(--section-y-sm) 0;
+        }
+        .cta-strip__inner {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 2rem;
+            align-items: center;
+            border-top: 1px solid var(--hairline);
+            border-bottom: 1px solid var(--hairline);
+            padding: 2.5rem 0;
+        }
+        .cta-strip h2 { font-size: clamp(1.5rem, 2.6vw, 2rem); margin: 0; max-width: 20ch; }
+        .cta-strip__actions { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+        @media (max-width: 900px) {
+            .mission__grid { grid-template-columns: 1fr; }
+            .mission__label { position: static; }
+            .network__grid { grid-template-columns: 1fr; }
+            .governance__grid { grid-template-columns: 1fr; }
+            .timeline__list { grid-template-columns: 1fr; }
+            .nodes-list { grid-template-columns: 1fr; }
+            .cta-strip__inner { grid-template-columns: 1fr; }
+        }
+{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <p class="page-hero__crumb">CECAM · ABOUT</p>
+        <h1>Fifty years of European computational science.</h1>
+        <p class="lede">CECAM is a non-profit European research network, anchored at EPFL Lausanne since 2003, that promotes fundamental research in computational atomic, molecular and materials simulation across a federation of twenty-two nodes.</p>
+
+        <figure class="about-hero-img" style="margin-left: 0; margin-right: 0;">
+            <img src="/uploads/conference-50years.jpg" alt="Plenary session of the CECAM 50th anniversary celebration at the SwissTech Convention Center, Lausanne">
+            <figcaption>50TH ANNIVERSARY · SWISSTECH, LAUSANNE</figcaption>
+        </figure>
+    </div>
+</section>
+
+<section class="mission">
+    <div class="container">
+        <div class="mission__grid">
+            <div class="mission__label">§ 01 · Mission</div>
+            <div class="mission__body">
+                <p>CECAM exists to promote fundamental research on advanced computational methods, and to apply them to the most consequential problems at the frontiers of science and technology. As the name suggests, the traditional focus has been atomistic and molecular simulation, applied to the physics and chemistry of condensed matter.</p>
+                <p>Over the last twenty years, powerful advances in hardware and software have extended these methods to a wide range of problems in materials science, biology and medicinal chemistry. The role of CECAM is to curate the workshops, schools, conferences and series that help the community keep up with its own pace of change — peer-led, never commercial, always for the community.</p>
+                <p>The federated structure is intentional. Twenty-two nodes across Europe and beyond host their own programmes; the headquarters at EPFL coordinates, funds the flagship calls, and protects the institutional memory of a network that turned fifty in 2019.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="network">
+    <div class="container">
+        <div class="network__head">
+            <p class="eyebrow eyebrow--bare">The network</p>
+            <h2 style="margin-top: 0.5rem;">Twenty-two nodes, anchored at EPFL.</h2>
+            <p style="color: var(--ink-soft); margin-top: 1rem; max-width: 36em;">Each node is hosted by a member institution and runs its own programme of workshops and schools under the CECAM umbrella. Selected nodes below.</p>
+        </div>
+        <div class="network__grid">
+            <div class="network-map" aria-label="Schematic map of CECAM nodes across Europe">
+                <svg viewBox="0 0 500 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Europe with CECAM node markers">
+                    <defs>
+                        <pattern id="grid" width="20" height="20" patternUnits="userSpaceOnUse">
+                            <path d="M 20 0 L 0 0 0 20" fill="none" stroke="rgba(15,42,92,0.08)" stroke-width="0.5"/>
+                        </pattern>
+                    </defs>
+                    <rect width="500" height="400" fill="url(#grid)"/>
+                    <!-- stylised Europe blob -->
+                    <path d="M120,90 C160,60 220,60 260,80 C300,70 340,80 360,110 C400,120 430,150 420,200 C440,240 410,290 360,300 C340,330 280,340 240,320 C200,340 150,330 130,300 C90,290 80,250 100,220 C70,180 80,130 120,90 Z" fill="rgba(46,125,193,0.08)" stroke="rgba(15,42,92,0.35)" stroke-width="1"/>
+                    <!-- Headquarters: Lausanne (CECAM-HQ) -->
+                    <g>
+                        <circle cx="220" cy="220" r="11" fill="none" stroke="#C8222C" stroke-width="1.2"/>
+                        <circle cx="220" cy="220" r="5" fill="#C8222C"/>
+                        <text x="232" y="217" font-family="Inter" font-size="11" fill="#0F2A5C" font-weight="600">EPFL · Lausanne</text>
+                        <text x="232" y="230" font-family="JetBrains Mono" font-size="9" fill="#6b6b6b">HQ</text>
+                    </g>
+                    <!-- Other nodes -->
+                    <g fill="#0F2A5C">
+                        <circle cx="170" cy="170" r="4"/><text x="178" y="173" font-family="Inter" font-size="10" fill="#0F2A5C">Paris-Orsay</text>
+                        <circle cx="285" cy="155" r="4"/><text x="293" y="158" font-family="Inter" font-size="10" fill="#0F2A5C">Jülich</text>
+                        <circle cx="320" cy="195" r="4"/><text x="328" y="198" font-family="Inter" font-size="10" fill="#0F2A5C">Vienna</text>
+                        <circle cx="195" cy="290" r="4"/><text x="203" y="293" font-family="Inter" font-size="10" fill="#0F2A5C">Madrid</text>
+                        <circle cx="265" cy="270" r="4"/><text x="273" y="273" font-family="Inter" font-size="10" fill="#0F2A5C">Roma</text>
+                        <circle cx="155" cy="230" r="4"/><text x="115" y="245" font-family="Inter" font-size="10" fill="#0F2A5C">Toulouse</text>
+                        <circle cx="245" cy="125" r="4"/><text x="253" y="128" font-family="Inter" font-size="10" fill="#0F2A5C">Cambridge</text>
+                        <circle cx="200" cy="130" r="4"/><text x="143" y="118" font-family="Inter" font-size="10" fill="#0F2A5C">Daresbury</text>
+                        <circle cx="350" cy="135" r="4"/><text x="358" y="138" font-family="Inter" font-size="10" fill="#0F2A5C">Warsaw</text>
+                        <circle cx="310" cy="115" r="4"/><text x="318" y="118" font-family="Inter" font-size="10" fill="#0F2A5C">Berlin</text>
+                        <circle cx="220" cy="100" r="4"/><text x="120" y="100" font-family="Inter" font-size="10" fill="#0F2A5C">Edinburgh</text>
+                    </g>
+                </svg>
+            </div>
+            <ul class="nodes-list" aria-label="Selected CECAM nodes">
+                <li>CECAM-HQ <span>EPFL · Lausanne</span></li>
+                <li>CECAM-FR-MOSER <span>Paris-Orsay</span></li>
+                <li>CECAM-DE-MM1P <span>Forschungszentrum Jülich</span></li>
+                <li>CECAM-AT <span>Vienna</span></li>
+                <li>CECAM-ES <span>Madrid</span></li>
+                <li>CECAM-IT <span>Roma</span></li>
+                <li>CECAM-FR-RA <span>Lyon</span></li>
+                <li>CECAM-FR-MOSER <span>Toulouse</span></li>
+                <li>CECAM-UK <span>Cambridge</span></li>
+                <li>CECAM-UK <span>Daresbury</span></li>
+                <li>CECAM-PL <span>Warsaw</span></li>
+                <li>CECAM-DE-BERLIN <span>Berlin</span></li>
+                <li>CECAM-UK-EDIN <span>Edinburgh</span></li>
+                <li>CECAM-IL <span>Tel Aviv</span></li>
+                <li>CECAM-NL <span>Amsterdam</span></li>
+                <li>CECAM-CH-EPFL <span>Lausanne</span></li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="governance">
+    <div class="container">
+        <div style="display: flex; justify-content: space-between; align-items: end; border-top: 1px solid var(--navy); padding-top: 1.5rem;">
+            <div>
+                <p class="eyebrow eyebrow--bare">Governance</p>
+                <h2 style="margin-top: 0.5rem; max-width: 18ch;">Director, Council, and Scientific Advisory Committee.</h2>
+            </div>
+            <p style="font-family: 'JetBrains Mono', monospace; font-size: 0.78rem; letter-spacing: 0.12em; color: var(--muted); text-transform: uppercase;">3 bodies</p>
+        </div>
+        <div class="governance__grid">
+            <div class="role-card">
+                <p class="role">Director</p>
+                <h3>Office of the Director</h3>
+                <p>Responsible for the overall scientific program, the flagship call, and CECAM's relationship with EPFL and member institutions.</p>
+            </div>
+            <div class="role-card">
+                <p class="role">Council</p>
+                <h3>Member-institution Council</h3>
+                <p>Representatives of CECAM's member institutions across Europe — sets policy, oversees finances, approves the flagship program.</p>
+            </div>
+            <div class="role-card">
+                <p class="role">Advisory</p>
+                <h3>Scientific Advisory Committee</h3>
+                <p>Rotating committee of senior researchers that reviews the flagship call and advises on the strategic direction of the network.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="timeline">
+    <div class="container">
+        <p class="eyebrow eyebrow--paper eyebrow--bare">History</p>
+        <h2 style="margin-top: 0.75rem;">From Orsay to EPFL — half a century in five steps.</h2>
+        <div class="timeline__list">
+            <div class="timeline__item">
+                <div class="timeline__year">1969</div>
+                <div class="timeline__title">Founded in Orsay</div>
+                <p class="timeline__body">CECAM is founded outside Paris as a centre for atomic and molecular calculations — one of the earliest dedicated facilities of its kind in Europe.</p>
+            </div>
+            <div class="timeline__item">
+                <div class="timeline__year">1992</div>
+                <div class="timeline__title">Workshop model takes hold</div>
+                <p class="timeline__body">The peer-proposed, peer-organised workshop becomes the centre's defining format — small intensive meetings where the program is the science.</p>
+            </div>
+            <div class="timeline__item">
+                <div class="timeline__year">2003</div>
+                <div class="timeline__title">Move to EPFL Lausanne</div>
+                <p class="timeline__body">CECAM-HQ relocates to EPFL in Lausanne, becoming the central node of a federated European network of member institutions.</p>
+            </div>
+            <div class="timeline__item">
+                <div class="timeline__year">2015</div>
+                <div class="timeline__title">CECAM Lectures launch</div>
+                <p class="timeline__body">An online lecture series begins, broadening reach beyond in-person workshops and creating a public archive of methodological talks.</p>
+            </div>
+            <div class="timeline__item">
+                <div class="timeline__year">2019</div>
+                <div class="timeline__title">Fiftieth anniversary</div>
+                <p class="timeline__body">CECAM marks fifty years of European computational science with a plenary at the SwissTech Convention Center, Lausanne.</p>
+            </div>
+            <div class="timeline__item">
+                <div class="timeline__year">2026</div>
+                <div class="timeline__title">Flagship 2027–2028 call</div>
+                <p class="timeline__body">The next two-year flagship call opens, shaping the program of workshops, schools and conferences across the network for 2027–2028.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="cta-strip">
+    <div class="container">
+        <div class="cta-strip__inner">
+            <h2>Find an event, or propose your own.</h2>
+            <div class="cta-strip__actions">
+                <a class="btn" href="/program">See the program <span class="arrow" aria-hidden="true">→</span></a>
+                <a class="btn btn--ghost" href="/contact">Contact us <span class="arrow" aria-hidden="true">→</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

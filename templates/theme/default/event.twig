@@ -1,0 +1,135 @@
+{% extends '@theme/layout.twig' %}
+{% set nav_active = 'program' %}
+{% set meta_description = entry.field('summary') %}
+
+{% block title %}{{ entry.field('title') }} · Program · CECAM{% endblock %}
+
+{% block styles %}
+        .ev-hero {
+            padding: clamp(3.5rem, 7vw, 6rem) 0 clamp(2rem, 4vw, 3rem);
+            border-bottom: 1px solid var(--hairline);
+        }
+        .ev-hero__crumb {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+            border-top: 1px solid var(--hairline);
+            padding-top: 1rem;
+        }
+        .ev-hero h1 {
+            font-size: clamp(2.2rem, 5vw, 3.6rem);
+            line-height: 1.05;
+            letter-spacing: -0.022em;
+            margin-bottom: 1.25rem;
+            font-weight: 500;
+            color: var(--navy);
+            max-width: 22ch;
+            font-variation-settings: "opsz" 144;
+        }
+        .ev-hero p.lede { max-width: 36em; }
+
+        .ev-meta {
+            padding: 0 0 var(--section-y-sm);
+            border-bottom: 1px solid var(--hairline);
+        }
+        .ev-meta__grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 2rem;
+            padding-top: 2rem;
+        }
+        .ev-meta__field {
+            border-top: 1px solid var(--navy);
+            padding-top: 1rem;
+        }
+        .ev-meta__label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.74rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 0.6rem;
+        }
+        .ev-meta__value {
+            font-family: 'Fraunces', serif;
+            font-size: 1.1rem;
+            line-height: 1.35;
+            color: var(--navy);
+            font-weight: 500;
+            font-variation-settings: "opsz" 60;
+        }
+        .ev-body { padding: var(--section-y-sm) 0 var(--section-y); }
+        .ev-body__inner { max-width: var(--prose); margin: 0 auto; }
+        .ev-body__inner p, .ev-body__inner ul { font-size: 1.05rem; line-height: 1.7; color: var(--ink); margin: 0 0 1.2em; }
+        .ev-body__inner h2 { font-size: 1.6rem; margin: 2.5rem 0 0.75rem; }
+        .ev-body__inner h3 { font-size: 1.25rem; margin: 2rem 0 0.5rem; }
+
+        .ev-cta {
+            border-top: 1px solid var(--hairline);
+            padding: var(--section-y-sm) 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1.5rem;
+        }
+
+        @media (max-width: 720px) {
+            .ev-meta__grid { grid-template-columns: 1fr 1fr; }
+        }
+{% endblock %}
+
+{% block content %}
+<section class="ev-hero">
+    <div class="container">
+        <p class="ev-hero__crumb"><a href="/program" style="color: var(--muted); border-bottom: 1px solid currentColor; padding-bottom: 1px;">← Program</a> · {{ entry.field('event_type') }}</p>
+        <h1>{{ entry.field('title') }}</h1>
+        <p class="lede">{{ entry.field('summary') }}</p>
+    </div>
+</section>
+
+<section class="ev-meta">
+    <div class="container">
+        <div class="ev-meta__grid">
+            <div class="ev-meta__field">
+                <div class="ev-meta__label">Type</div>
+                <div class="ev-meta__value">{{ entry.field('event_type') }}</div>
+            </div>
+            <div class="ev-meta__field">
+                <div class="ev-meta__label">Dates</div>
+                <div class="ev-meta__value">{{ entry.field('start_date')|date('j F') }} — {{ entry.field('end_date')|date('j F Y') }}</div>
+            </div>
+            <div class="ev-meta__field">
+                <div class="ev-meta__label">Venue</div>
+                <div class="ev-meta__value">{{ entry.field('venue') }}</div>
+            </div>
+            <div class="ev-meta__field">
+                <div class="ev-meta__label">Organisers</div>
+                <div class="ev-meta__value">{{ entry.field('organizers')|nl2br }}</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="ev-body">
+    <div class="container">
+        <div class="ev-body__inner">
+            {{ entry.field('body')|markdown }}
+        </div>
+    </div>
+</section>
+
+<section class="ev-cta">
+    <div class="container" style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;">
+        {% if entry.field('external_url') %}
+            <a class="btn" href="{{ entry.field('external_url') }}" target="_blank" rel="noopener">Open on legacy CECAM site <span class="arrow" aria-hidden="true">↗</span></a>
+        {% else %}
+            <a class="btn" href="mailto:helpdesk@cecam.org?subject={{ entry.field('title')|url_encode }}">Contact organisers <span class="arrow" aria-hidden="true">→</span></a>
+        {% endif %}
+        <a class="link-arrow" href="/program"><span class="arrow" aria-hidden="true">←</span> All events</a>
+    </div>
+</section>
+{% endblock %}

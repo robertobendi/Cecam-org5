@@ -1,0 +1,63 @@
+{% extends '@theme/layout.twig' %}
+{% set nav_active = 'activities' %}
+{% set meta_description = entry.field('summary') %}
+
+{% block title %}{{ entry.field('title') }} · Activities · CECAM{% endblock %}
+
+{% block styles %}
+        .ac-hero {
+            padding: clamp(3.5rem, 7vw, 6rem) 0 clamp(2rem, 4vw, 3rem);
+            border-bottom: 1px solid var(--hairline);
+        }
+        .ac-hero__crumb {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+            border-top: 1px solid var(--hairline);
+            padding-top: 1rem;
+        }
+        .ac-hero h1 {
+            font-size: clamp(2.4rem, 5.5vw, 4rem);
+            line-height: 1.04;
+            letter-spacing: -0.022em;
+            margin-bottom: 1.25rem;
+            font-weight: 500;
+            color: var(--navy);
+            max-width: 16ch;
+            font-variation-settings: "opsz" 144;
+        }
+        .ac-body { padding: var(--section-y-sm) 0 var(--section-y); }
+        .ac-body__inner { max-width: var(--prose); margin: 0 auto; font-size: 1.05rem; line-height: 1.7; }
+        .ac-body__inner p { margin: 0 0 1.2em; }
+        .ac-back { padding: 1.5rem 0 var(--section-y-sm); border-top: 1px solid var(--hairline); }
+{% endblock %}
+
+{% block content %}
+<section class="ac-hero">
+    <div class="container">
+        <p class="ac-hero__crumb"><a href="/activities" style="color: var(--muted); border-bottom: 1px solid currentColor; padding-bottom: 1px;">← Recurring activities</a></p>
+        <h1>{{ entry.field('title') }}</h1>
+        <p class="lede">{{ entry.field('summary') }}</p>
+    </div>
+</section>
+
+<section class="ac-body">
+    <div class="container">
+        <div class="ac-body__inner">
+            {{ entry.field('body')|markdown }}
+            {% if entry.field('external_url') %}
+                <p style="margin-top: 2rem;"><a class="btn" href="{{ entry.field('external_url') }}" target="_blank" rel="noopener">Visit the series page <span class="arrow" aria-hidden="true">↗</span></a></p>
+            {% endif %}
+        </div>
+    </div>
+</section>
+
+<section class="ac-back">
+    <div class="container">
+        <a class="link-arrow" href="/activities"><span class="arrow" aria-hidden="true">←</span> All activities</a>
+    </div>
+</section>
+{% endblock %}

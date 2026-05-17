@@ -1,22 +1,100 @@
 {% extends '@theme/layout.twig' %}
+{% set nav_active = 'news' %}
 {% set meta_description = entry.field('excerpt') %}
 
-{% block title %}{{ entry.field('title') }} · {{ site.name }}{% endblock %}
+{% block title %}{{ entry.field('title') }} · News · CECAM{% endblock %}
+
+{% block styles %}
+        .post-hero {
+            padding: clamp(3.5rem, 7vw, 6rem) 0 clamp(2rem, 4vw, 3rem);
+            border-bottom: 1px solid var(--hairline);
+        }
+        .post-hero__crumb {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+            border-top: 1px solid var(--hairline);
+            padding-top: 1rem;
+        }
+        .post-hero__crumb a { color: var(--muted); border-bottom: 1px solid currentColor; padding-bottom: 1px; }
+        .post-hero__crumb a:hover { color: var(--navy); }
+        .post-hero h1 {
+            font-size: clamp(2.2rem, 5.5vw, 3.8rem);
+            line-height: 1.06;
+            letter-spacing: -0.022em;
+            margin-bottom: 1.5rem;
+            font-weight: 500;
+            color: var(--navy);
+            max-width: 22ch;
+            font-variation-settings: "opsz" 144;
+        }
+        .post-hero .lede { max-width: 36em; }
+        .post-hero__meta {
+            margin-top: 2rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.82rem;
+            color: var(--ink-soft);
+            letter-spacing: 0.05em;
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .post-hero__meta strong { color: var(--navy); font-weight: 500; }
+
+        .post-body {
+            padding: var(--section-y-sm) 0 var(--section-y);
+        }
+        .post-body__inner { max-width: var(--prose); margin: 0 auto; }
+        .post-body p, .post-body ul, .post-body ol { font-size: 1.08rem; line-height: 1.7; color: var(--ink); margin: 0 0 1.25em; }
+        .post-body h2 { font-size: 1.6rem; margin: 2.5rem 0 0.75rem; }
+        .post-body h3 { font-size: 1.25rem; margin: 2rem 0 0.5rem; }
+        .post-body a { color: var(--signal); border-bottom: 1px solid currentColor; padding-bottom: 1px; }
+        .post-body blockquote {
+            border-left: 3px solid var(--signal);
+            padding: 0.25rem 0 0.25rem 1.5rem;
+            color: var(--ink-soft);
+            font-family: 'Fraunces', serif;
+            font-style: italic;
+            font-size: 1.15rem;
+            margin: 1.5rem 0;
+        }
+
+        .post-back {
+            padding: 1.5rem 0 var(--section-y-sm);
+            border-top: 1px solid var(--hairline);
+        }
+{% endblock %}
 
 {% block content %}
-<article class="wrap">
-    <h1>{{ entry.field('title') }}</h1>
-    <p class="meta">
-        {{ (entry.publishAt ?? entry.createdAt)|date('F j, Y') }}
-        {% if entry.field('author') %} · by {{ entry.field('author') }}{% endif %}
-    </p>
-    {% if entry.field('excerpt') %}
-        <p class="lede">{{ entry.field('excerpt') }}</p>
-    {% endif %}
-    <div class="article-body">
-        {{ entry.field('body')|markdown }}
+<section class="post-hero">
+    <div class="container">
+        <p class="post-hero__crumb"><a href="/news">← News</a></p>
+        <h1>{{ entry.field('title') }}</h1>
+        {% if entry.field('excerpt') %}
+            <p class="lede">{{ entry.field('excerpt') }}</p>
+        {% endif %}
+        <div class="post-hero__meta">
+            <span><strong>{{ (entry.publishAt ?? entry.createdAt)|date('j F Y') }}</strong></span>
+            {% if entry.field('eyebrow') %}<span>{{ entry.field('eyebrow') }}</span>{% endif %}
+            {% if entry.field('author') %}<span>By {{ entry.field('author') }}</span>{% endif %}
+        </div>
     </div>
-    <hr>
-    <p><a href="/blog">← All posts</a></p>
-</article>
+</section>
+
+<section class="post-body">
+    <div class="container">
+        <div class="post-body__inner">
+            {{ entry.field('body')|markdown }}
+        </div>
+    </div>
+</section>
+
+<section class="post-back">
+    <div class="container">
+        <a class="link-arrow" href="/news"><span class="arrow" aria-hidden="true">←</span> All news</a>
+    </div>
+</section>
 {% endblock %}

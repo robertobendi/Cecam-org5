@@ -1,0 +1,328 @@
+{% extends '@theme/layout.twig' %}
+{% set nav_active = 'contact' %}
+
+{% block title %}Contact — CECAM HQ, EPFL Lausanne{% endblock %}
+{% block meta_description %}CECAM headquarters at EPFL, Lausanne. Helpdesk email, postal address, press contact and mailing-list signup.{% endblock %}
+
+{% block styles %}
+        .page-hero {
+            padding: clamp(3.5rem, 7vw, 6rem) 0 clamp(2rem, 4vw, 3rem);
+            border-bottom: 1px solid var(--hairline);
+        }
+        .page-hero h1 {
+            font-size: clamp(2.4rem, 5.5vw, 4rem);
+            line-height: 1.04;
+            letter-spacing: -0.022em;
+            margin-bottom: 1.25rem;
+            max-width: 16ch;
+            font-weight: 500;
+            font-variation-settings: "opsz" 144;
+        }
+        .page-hero p.lede { max-width: 36em; }
+        .page-hero__crumb {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+            border-top: 1px solid var(--hairline);
+            padding-top: 1rem;
+        }
+
+        .hq {
+            padding: var(--section-y) 0 var(--section-y-sm);
+        }
+        .hq__grid {
+            display: grid;
+            grid-template-columns: 1.1fr 1fr;
+            gap: clamp(2rem, 4vw, 4rem);
+            align-items: start;
+        }
+        .hq-card {
+            background: rgba(255,255,255,0.6);
+            border: 1px solid var(--hairline);
+            border-radius: var(--radius);
+            padding: clamp(1.5rem, 3vw, 2.5rem);
+        }
+        .hq-card h2 {
+            font-size: clamp(1.6rem, 2.6vw, 2rem);
+            margin: 0 0 1.2rem;
+        }
+        .hq-card .field {
+            border-top: 1px solid var(--hairline);
+            padding: 1rem 0;
+            display: grid;
+            grid-template-columns: 120px 1fr;
+            gap: 1rem;
+        }
+        .hq-card .field:last-child { border-bottom: 1px solid var(--hairline); }
+        .hq-card .field .label {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.74rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+        .hq-card .field .value {
+            font-size: 0.98rem;
+            line-height: 1.55;
+            color: var(--ink);
+        }
+        .hq-card .field .value a { color: var(--signal); border-bottom: 1px solid currentColor; padding-bottom: 1px; }
+        .hq-card .field .value a:hover { color: var(--navy); }
+        .hq-photo {
+            position: relative;
+            aspect-ratio: 4 / 3;
+            border-radius: var(--radius);
+            overflow: hidden;
+        }
+        .hq-photo img { width: 100%; height: 100%; object-fit: cover; }
+        .hq-photo figcaption {
+            position: absolute;
+            left: 0; bottom: 0; right: 0;
+            background: linear-gradient(0deg, rgba(15,42,92,0.78), rgba(15,42,92,0));
+            color: var(--paper);
+            padding: 1.5rem 1.25rem 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.06em;
+        }
+
+        .routes { padding: var(--section-y-sm) 0; }
+        .routes__head { margin-bottom: 2.5rem; border-top: 1px solid var(--navy); padding-top: 1.5rem; }
+        .routes__grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.25rem;
+        }
+        .route-card {
+            background: rgba(255,255,255,0.65);
+            border: 1px solid var(--hairline);
+            border-radius: var(--radius);
+            padding: 1.75rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.6rem;
+        }
+        .route-card .icon {
+            width: 36px;
+            height: 36px;
+            border: 1px solid var(--hairline-strong);
+            border-radius: var(--radius);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--navy);
+            margin-bottom: 0.5rem;
+        }
+        .route-card h3 {
+            font-family: 'Fraunces', serif;
+            font-weight: 500;
+            font-size: 1.25rem;
+            color: var(--navy);
+            margin: 0;
+        }
+        .route-card p { font-size: 0.92rem; color: var(--ink-soft); margin: 0; line-height: 1.55; }
+        .route-card .link {
+            margin-top: auto;
+            font-weight: 500;
+            color: var(--signal);
+            font-size: 0.95rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.4em;
+        }
+
+        .map-section { padding: var(--section-y-sm) 0; }
+        .map-block {
+            margin: 0;
+            border: 1px solid var(--hairline);
+            border-radius: var(--radius);
+            overflow: hidden;
+            background: var(--paper);
+        }
+        .map-block iframe { display: block; width: 100%; }
+        .map-block figcaption {
+            padding: 1rem 1.25rem;
+            font-size: 0.88rem;
+            color: var(--ink-soft);
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+            gap: 1rem;
+            border-top: 1px solid var(--hairline);
+        }
+        .map-block figcaption strong { color: var(--navy); font-weight: 500; }
+
+        .docs-strip {
+            background: var(--paper-warm);
+            border-top: 1px solid var(--hairline);
+            border-bottom: 1px solid var(--hairline);
+            padding: var(--section-y-sm) 0;
+        }
+        .docs-strip__inner {
+            display: grid;
+            grid-template-columns: 220px 1fr;
+            gap: clamp(2rem, 4vw, 4rem);
+            align-items: center;
+        }
+        .docs-strip h2 { font-size: clamp(1.4rem, 2.4vw, 1.8rem); margin: 0; }
+        .docs-strip ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 0.5rem 2rem;
+        }
+        .docs-strip li {
+            padding: 0.7rem 0;
+            border-bottom: 1px solid var(--hairline);
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.95rem;
+        }
+        .docs-strip a { color: var(--ink); }
+        .docs-strip a:hover { color: var(--signal); }
+
+        @media (max-width: 880px) {
+            .hq__grid { grid-template-columns: 1fr; }
+            .routes__grid { grid-template-columns: 1fr; }
+            .hq-card .field { grid-template-columns: 1fr; gap: 0.3rem; }
+            .docs-strip__inner { grid-template-columns: 1fr; }
+            .docs-strip ul { grid-template-columns: 1fr; }
+        }
+{% endblock %}
+
+{% block content %}
+<section class="page-hero">
+    <div class="container">
+        <p class="page-hero__crumb">CECAM · CONTACT</p>
+        <h1>Get in touch with the network.</h1>
+        <p class="lede">For scientific questions, proposal logistics, careers and press — start with the right inbox below, or visit us at EPFL Lausanne.</p>
+    </div>
+</section>
+
+<section class="hq">
+    <div class="container">
+        <div class="hq__grid">
+            <div class="hq-card">
+                <h2>CECAM Headquarters</h2>
+                <div class="field">
+                    <div class="label">Address</div>
+                    <address class="value" style="font-style: normal;">
+                        EPFL CECAM<br>
+                        Avenue de Forel 3, BCH 3103<br>
+                        1015 Lausanne, Switzerland
+                    </address>
+                </div>
+                <div class="field">
+                    <div class="label">Helpdesk</div>
+                    <div class="value"><a href="mailto:helpdesk@cecam.org">helpdesk@cecam.org</a><br><span style="color: var(--muted); font-size: 0.88rem;">General questions, event logistics, proposal queries.</span></div>
+                </div>
+                <div class="field">
+                    <div class="label">Phone</div>
+                    <div class="value text-mono">+41 21 693 04 51<br><span style="color: var(--muted); font-size: 0.85rem; font-family: 'Inter', sans-serif;">EPFL switchboard, Mon–Fri 09:00–17:00 CET</span></div>
+                </div>
+                <div class="field">
+                    <div class="label">Mailing list</div>
+                    <div class="value">Subscribe in the <a href="#newsletter">strip below</a> — one email per flagship call and program update.</div>
+                </div>
+            </div>
+
+            <figure class="hq-photo" style="margin: 0;">
+                <img src="/uploads/epfl-aerial-panorama.jpg" alt="Aerial view of the EPFL campus on the shore of Lake Geneva, Lausanne">
+                <figcaption>EPFL · LAUSANNE · LAKE GENEVA</figcaption>
+            </figure>
+        </div>
+    </div>
+</section>
+
+<section class="routes">
+    <div class="container">
+        <div class="routes__head">
+            <p class="eyebrow eyebrow--bare">Inquiry routes</p>
+            <h2 style="margin-top: 0.5rem;">Pick the right inbox.</h2>
+        </div>
+        <div class="routes__grid">
+            <div class="route-card">
+                <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6.5h18v11a1.5 1.5 0 0 1-1.5 1.5h-15A1.5 1.5 0 0 1 3 17.5Z"/><path d="m3 7 9 6 9-6"/></svg></div>
+                <h3>Scientific program</h3>
+                <p>Workshop, school and conference questions, proposal advice, and flagship-call logistics.</p>
+                <a class="link" href="mailto:helpdesk@cecam.org">helpdesk@cecam.org <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="route-card">
+                <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 7a3 3 0 0 1 3-3h10a3 3 0 0 1 3 3v10a3 3 0 0 1-3 3H7a3 3 0 0 1-3-3Z"/><path d="M9 11h6M9 15h4"/></svg></div>
+                <h3>Careers</h3>
+                <p>Open positions across CECAM-HQ and member nodes — postdocs, software engineers, program officers.</p>
+                <a class="link" href="mailto:helpdesk@cecam.org?subject=Careers">helpdesk@cecam.org <span aria-hidden="true">→</span></a>
+            </div>
+            <div class="route-card">
+                <div class="icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3a9 9 0 1 0 9 9"/><path d="M12 3v9l6.5 6.5"/></svg></div>
+                <h3>Press &amp; comms</h3>
+                <p>Press queries about CECAM, the network, or selected workshops and prizes.</p>
+                <a class="link" href="mailto:helpdesk@cecam.org?subject=Press">helpdesk@cecam.org <span aria-hidden="true">→</span></a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="map-section">
+    <div class="container">
+        <p class="eyebrow eyebrow--bare" style="margin-bottom: 1rem;">Visit us</p>
+        <h2 style="margin-bottom: 1.5rem;">EPFL campus · Lausanne.</h2>
+        <figure class="map-block">
+            <iframe
+                src="https://www.openstreetmap.org/export/embed.html?bbox=6.5560%2C46.5160%2C6.5760%2C46.5260&layer=mapnik&marker=46.5210%2C6.5660"
+                width="100%"
+                height="420"
+                style="border:0;"
+                loading="lazy"
+                title="Map of CECAM at EPFL, Lausanne"
+            ></iframe>
+            <figcaption>
+                <span><strong>CECAM-HQ, EPFL</strong> · Avenue de Forel 3, BCH 3103, 1015 Lausanne</span>
+                <span>
+                    <a href="https://www.openstreetmap.org/?mlat=46.5210&mlon=6.5660#map=16/46.5210/6.5660" target="_blank" rel="noopener">Open in OpenStreetMap →</a>
+                </span>
+            </figcaption>
+        </figure>
+    </div>
+</section>
+
+<section class="newsletter" id="newsletter">
+    <div class="container">
+        <div class="newsletter__inner" style="display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;">
+            <div>
+                <h2 style="margin: 0 0 0.75rem;">Stay close to the program.</h2>
+                <p style="color: var(--ink-soft); margin: 0; max-width: 36em;">One email when a flagship call opens, when the program is updated, and when registration opens for major schools and conferences.</p>
+            </div>
+            <!-- TODO: replace REPLACE_ME with the real Formspree endpoint when deploying -->
+            <form action="https://formspree.io/f/REPLACE_ME" method="POST" style="display: flex; gap: 0.5rem;">
+                <label class="vh" for="contact-newsletter-email">Email</label>
+                <input id="contact-newsletter-email" name="email" type="email" placeholder="you@university.eu" required
+                       style="flex: 1; background: var(--paper); border: 1px solid var(--hairline-strong); padding: 0.95rem 1.05rem; border-radius: var(--radius); font-size: 16px; font-family: inherit; min-height: 52px;">
+                <input type="text" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
+                <button type="submit" class="btn">Subscribe</button>
+            </form>
+        </div>
+    </div>
+</section>
+
+<section class="docs-strip">
+    <div class="container">
+        <div class="docs-strip__inner">
+            <h2>Documents &amp; legal.</h2>
+            <ul>
+                <li><a href="/about">CECAM statutes</a> <span style="color: var(--muted); font-size: 0.85rem;">PDF</span></li>
+                <li><a href="/about">Annual report 2025</a> <span style="color: var(--muted); font-size: 0.85rem;">PDF</span></li>
+                <li><a href="/about">Privacy policy</a> <span style="color: var(--muted); font-size: 0.85rem;">HTML</span></li>
+                <li><a href="/about">Disclaimer</a> <span style="color: var(--muted); font-size: 0.85rem;">HTML</span></li>
+                <li><a href="/about">Flagship call guidelines</a> <span style="color: var(--muted); font-size: 0.85rem;">PDF</span></li>
+                <li><a href="/about">Code of conduct</a> <span style="color: var(--muted); font-size: 0.85rem;">PDF</span></li>
+            </ul>
+        </div>
+    </div>
+</section>
+{% endblock %}

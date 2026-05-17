@@ -3,10 +3,10 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>{% block title %}{{ site.name }} — Centre Européen de Calcul Atomique et Moléculaire{% endblock %}</title>
-    <meta name="description" content="{% block meta_description %}CECAM convenes the workshops, schools and conferences that shape computational atomic and molecular science across Europe — proposed by researchers, funded by the network, hosted at EPFL and partner institutions from Edinburgh to Rome.{% endblock %}">
+    <title>Recurring activities — Lectures, Mansigh, MARVEL Classics, Alder Prize</title>
+    <meta name="description" content="CECAM's six recurring programmes: Mixed-Gen, CECAM Lectures, MARVEL Classics, Mary Ann Mansigh Conversations, CECAM Webinars, and the Berni J. Alder Prize.">
     <meta name="theme-color" content="#0F2A5C">
-    <link rel="icon" href="/uploads/cecam-mark.png" type="image/png">
+    <link rel="icon" href="uploads/cecam-mark.png" type="image/png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
@@ -445,35 +445,303 @@
         }
 
         /* component-specific styles are added by individual page templates */
-        {% block styles %}{% endblock %}
+                .page-hero {
+            padding: clamp(3.5rem, 7vw, 6rem) 0 clamp(2rem, 4vw, 3rem);
+            border-bottom: 1px solid var(--hairline);
+        }
+        .page-hero h1 {
+            font-size: clamp(2.4rem, 5.5vw, 4rem);
+            line-height: 1.04;
+            letter-spacing: -0.022em;
+            margin-bottom: 1.25rem;
+            max-width: 18ch;
+            font-weight: 500;
+            font-variation-settings: "opsz" 144;
+        }
+        .page-hero p.lede { max-width: 38em; }
+        .page-hero__crumb {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+            border-top: 1px solid var(--hairline);
+            padding-top: 1rem;
+        }
+
+        .activities-list { padding: var(--section-y) 0; }
+
+        .activity-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(2rem, 6vw, 6rem);
+            align-items: center;
+            padding: clamp(3rem, 7vw, 5rem) 0;
+            border-top: 1px solid var(--hairline);
+        }
+        .activity-row:nth-child(even) .activity-row__media { order: 2; }
+        .activity-row:nth-child(even) .activity-row__copy { order: 1; }
+        .activity-row__num {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--signal);
+            margin-bottom: 1rem;
+        }
+        .activity-row h2 {
+            font-size: clamp(1.7rem, 3.4vw, 2.4rem);
+            line-height: 1.12;
+            margin-bottom: 1.25rem;
+            max-width: 18ch;
+            color: var(--navy);
+        }
+        .activity-row p {
+            color: var(--ink-soft);
+            font-size: 1.02rem;
+            line-height: 1.65;
+            max-width: 36em;
+            margin: 0 0 1rem;
+        }
+        .activity-row__meta {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.08em;
+            color: var(--muted);
+            text-transform: uppercase;
+            margin-top: 1.4rem;
+            padding-top: 1rem;
+            border-top: 1px solid var(--hairline);
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .activity-row__meta span { display: flex; flex-direction: column; gap: 0.2rem; color: var(--ink); font-weight: 500; font-size: 0.85rem; letter-spacing: 0.02em; }
+        .activity-row__meta span small { font-size: 0.7rem; color: var(--muted); letter-spacing: 0.12em; }
+        .activity-row__cta {
+            margin-top: 1.5rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5em;
+            color: var(--signal);
+            font-weight: 500;
+            border-bottom: 1px solid currentColor;
+            padding-bottom: 1px;
+        }
+        .activity-row__cta:hover { color: var(--navy); }
+
+        /* Media slots — glyph or photo */
+        .activity-row__media {
+            position: relative;
+            background: var(--paper-warm);
+            border: 1px solid var(--hairline);
+            border-radius: var(--radius);
+            aspect-ratio: 4 / 3;
+            display: grid;
+            place-items: center;
+            overflow: hidden;
+        }
+        .activity-row__media img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .activity-row__media .glyph {
+            width: 50%;
+            max-width: 220px;
+            color: var(--navy);
+            opacity: 0.92;
+        }
+        .activity-row__media .glyph svg { width: 100%; height: auto; display: block; }
+        .activity-row__media .label {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--signal);
+        }
+
+        @media (max-width: 880px) {
+            .activity-row { grid-template-columns: 1fr; }
+            .activity-row:nth-child(even) .activity-row__media,
+            .activity-row:nth-child(even) .activity-row__copy { order: initial; }
+        }
     </style>
-    {% block head %}{% endblock %}
-</head>
+    </head>
 <body>
-    <a class="vh" href="#main">Skip to content</a>
+    <a class="vh" href="activities.html#main">Skip to content</a>
 
     <header class="site-header">
         <div class="site-header__inner">
-            <a class="brand" href="/" aria-label="CECAM home">
-                <img src="/uploads/cecam-wordmark.png" alt="CECAM — Centre Européen de Calcul Atomique et Moléculaire" width="200" height="42">
+            <a class="brand" href="index.html" aria-label="CECAM home">
+                <img src="uploads/cecam-wordmark.png" alt="CECAM — Centre Européen de Calcul Atomique et Moléculaire" width="200" height="42">
             </a>
             <button class="menu-toggle" aria-controls="primary-nav" aria-expanded="false">
                 <span class="menu-toggle__bars" aria-hidden="true"><span></span><span></span><span></span></span>
                 Menu
             </button>
-            {% set cp = nav_active|default('') %}
-            <nav id="primary-nav" class="primary-nav" aria-label="Primary">
-                <a href="/about"{% if cp == 'about' %} aria-current="page"{% endif %}>About</a>
-                <a href="/program"{% if cp == 'program' %} aria-current="page"{% endif %}>Program</a>
-                <a href="/activities"{% if cp == 'activities' %} aria-current="page"{% endif %}>Activities</a>
-                <a href="/news"{% if cp == 'news' %} aria-current="page"{% endif %}>News</a>
-                <a href="/contact"{% if cp == 'contact' %} aria-current="page"{% endif %}>Contact</a>
+                        <nav id="primary-nav" class="primary-nav" aria-label="Primary">
+                <a href="about.html">About</a>
+                <a href="program.html">Program</a>
+                <a href="activities.html" aria-current="page">Activities</a>
+                <a href="news.html">News</a>
+                <a href="contact.html">Contact</a>
             </nav>
         </div>
     </header>
 
     <main id="main">
-        {% block content %}{% endblock %}
+        <section class="page-hero">
+    <div class="container">
+        <p class="page-hero__crumb">CECAM · RECURRING ACTIVITIES</p>
+        <h1>Year-round series, in parallel with the workshops.</h1>
+        <p class="lede">Beyond the funded program, CECAM runs six evergreen series — lectures, conversations, archives and a prize — that keep the community in touch between workshops.</p>
+    </div>
+</section>
+
+<section class="activities-list">
+    <div class="container">
+
+        <article class="activity-row" id="mixed-gen">
+            <div class="activity-row__media">
+                <span class="label">01 / Online</span>
+                <div class="glyph" aria-hidden="true">
+                    <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="20" y="30" width="100" height="70" rx="4"/>
+                        <path d="M40 100 v15 l20 -15"/>
+                        <rect x="80" y="60" width="100" height="70" rx="4" fill="rgba(46,125,193,0.08)"/>
+                        <path d="M160 130 v15 l-20 -15"/>
+                        <circle cx="50" cy="65" r="2"/><circle cx="70" cy="65" r="2"/><circle cx="90" cy="65" r="2"/>
+                        <circle cx="110" cy="95" r="2"/><circle cx="130" cy="95" r="2"/><circle cx="150" cy="95" r="2"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="activity-row__copy">
+                <p class="activity-row__num">§ 01 · Online talks &amp; posters</p>
+                <h2>Mixed-Gen.</h2>
+                <p>A series of online talks and poster sessions on advanced topics in simulation and modelling, and their applications — designed for simulators young in years or at heart. The format mixes generations on purpose: PhD students present alongside senior researchers, with discussion the central activity.</p>
+                <div class="activity-row__meta">
+                    <span><small>FORMAT</small>Online · talks + posters</span>
+                    <span><small>RHYTHM</small>Several sessions per year</span>
+                </div>
+            </div>
+        </article>
+
+        <article class="activity-row" id="cecam-lectures">
+            <div class="activity-row__media">
+                <span class="label">02 / Lecture series</span>
+                <div class="glyph" aria-hidden="true">
+                    <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="40" y="40" width="120" height="80" rx="2"/>
+                        <path d="M80 120 v20 M120 120 v20 M70 140 h60"/>
+                        <path d="M50 60 h35 M50 75 h45 M50 90 h25"/>
+                        <path d="M170 70 q15 10 0 30"/>
+                        <path d="M180 60 q22 18 0 50"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="activity-row__copy">
+                <p class="activity-row__num">§ 02 · Invited lectures since 2015</p>
+                <h2>CECAM Lectures.</h2>
+                <p>In April 2015 CECAM initiated a series of lectures to highlight interesting developments across computational science. Speakers are invited by the director's office; each lecture is recorded and made public so that the archive itself becomes a methodological reference for the community.</p>
+                <div class="activity-row__meta">
+                    <span><small>SINCE</small>April 2015</span>
+                    <span><small>FORMAT</small>Single-lecture, recorded</span>
+                    <span><small>ARCHIVE</small>Online</span>
+                </div>
+            </div>
+        </article>
+
+        <article class="activity-row" id="marvel-classics">
+            <div class="activity-row__media">
+                <span class="label">03 / Methods archive</span>
+                <div class="glyph" aria-hidden="true">
+                    <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="30" y="35" width="60" height="90" rx="2"/>
+                        <rect x="110" y="35" width="60" height="90" rx="2" fill="rgba(46,125,193,0.08)"/>
+                        <path d="M40 55 h40 M40 70 h40 M40 85 h30"/>
+                        <path d="M120 55 h40 M120 70 h40 M120 85 h30"/>
+                        <circle cx="100" cy="80" r="4" fill="currentColor"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="activity-row__copy">
+                <p class="activity-row__num">§ 03 · CECAM–MARVEL co-production</p>
+                <h2>MARVEL Classics.</h2>
+                <p>A different look at fundamental developments of simulation and modelling. Milestone conceptual steps, methods and algorithms are presented by their originators — the people who first wrote the paper, prototyped the code, or named the technique. Co-produced with the MARVEL National Centre of Competence in Research.</p>
+                <div class="activity-row__meta">
+                    <span><small>FORMAT</small>Recorded interviews</span>
+                    <span><small>PARTNER</small>NCCR MARVEL</span>
+                </div>
+            </div>
+        </article>
+
+        <article class="activity-row" id="mansigh-conversations">
+            <div class="activity-row__media">
+                <span class="label">04 / Conversation series</span>
+                <div class="glyph" aria-hidden="true">
+                    <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <path d="M30 50 q0 -15 15 -15 h60 q15 0 15 15 v30 q0 15 -15 15 H80 l-22 18 v-18 h-13 q-15 0 -15 -15 z"/>
+                        <path d="M85 90 q0 -15 15 -15 h45 q15 0 15 15 v25 q0 15 -15 15 h-30 l-18 15 v-15 q-12 0 -12 -12z" fill="rgba(46,125,193,0.08)"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="activity-row__copy">
+                <p class="activity-row__num">§ 04 · Beyond the methods</p>
+                <h2>Mary Ann Mansigh Conversation Series.</h2>
+                <p>The Mary Ann Mansigh Conversation Series focuses on non-strictly-technical topics of cultural interest to the simulation and modelling community: ethics, the history of the field, the politics of open science, what computers were like when our citations were footnotes. Talks introduce the topic; the central event is the conversation that follows.</p>
+                <div class="activity-row__meta">
+                    <span><small>FORMAT</small>Talk + audience conversation</span>
+                    <span><small>TONE</small>Informal &amp; informative</span>
+                </div>
+            </div>
+        </article>
+
+        <article class="activity-row" id="cecam-webinars">
+            <div class="activity-row__media">
+                <span class="label">05 / Short online talks</span>
+                <div class="glyph" aria-hidden="true">
+                    <svg viewBox="0 0 200 160" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="1.5">
+                        <rect x="30" y="35" width="140" height="90" rx="3"/>
+                        <path d="M85 65 v30 l30 -15 z" fill="currentColor"/>
+                        <path d="M50 135 h100"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="activity-row__copy">
+                <p class="activity-row__num">§ 05 · Bite-sized methods</p>
+                <h2>CECAM Webinars.</h2>
+                <p>Short online talks on simulation methods, hosted across the network and archived afterwards. The webinar format complements the in-person workshops with a steady drumbeat of methodological updates from researchers across the twenty-two nodes.</p>
+                <div class="activity-row__meta">
+                    <span><small>FORMAT</small>Online · 45 min + Q&amp;A</span>
+                    <span><small>ARCHIVE</small>Recorded</span>
+                </div>
+            </div>
+        </article>
+
+        <article class="activity-row" id="alder-prize">
+            <div class="activity-row__media" style="background: #181614;">
+                <img src="uploads/alder-prize.png" alt="The Berni J. Alder CECAM Prize trophy displayed at the CECAM 50th anniversary">
+            </div>
+            <div class="activity-row__copy">
+                <p class="activity-row__num">§ 06 · Award</p>
+                <h2>Berni J. Alder CECAM Prize.</h2>
+                <p>The Berni J. Alder CECAM Prize recognises exceptional contributions to the field of microscopic simulation of matter. Named for one of the founders of molecular dynamics, the prize is awarded by CECAM in collaboration with the European Physical Society's Computational Physics group.</p>
+                <div class="activity-row__meta">
+                    <span><small>NAMED FOR</small>Berni J. Alder</span>
+                    <span><small>FIELD</small>Microscopic simulation of matter</span>
+                    <span><small>WITH</small>EPS Computational Physics</span>
+                </div>
+            </div>
+        </article>
+
+    </div>
+</section>
     </main>
 
     <footer class="site-footer">
@@ -481,7 +749,7 @@
             <div class="footer-grid">
                 <div class="footer-col footer-brand">
                     <div class="footer-wordmark">
-                        <img src="/uploads/cecam-wordmark.png" alt="CECAM" width="220" height="42">
+                        <img src="uploads/cecam-wordmark.png" alt="CECAM" width="220" height="42">
                     </div>
                     <p style="max-width: 28em;">Fostering fundamental research on computational science for societal benefit, across a federated European network anchored at EPFL.</p>
                     <p style="margin-top: 1.2rem;"><span class="badge badge--open"><span class="pulse-dot" aria-hidden="true"></span> Flagship 2027–2028 call open</span></p>
@@ -498,11 +766,11 @@
                 <div class="footer-col">
                     <h4>Network</h4>
                     <ul>
-                        <li><a href="/about">About CECAM</a></li>
-                        <li><a href="/program">Program</a></li>
-                        <li><a href="/activities">Recurring activities</a></li>
-                        <li><a href="/news">News</a></li>
-                        <li><a href="/contact">Contact</a></li>
+                        <li><a href="about.html">About CECAM</a></li>
+                        <li><a href="program.html">Program</a></li>
+                        <li><a href="activities.html">Recurring activities</a></li>
+                        <li><a href="news.html">News</a></li>
+                        <li><a href="contact.html">Contact</a></li>
                     </ul>
                     <div class="footer-mailing" style="margin-top: 1.4rem;">
                         <h4 style="margin-bottom: 0.5rem;">Newsletter</h4>
@@ -517,11 +785,11 @@
                 </div>
             </div>
             <div class="footer-meta">
-                <span>© {{ "now"|date('Y') }} CECAM — Centre Européen de Calcul Atomique et Moléculaire · 50 years of computational science</span>
+                <span>© 2026 CECAM — Centre Européen de Calcul Atomique et Moléculaire · 50 years of computational science</span>
                 <ul>
-                    <li><a href="/about">Disclaimer</a></li>
-                    <li><a href="/about">Privacy</a></li>
-                    <li><a href="/contact">Documents</a></li>
+                    <li><a href="about.html">Disclaimer</a></li>
+                    <li><a href="about.html">Privacy</a></li>
+                    <li><a href="contact.html">Documents</a></li>
                 </ul>
             </div>
         </div>

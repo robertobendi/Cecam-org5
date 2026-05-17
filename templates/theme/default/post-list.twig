@@ -1,24 +1,247 @@
 {% extends '@theme/layout.twig' %}
+{% set nav_active = 'news' %}
 
-{% block title %}Blog · {{ site.name }}{% endblock %}
+{% block title %}News — CECAM{% endblock %}
+{% block meta_description %}News from CECAM and the European computational science network — call openings, workshop selections, prizes and program updates.{% endblock %}
+
+{% block styles %}
+        .page-hero {
+            padding: clamp(3.5rem, 7vw, 6rem) 0 clamp(2rem, 4vw, 3rem);
+            border-bottom: 1px solid var(--hairline);
+        }
+        .page-hero h1 {
+            font-size: clamp(2.4rem, 5.5vw, 4rem);
+            line-height: 1.04;
+            letter-spacing: -0.022em;
+            margin-bottom: 1.25rem;
+            font-weight: 500;
+            font-variation-settings: "opsz" 144;
+        }
+        .page-hero p.lede { max-width: 36em; }
+        .page-hero__crumb {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.75rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 1.5rem;
+            border-top: 1px solid var(--hairline);
+            padding-top: 1rem;
+        }
+
+        .featured {
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: clamp(2rem, 5vw, 4rem);
+            padding: var(--section-y) 0 var(--section-y-sm);
+            align-items: center;
+        }
+        .featured__img {
+            aspect-ratio: 4 / 3;
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--hairline);
+        }
+        .featured__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 500ms ease; }
+        .featured:hover .featured__img img { transform: scale(1.03); }
+        .featured__body {}
+        .featured__eyebrow {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--signal);
+            margin-bottom: 1rem;
+        }
+        .featured h2 {
+            font-size: clamp(1.8rem, 3.6vw, 2.8rem);
+            line-height: 1.12;
+            margin-bottom: 1.25rem;
+            color: var(--navy);
+        }
+        .featured h2 a { color: inherit; }
+        .featured p { color: var(--ink-soft); font-size: 1.08rem; line-height: 1.6; margin-bottom: 1.25rem; max-width: 36em; }
+
+        .news-listing {
+            padding: var(--section-y-sm) 0 var(--section-y);
+            border-top: 1px solid var(--hairline);
+        }
+        .news-listing h2.section-h {
+            font-size: clamp(1.4rem, 2.4vw, 1.8rem);
+            margin: 0 0 2rem;
+            border-top: 1px solid var(--navy);
+            padding-top: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: end;
+            gap: 1rem;
+        }
+        .news-listing h2.section-h span {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.12em;
+            color: var(--muted);
+            text-transform: uppercase;
+            font-weight: 400;
+        }
+
+        .news-row {
+            display: grid;
+            grid-template-columns: 130px 1fr 220px;
+            gap: 2rem;
+            padding: 1.75rem 0;
+            border-bottom: 1px solid var(--hairline);
+            text-decoration: none;
+            color: inherit;
+            align-items: start;
+            transition: background-color 200ms ease;
+        }
+        .news-row:hover { background: rgba(46,125,193,0.04); }
+        .news-row__date {
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.78rem;
+            color: var(--muted);
+            letter-spacing: 0.06em;
+            display: flex;
+            flex-direction: column;
+            gap: 0.3rem;
+            padding-top: 0.4rem;
+        }
+        .news-row__date strong { color: var(--navy); font-weight: 500; font-size: 1.3rem; letter-spacing: -0.01em; line-height: 1; }
+        .news-row__body { display: flex; flex-direction: column; gap: 0.5rem; }
+        .news-row h3 {
+            font-family: 'Fraunces', serif;
+            font-weight: 500;
+            font-size: clamp(1.2rem, 1.9vw, 1.4rem);
+            line-height: 1.22;
+            color: var(--navy);
+            margin: 0;
+        }
+        .news-row p { font-size: 0.95rem; line-height: 1.55; color: var(--ink-soft); margin: 0; max-width: 42em; }
+        .news-row__thumb {
+            aspect-ratio: 4 / 3;
+            background: var(--paper-warm);
+            border-radius: var(--radius);
+            overflow: hidden;
+            border: 1px solid var(--hairline);
+        }
+        .news-row__thumb img { width: 100%; height: 100%; object-fit: cover; }
+        .news-row__type {
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-weight: 600;
+            color: var(--signal);
+        }
+
+        .pagination {
+            display: flex;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--hairline);
+        }
+        .pagination a, .pagination span {
+            display: inline-flex;
+            min-width: 44px;
+            min-height: 44px;
+            align-items: center;
+            justify-content: center;
+            padding: 0 0.85rem;
+            border: 1px solid var(--hairline-strong);
+            border-radius: var(--radius);
+            color: var(--navy);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            text-decoration: none;
+        }
+        .pagination .is-current { background: var(--navy); color: var(--paper); border-color: var(--navy); }
+        .pagination a:hover { background: #fff; }
+
+        @media (max-width: 880px) {
+            .featured { grid-template-columns: 1fr; }
+            .news-row { grid-template-columns: 1fr; gap: 1rem; }
+            .news-row__date { flex-direction: row; align-items: baseline; }
+            .news-row__thumb { aspect-ratio: 16 / 9; }
+        }
+{% endblock %}
 
 {% block content %}
-<div class="wrap">
-    <h1>Blog</h1>
-    {% if posts|length == 0 %}
-        <div class="empty-state">
-            <p>No posts yet — check back soon.</p>
+<section class="page-hero">
+    <div class="container">
+        <p class="page-hero__crumb">CECAM · NEWS</p>
+        <h1>News from the network.</h1>
+        <p class="lede">Selections, calls and announcements from CECAM-HQ and the partner nodes. Sorted newest first.</p>
+    </div>
+</section>
+
+<div class="container">
+    <article class="featured">
+        <figure class="featured__img" style="margin: 0;">
+            <img src="/uploads/molecular-dynamics.jpg" alt="Atomistic simulation visualisation related to fracture in amorphous materials">
+        </figure>
+        <div class="featured__body">
+            <p class="featured__eyebrow">17 MAR 2026 · LORENTZ SELECTION</p>
+            <h2>The 2027 CECAM-Lorentz workshop has been selected: <em style="font-style: italic; color: var(--signal); font-weight: 400;">Fracture of Amorphous Materials Across the Scales.</em></h2>
+            <p>Congratulations to Maximilian Ries, Sebastian Pfaller and Andrea Giuntoli. The workshop will take place at CECAM-HQ, EPFL, Lausanne on 12–16 April 2027 and will bring together computational and experimental researchers working on damage and failure of glasses and amorphous polymers, with sessions on multiscale modelling, machine-learning interatomic potentials, and the interpretation of fracture surfaces at the atomic scale.</p>
         </div>
-    {% else %}
-        {% for post in posts %}
-            <a class="post-card" href="/blog/{{ post.slug }}">
-                <h2>{{ post.field('title', '(untitled)') }}</h2>
-                <div class="date">{{ (post.publishAt ?? post.createdAt)|date('F j, Y') }}</div>
-                {% if post.field('excerpt') %}
-                    <p>{{ post.field('excerpt') }}</p>
-                {% endif %}
-            </a>
-        {% endfor %}
-    {% endif %}
+    </article>
 </div>
+
+<section class="news-listing">
+    <div class="container">
+        <h2 class="section-h">All news <span>12 items · sorted by date</span></h2>
+
+        {% set news = [
+            { date: '02 Feb 2026', day: '02', month: 'Feb 2026', type: 'Open call', slug: 'flagship-2027-2028-open',
+              title: 'Flagship 2027–2028 call open until 17 July 2026.',
+              dek: 'Researchers across the network are invited to propose workshops, schools and conferences for the next two-year flagship cycle.',
+              img: '/uploads/sem-instrument.jpg', alt: 'A scanning electron microscope instrument in a research laboratory.' },
+            { date: '12 Jan 2026', day: '12', month: 'Jan 2026', type: 'Event', slug: 'esl-feb-workshop',
+              title: 'ESL module integration into electronic-structure codes — 17–28 Feb, CECAM-HQ.',
+              dek: 'A two-week event for developers of electronic-structure software to integrate Electronic Structure Library modules into production codes.',
+              img: '/uploads/protein-structure.png', alt: 'Protein structure visualisation as used in electronic-structure simulations.' },
+            { date: '04 Dec 2025', day: '04', month: 'Dec 2025', type: 'Recognition', slug: 'alder-prize-2025',
+              title: 'Berni J. Alder CECAM Prize 2025 announced — Pierre Hohenberg cited in laureate lecture.',
+              dek: 'The 2025 Alder Prize recognises exceptional contributions to microscopic simulation of matter. The laureate lecture will be given at the next CECAM annual assembly.',
+              img: '/uploads/alder-prize.png', alt: 'The Berni J. Alder CECAM Prize trophy.' },
+            { date: '21 Oct 2025', day: '21', month: 'Oct 2025', type: 'Activity', slug: 'cecam-lectures-autumn-2025',
+              title: 'Autumn 2025 CECAM Lectures programme online.',
+              dek: 'Five lectures across machine-learning potentials, free-energy methods, and quantum transport — recorded and archived for the community.',
+              img: '/uploads/cecam-event.jpg', alt: 'CECAM lecture event' },
+            { date: '09 Sep 2025', day: '09', month: 'Sep 2025', type: 'Network', slug: 'cecam-node-edinburgh-renewed',
+              title: 'CECAM-UK-EDIN node renewed for a further four-year term.',
+              dek: 'The Edinburgh node has been renewed by the Council. Plans for the next four years include a yearly summer school on path-integral methods.',
+              img: '/uploads/epfl-aerial-panorama.jpg', alt: 'EPFL campus, where CECAM-HQ is anchored.' },
+            { date: '18 Jul 2025', day: '18', month: 'Jul 2025', type: 'Workshop', slug: 'mlff-foundations-report',
+              title: 'Workshop report: foundations of machine-learning force fields.',
+              dek: 'Notes and recordings from the June workshop at Jülich are now public — including the open discussion on benchmark data curation.',
+              img: '/uploads/molecular-dynamics.jpg', alt: 'A molecular dynamics visualisation.' }
+        ] %}
+
+        {% for item in news %}
+            <article class="news-row">
+                <div class="news-row__date">
+                    <strong>{{ item.day }}</strong>
+                    <span>{{ item.month }}</span>
+                </div>
+                <div class="news-row__body">
+                    <p class="news-row__type">{{ item.type }}</p>
+                    <h3>{{ item.title }}</h3>
+                    <p>{{ item.dek }}</p>
+                </div>
+                <div class="news-row__thumb">
+                    <img src="{{ item.img }}" alt="{{ item.alt }}" loading="lazy">
+                </div>
+            </article>
+        {% endfor %}
+
+        <nav class="pagination" aria-label="Pagination">
+            <span class="is-current">1</span>
+            <a href="#">2</a>
+            <a href="#" aria-label="Next page">→</a>
+        </nav>
+    </div>
+</section>
 {% endblock %}

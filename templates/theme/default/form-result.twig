@@ -1,17 +1,31 @@
 {% extends '@theme/layout.twig' %}
 
-{% block title %}{{ ok ? 'Thanks' : 'Try again' }} · {{ site.name }}{% endblock %}
+{% block title %}{{ ok ? 'Subscribed' : 'Try again' }} · CECAM{% endblock %}
+
+{% block styles %}
+        .fr {
+            padding: clamp(4rem, 10vw, 7rem) 0;
+            text-align: center;
+        }
+        .fr h1 { font-size: clamp(2rem, 4vw, 3rem); margin: 0 0 1rem; max-width: 22ch; margin-left: auto; margin-right: auto; }
+        .fr p { color: var(--ink-soft); max-width: 36em; margin: 0 auto 2rem; font-size: 1.05rem; }
+        .fr ul { display: inline-block; text-align: left; color: var(--pulse); }
+{% endblock %}
 
 {% block content %}
-<div class="wrap" style="text-align:center;padding:4rem 0;">
-    {% if ok %}
-        <h1>Thanks for getting in touch.</h1>
-        <p class="lede">We received your message.</p>
-    {% else %}
-        <h1>Something went wrong.</h1>
-        <ul style="display:inline-block;text-align:left;">
-            {% for e in errors %}<li>{{ e }}</li>{% endfor %}</ul>
-        <p style="margin-top:2rem;"><a href="javascript:history.back()">← Go back</a></p>
-    {% endif %}
+<div class="container">
+    <div class="fr">
+        {% if ok %}
+            <h1>Thanks — you're subscribed.</h1>
+            <p>We'll write when a flagship call opens or when major schools and conferences open registration. No marketing.</p>
+            <a class="btn" href="/">Back home <span class="arrow" aria-hidden="true">→</span></a>
+        {% else %}
+            <h1>Something didn't go through.</h1>
+            <ul>
+                {% for e in errors %}<li>{{ e }}</li>{% endfor %}
+            </ul>
+            <p style="margin-top: 2rem;"><a class="link-arrow" href="javascript:history.back()"><span class="arrow" aria-hidden="true">←</span> Go back</a></p>
+        {% endif %}
+    </div>
 </div>
 {% endblock %}

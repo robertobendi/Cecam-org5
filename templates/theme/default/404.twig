@@ -1,11 +1,50 @@
 {% extends '@theme/layout.twig' %}
 
-{% block title %}Not found · {{ site.name }}{% endblock %}
+{% block title %}Page not found · CECAM{% endblock %}
+
+{% block styles %}
+        .nf {
+            padding: clamp(4rem, 10vw, 8rem) 0;
+            text-align: center;
+        }
+        .nf img {
+            max-width: 110px;
+            height: auto;
+            margin: 0 auto 2rem;
+            opacity: 0.9;
+            display: block;
+        }
+        .nf__num {
+            font-family: 'Fraunces', serif;
+            font-size: clamp(5rem, 14vw, 9rem);
+            line-height: 1;
+            font-weight: 500;
+            color: var(--navy);
+            letter-spacing: -0.04em;
+            font-variation-settings: "opsz" 144;
+            margin: 0 0 1rem;
+        }
+        .nf h1 {
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            margin: 0 0 1rem;
+            max-width: 20ch;
+            margin-left: auto; margin-right: auto;
+        }
+        .nf p { color: var(--ink-soft); max-width: 36em; margin: 0 auto 2rem; font-size: 1.05rem; }
+        .nf__actions { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
+{% endblock %}
 
 {% block content %}
-<div class="wrap empty-state">
-    <h1>404</h1>
-    <p class="lede">That page doesn’t exist — or has been moved.</p>
-    <p><a href="/">Go home →</a></p>
+<div class="container">
+    <div class="nf">
+        <img src="/uploads/cecam-mark.png" alt="CECAM mark">
+        <div class="nf__num">404</div>
+        <h1>This page does not exist — or has been moved.</h1>
+        <p>The CECAM site was rebuilt; many legacy URLs have changed. Try the program index, the news archive, or get in touch with the helpdesk.</p>
+        <div class="nf__actions">
+            <a class="btn" href="/">Go home <span class="arrow" aria-hidden="true">→</span></a>
+            <a class="btn btn--ghost" href="/program">Browse program <span class="arrow" aria-hidden="true">→</span></a>
+        </div>
+    </div>
 </div>
 {% endblock %}
