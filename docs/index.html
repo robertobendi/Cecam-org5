@@ -444,14 +444,14 @@
         }
 
         /* component-specific styles are added by individual page templates */
-        /* ─────────────────────────────────────── tasteful pinboard ─── */
+        /* ─────────────────────────────────────── home (rich pinboard) ─── */
 
         :root {
             --board:        #F7F3E8;
             --card:         #FFFFFF;
             --line:         rgba(15, 42, 92, 0.08);
             --line-strong:  rgba(15, 42, 92, 0.18);
-            --tint:         rgba(15, 42, 92, 0.04);
+            --tint:         rgba(15, 42, 92, 0.045);
 
             --cat-call:        #C8222C;
             --cat-workshop:    #1F6FA8;
@@ -462,96 +462,143 @@
             --cat-about:       #0F2A5C;
 
             --pin-radius:   14px;
-            --pin-shadow-h: 0 6px 18px rgba(15,42,92,0.08), 0 2px 4px rgba(15,42,92,0.04);
+            --pin-shadow-h: 0 8px 24px rgba(15,42,92,0.10), 0 2px 6px rgba(15,42,92,0.04);
         }
 
         body { background: var(--board); }
 
-        /* ─── HERO ─── */
-        .board-hero {
-            padding: clamp(2.5rem, 5vw, 4rem) 0 clamp(1.25rem, 2.5vw, 2rem);
+        /* ─── BRAND HERO with EPFL aerial photo ─── */
+        .brand-hero {
+            position: relative;
+            width: 100%;
+            min-height: clamp(440px, 56vw, 600px);
+            overflow: hidden;
+            isolation: isolate;
         }
-        .board-hero__inner {
-            max-width: 880px;
+        .brand-hero__bg {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            filter: saturate(0.92) contrast(1.04);
+            transform: scale(1.04);
+            animation: heroDrift 24s ease-in-out infinite alternate;
+        }
+        @keyframes heroDrift {
+            0%   { transform: scale(1.04) translateX(0); }
+            100% { transform: scale(1.06) translateX(-1%); }
+        }
+        .brand-hero__veil {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            background:
+              linear-gradient(180deg, rgba(15,42,92,0.18) 0%, rgba(15,42,92,0.45) 55%, rgba(8,30,71,0.82) 100%),
+              linear-gradient(90deg, rgba(8,30,71,0.30) 0%, transparent 55%);
+        }
+        .brand-hero__content {
+            position: relative;
+            z-index: 2;
+            max-width: var(--container);
             margin: 0 auto;
-            padding: 0 var(--gutter);
+            padding: clamp(2rem, 5vw, 3.5rem) var(--gutter) clamp(2.2rem, 5vw, 3.5rem);
+            min-height: clamp(440px, 56vw, 600px);
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            color: var(--paper);
+            gap: clamp(0.8rem, 1.4vw, 1.2rem);
         }
-        .board-hero__eyebrow {
+        .brand-hero__eyebrow {
             font-family: 'Geist Mono', ui-monospace, monospace;
             font-size: 0.72rem;
             font-weight: 500;
-            letter-spacing: 0.16em;
+            letter-spacing: 0.18em;
             text-transform: uppercase;
-            color: var(--muted);
-            margin: 0 0 1rem;
+            color: rgba(246, 244, 238, 0.85);
+            margin: 0;
             display: inline-flex;
             align-items: center;
             gap: 0.55rem;
         }
-        .board-hero__eyebrow .dot { width: 5px; height: 5px; background: var(--cat-call); border-radius: 50%; }
-        .board-hero h1 {
+        .brand-hero__eyebrow .dot {
+            width: 6px;
+            height: 6px;
+            background: var(--cat-call);
+            border-radius: 50%;
+            box-shadow: 0 0 0 0 rgba(200,34,44,0.55);
+            animation: callPulse 2.2s ease-in-out infinite;
+        }
+        .brand-hero h1 {
+            color: var(--paper);
             font-family: 'Geist', sans-serif;
             font-weight: 700;
-            font-size: clamp(2.2rem, 5vw, 3.6rem);
-            line-height: 1.02;
-            letter-spacing: -0.035em;
-            color: var(--navy);
-            margin: 0 0 1.2rem;
-            max-width: 24ch;
+            font-size: clamp(2.4rem, 6.2vw, 4.6rem);
+            line-height: 0.98;
+            letter-spacing: -0.038em;
+            margin: 0;
+            max-width: 18ch;
+            text-wrap: balance;
         }
-        .board-hero__sub {
+        .brand-hero h1 .accent { color: #FFB39E; }
+        .brand-hero__sub {
+            color: rgba(246, 244, 238, 0.88);
             font-family: 'Geist', sans-serif;
-            font-size: clamp(0.98rem, 1.2vw, 1.1rem);
-            line-height: 1.55;
-            color: var(--ink-soft);
+            font-size: clamp(1rem, 1.3vw, 1.18rem);
+            line-height: 1.5;
+            margin: 0;
             max-width: 56ch;
-            margin: 0 0 1.6rem;
             letter-spacing: -0.005em;
         }
-        .board-hero__search {
+        .brand-hero__search {
             position: relative;
-            max-width: 520px;
+            max-width: 540px;
+            margin-top: 0.4rem;
         }
-        .board-hero__search input {
+        .brand-hero__search input {
             width: 100%;
-            background: var(--card);
-            border: 1px solid var(--line-strong);
+            background: rgba(255,255,255,0.96);
+            border: 1px solid rgba(255,255,255,0.6);
             border-radius: 999px;
-            padding: 0.9rem 1.1rem 0.9rem 2.85rem;
+            padding: 0.95rem 1.2rem 0.95rem 2.95rem;
             font-family: 'Geist', sans-serif;
-            font-size: 0.98rem;
+            font-size: 1rem;
             color: var(--ink);
-            min-height: 52px;
+            min-height: 54px;
+            box-shadow: 0 6px 24px rgba(8, 30, 71, 0.25);
             transition: border-color 180ms ease, box-shadow 180ms ease;
         }
-        .board-hero__search input::placeholder { color: var(--muted); }
-        .board-hero__search input:focus {
+        .brand-hero__search input::placeholder { color: var(--muted); }
+        .brand-hero__search input:focus {
             outline: none;
-            border-color: var(--navy);
-            box-shadow: 0 0 0 4px rgba(15,42,92,0.08);
+            background: white;
+            box-shadow: 0 0 0 4px rgba(255,255,255,0.4), 0 6px 24px rgba(8, 30, 71, 0.3);
         }
-        .board-hero__search svg {
+        .brand-hero__search svg {
             position: absolute;
-            left: 1.05rem;
+            left: 1.1rem;
             top: 50%;
             transform: translateY(-50%);
-            width: 17px;
-            height: 17px;
+            width: 18px;
+            height: 18px;
             color: var(--muted);
             pointer-events: none;
         }
-        .board-hero__stats {
-            margin-top: 1.4rem;
+        .brand-hero__stats {
+            margin-top: 0.4rem;
             display: flex;
             flex-wrap: wrap;
-            gap: 1.6rem;
+            gap: 1.6rem 2rem;
             font-family: 'Geist Mono', monospace;
             font-size: 0.74rem;
-            color: var(--muted);
-            letter-spacing: 0.06em;
+            color: rgba(246, 244, 238, 0.7);
+            letter-spacing: 0.08em;
             text-transform: uppercase;
         }
-        .board-hero__stats strong { color: var(--navy); font-weight: 600; }
+        .brand-hero__stats strong { color: var(--paper); font-weight: 600; }
+        .brand-hero__stats .sep { opacity: 0.25; }
 
         /* ─── STICKY FILTER CHIPS ─── */
         .chips {
@@ -595,16 +642,8 @@
             white-space: nowrap;
             min-height: 36px;
         }
-        .chip:hover {
-            background: rgba(15,42,92,0.04);
-            color: var(--navy);
-            border-color: rgba(15,42,92,0.28);
-        }
-        .chip--active {
-            background: var(--navy);
-            color: var(--paper);
-            border-color: var(--navy);
-        }
+        .chip:hover { background: rgba(15,42,92,0.04); color: var(--navy); border-color: rgba(15,42,92,0.28); }
+        .chip--active { background: var(--navy); color: var(--paper); border-color: var(--navy); }
         .chip--active:hover { background: var(--navy-hover); color: var(--paper); border-color: var(--navy-hover); }
         .chip__count {
             font-family: 'Geist Mono', monospace;
@@ -615,9 +654,7 @@
         .chip--active .chip__count { opacity: 0.78; }
 
         /* ─── MASONRY PINBOARD ─── */
-        .board {
-            padding: 1.4rem 0 clamp(4rem, 7vw, 5rem);
-        }
+        .board { padding: 1.4rem 0 clamp(4rem, 7vw, 5rem); }
         .board__grid {
             column-count: 4;
             column-gap: 1.25rem;
@@ -651,8 +688,7 @@
         .pin.in-view {
             opacity: 1;
             transform: translateY(0);
-            transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1),
-                        opacity 520ms ease;
+            transition: transform 520ms cubic-bezier(0.22, 1, 0.36, 1), opacity 520ms ease;
         }
         a.pin:hover {
             transform: translateY(-2px);
@@ -661,7 +697,6 @@
         }
         .pin--hidden { display: none; }
 
-        /* category accent on left border */
         .pin[data-cat="call"]       { border-left-color: var(--cat-call); }
         .pin[data-cat="workshop"]   { border-left-color: var(--cat-workshop); }
         .pin[data-cat="school"]     { border-left-color: var(--cat-school); }
@@ -670,7 +705,6 @@
         .pin[data-cat="series"]     { border-left-color: var(--cat-series); }
         .pin[data-cat="about"]      { border-left-color: var(--cat-about); }
 
-        /* shared pin internals */
         .pin__body { padding: 1.2rem 1.25rem 1.3rem; display: flex; flex-direction: column; gap: 0.6rem; }
         .pin__top {
             display: flex;
@@ -690,16 +724,9 @@
             font-family: 'Geist', sans-serif;
             font-size: 0.72rem;
             font-weight: 500;
-            letter-spacing: 0;
             white-space: nowrap;
         }
-        .pin__tag .dot {
-            width: 6px;
-            height: 6px;
-            background: currentColor;
-            border-radius: 50%;
-            flex-shrink: 0;
-        }
+        .pin__tag .dot { width: 6px; height: 6px; background: currentColor; border-radius: 50%; flex-shrink: 0; }
         .pin__tag[data-cat="call"]       { color: var(--cat-call); }
         .pin__tag[data-cat="workshop"]   { color: var(--cat-workshop); }
         .pin__tag[data-cat="school"]     { color: var(--cat-school); }
@@ -743,7 +770,7 @@
             letter-spacing: 0.05em;
             color: var(--muted);
         }
-        .pin__meta svg { width: 13px; height: 13px; opacity: 0.7; }
+        .pin__meta svg { width: 13px; height: 13px; opacity: 0.7; flex-shrink: 0; }
         .pin__cta {
             margin-top: 0.4rem;
             display: inline-flex;
@@ -753,23 +780,23 @@
             font-size: 0.84rem;
             font-weight: 600;
             color: var(--navy);
-            letter-spacing: -0.005em;
         }
         .pin__cta .arrow { transition: transform 200ms ease; }
         a.pin:hover .pin__cta .arrow { transform: translateX(3px); }
 
-        /* image on pin */
         .pin__img {
             display: block;
             width: 100%;
             height: auto;
             object-fit: cover;
             background: var(--paper-warm);
+            transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1);
         }
+        a.pin .pin__img-wrap { overflow: hidden; background: var(--paper-warm); }
+        a.pin:hover .pin__img { transform: scale(1.03); }
 
         /* ─── PIN VARIANTS ─── */
 
-        /* event pin — big date display */
         .pin--event .pin__date {
             display: flex;
             align-items: baseline;
@@ -785,13 +812,12 @@
             color: var(--navy);
         }
         .pin--event .pin__mon {
-            font-family: 'Geist', sans-serif;
             font-weight: 600;
             font-size: 0.95rem;
             color: var(--ink-soft);
         }
 
-        /* open call urgent pin */
+        /* open call pin */
         .pin--call .pin__countdown {
             display: inline-flex;
             align-items: center;
@@ -821,11 +847,64 @@
         .pin--call .pin__title { font-size: 1.18rem; line-height: 1.25; }
         .pin--call .pin__cta { color: var(--cat-call); }
 
-        /* series pin — compact */
-        .pin--series .pin__title { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; }
+        /* THIRD WAY featured quote pin */
+        .pin--quote {
+            background:
+              radial-gradient(circle at 80% 10%, rgba(31, 111, 168, 0.18) 0%, transparent 55%),
+              radial-gradient(circle at 10% 90%, rgba(200, 34, 44, 0.08) 0%, transparent 55%),
+              linear-gradient(180deg, #FFFFFF 0%, #F1ECDF 100%);
+        }
+        .pin--quote .pin__body { padding: 1.5rem 1.4rem 1.6rem; }
+        .pin--quote .pin__quote {
+            font-family: 'Geist', sans-serif;
+            font-weight: 700;
+            font-size: clamp(1.4rem, 2vw, 1.7rem);
+            line-height: 1.18;
+            letter-spacing: -0.025em;
+            color: var(--navy);
+            margin: 0.3rem 0 0;
+        }
+        .pin--quote .pin__quote .mark { color: var(--cat-call); font-size: 1.5em; line-height: 0; vertical-align: -0.18em; margin-right: 0.1em; }
+        .pin--quote .pin__cite {
+            margin-top: 1rem;
+            font-family: 'Geist Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
 
-        /* news pin with image */
-        .pin--news-image .pin__img { aspect-ratio: 4 / 3; }
+        /* numbers pin (functional, not decorative) */
+        .pin--numbers .pin__numgrid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 0.6rem;
+            margin-top: 0.3rem;
+        }
+        .pin--numbers .pin__numgrid > div {
+            display: flex;
+            flex-direction: column;
+            gap: 0.15rem;
+        }
+        .pin--numbers .pin__num {
+            font-family: 'Geist', sans-serif;
+            font-weight: 700;
+            font-size: 1.75rem;
+            line-height: 0.95;
+            letter-spacing: -0.04em;
+            color: var(--navy);
+        }
+        .pin--numbers .pin__numlabel {
+            font-family: 'Geist Mono', monospace;
+            font-size: 0.66rem;
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+            color: var(--muted);
+            line-height: 1.3;
+        }
+
+        /* series pin */
+        .pin--series .pin__title { font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em; }
 
         /* network map pin */
         .pin--network .pin__map {
@@ -835,6 +914,66 @@
             padding: 0.75rem 0.6rem;
         }
         .pin--network .pin__map svg { display: block; width: 100%; height: auto; }
+
+        /* image-led pin */
+        .pin--image-top .pin__img-wrap { aspect-ratio: 4 / 3; }
+        .pin--image-tall .pin__img-wrap { aspect-ratio: 4 / 5; }
+        .pin--image-wide .pin__img-wrap { aspect-ratio: 16 / 9; }
+
+        /* anniversary pin — vintage feel */
+        .pin--anniversary {
+            background:
+              linear-gradient(180deg, #FFFFFF 0%, #F4EBD8 100%);
+        }
+        .pin--anniversary .pin__big50 {
+            font-family: 'Geist', sans-serif;
+            font-weight: 800;
+            font-size: 3.6rem;
+            line-height: 0.9;
+            letter-spacing: -0.05em;
+            color: var(--navy);
+            margin: 0.5rem 0 0.4rem;
+        }
+        .pin--anniversary .pin__big50 .sup {
+            font-size: 0.4em;
+            vertical-align: 0.45em;
+            margin-left: 0.1em;
+            color: var(--cat-call);
+            font-weight: 700;
+        }
+
+        /* prize pin */
+        .pin--prize { background: linear-gradient(180deg, #FFFFFF 0%, #FAF1DC 100%); }
+        .pin--prize .pin__img-wrap { aspect-ratio: 4 / 3; background: #1a1a1a; }
+        .pin--prize .pin__img { object-fit: contain; padding: 0.5rem; }
+
+        /* HQ pin */
+        .pin--hq .pin__img-wrap { aspect-ratio: 16 / 10; }
+
+        /* social follow pin */
+        .pin--social .pin__sociallist {
+            display: flex;
+            flex-direction: column;
+            gap: 0.45rem;
+            margin-top: 0.4rem;
+        }
+        .pin--social .pin__sociallink {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            padding: 0.7rem 0.85rem;
+            background: var(--tint);
+            border-radius: 10px;
+            font-family: 'Geist', sans-serif;
+            font-weight: 500;
+            font-size: 0.9rem;
+            color: var(--navy);
+            text-decoration: none;
+            transition: background 180ms ease, transform 180ms ease;
+        }
+        .pin--social .pin__sociallink:hover { background: rgba(15,42,92,0.08); transform: translateX(2px); }
+        .pin--social .pin__sociallink svg { width: 18px; height: 18px; flex-shrink: 0; color: var(--cat-about); }
+        .pin--social .pin__sociallink .handle { margin-left: auto; color: var(--muted); font-family: 'Geist Mono', monospace; font-size: 0.78rem; }
 
         /* newsletter pin */
         .pin--newsletter {
@@ -846,12 +985,7 @@
         .pin--newsletter .pin__title { color: var(--paper); }
         .pin--newsletter .pin__desc  { color: rgba(246,244,238,0.82); }
         .pin--newsletter .pin__tag   { background: rgba(246,244,238,0.10); color: rgba(246,244,238,0.92); }
-        .pin--newsletter .pin__form  {
-            margin-top: 0.4rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.45rem;
-        }
+        .pin--newsletter .pin__form  { margin-top: 0.4rem; display: flex; flex-direction: column; gap: 0.45rem; }
         .pin--newsletter input[type="email"] {
             background: rgba(246,244,238,0.08);
             border: 1px solid rgba(246,244,238,0.18);
@@ -900,7 +1034,15 @@
         @media (prefers-reduced-motion: reduce) {
             .pin { opacity: 1; transform: none; }
             a.pin:hover { transform: none; }
-            .pin--call .pin__countdown .dot { animation: none; }
+            .pin--call .pin__countdown .dot,
+            .brand-hero__eyebrow .dot { animation: none; }
+            .brand-hero__bg { animation: none; transform: scale(1.04); }
+        }
+
+        @media (max-width: 640px) {
+            .pin--numbers .pin__numgrid { grid-template-columns: repeat(3, 1fr); gap: 0.4rem; }
+            .pin--numbers .pin__num { font-size: 1.4rem; }
+            .brand-hero h1 { font-size: clamp(2rem, 8vw, 2.8rem); }
         }
     </style>
     </head>
@@ -927,53 +1069,68 @@
     </header>
 
     <main id="main">
-<section class="board-hero">
-    <div class="board-hero__inner">
-        <p class="board-hero__eyebrow"><span class="dot"></span>CECAM Program · Lausanne</p>
-        <h1>What&rsquo;s coming up in European simulation?</h1>
-        <p class="board-hero__sub">Browse workshops, schools, conferences, lectures and calls across the CECAM network — 22 nodes from Edinburgh to Tel Aviv, anchored at EPFL.</p>
-        <div class="board-hero__search">
+<section class="brand-hero">
+    <img class="brand-hero__bg" src="uploads/epfl-aerial-panorama.jpg" alt="" aria-hidden="true">
+    <div class="brand-hero__veil" aria-hidden="true"></div>
+    <div class="brand-hero__content">
+        <p class="brand-hero__eyebrow"><span class="dot"></span>Live · Flagship 2027–2028 call open</p>
+        <h1>A <span class="accent">third way</span> of doing science. Since 1969.</h1>
+        <p class="brand-hero__sub">CECAM convenes the workshops, schools and conferences that shape computational atomic and molecular science across Europe — anchored at EPFL Lausanne, federated across 21 nodes from Edinburgh to Tel Aviv.</p>
+        <div class="brand-hero__search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><line x1="20" y1="20" x2="16.65" y2="16.65"/></svg>
             <input id="board-search" type="search" placeholder="Search events, calls, lectures, topics…" autocomplete="off" spellcheck="false">
         </div>
-        <div class="board-hero__stats">
-            <span><strong id="stat-events">5</strong> upcoming events</span>
-            <span><strong id="stat-calls">1</strong> open call</span>
-            <span><strong>6</strong> recurring series</span>
-            <span><strong>22</strong> nodes</span>
+        <div class="brand-hero__stats">
+            <span><strong>21</strong> nodes</span>
+            <span class="sep">·</span>
+            <span><strong>29</strong> institutions</span>
+            <span class="sep">·</span>
+            <span><strong>14</strong> countries</span>
+            <span class="sep">·</span>
+            <span><strong>56</strong> years</span>
         </div>
     </div>
 </section>
 
 <div class="chips" role="tablist" aria-label="Filter pins by category">
     <div class="chips__row">
-        <button class="chip chip--active" data-filter="all" role="tab" aria-selected="true">All <span class="chip__count">20</span></button>
-        <button class="chip" data-filter="call" role="tab" aria-selected="false">Open calls <span class="chip__count">1</span></button>
-        <button class="chip" data-filter="workshop" role="tab" aria-selected="false">Workshops <span class="chip__count">2</span></button>
-        <button class="chip" data-filter="school" role="tab" aria-selected="false">Schools <span class="chip__count">1</span></button>
-        <button class="chip" data-filter="conference" role="tab" aria-selected="false">Conferences <span class="chip__count">1</span></button>
-        <button class="chip" data-filter="news" role="tab" aria-selected="false">News <span class="chip__count">3</span></button>
-        <button class="chip" data-filter="series" role="tab" aria-selected="false">Series <span class="chip__count">6</span></button>
-        <button class="chip" data-filter="about" role="tab" aria-selected="false">Network <span class="chip__count">5</span></button>
+        <button class="chip chip--active" data-filter="all" role="tab" aria-selected="true">All <span class="chip__count">—</span></button>
+        <button class="chip" data-filter="call" role="tab" aria-selected="false">Open calls <span class="chip__count">—</span></button>
+        <button class="chip" data-filter="workshop" role="tab" aria-selected="false">Workshops <span class="chip__count">—</span></button>
+        <button class="chip" data-filter="school" role="tab" aria-selected="false">Schools <span class="chip__count">—</span></button>
+        <button class="chip" data-filter="conference" role="tab" aria-selected="false">Conferences <span class="chip__count">—</span></button>
+        <button class="chip" data-filter="news" role="tab" aria-selected="false">News <span class="chip__count">—</span></button>
+        <button class="chip" data-filter="series" role="tab" aria-selected="false">Series <span class="chip__count">—</span></button>
+        <button class="chip" data-filter="about" role="tab" aria-selected="false">Network <span class="chip__count">—</span></button>
     </div>
 </div>
 
 <section class="board">
     <div class="board__grid" id="pinboard">
 
-        <!-- 01 · Open call (urgent, with countdown) -->
+        <!-- 01 · Open call (urgent, countdown) -->
         <a class="pin pin--call" href="program.html#flagship" data-cat="call" data-tags="call" data-deadline="2026-07-17">
             <div class="pin__body">
                 <span class="pin__countdown"><span class="dot"></span><span class="t">Open call · — days</span></span>
                 <h3 class="pin__title">Flagship 2027–2028 — propose a workshop, school or conference.</h3>
-                <p class="pin__desc">The CECAM network is selecting events to fund and host across Europe for the next two-year program in atomistic and molecular simulation.</p>
-                <span class="pin__meta">Deadline · 17 July 2026 · 23:59 CET</span>
+                <p class="pin__desc">The CECAM network is selecting peer-led events to fund and host across Europe over the next two-year program — workshops, schools, CECAM-Lorentz and Psi-k research conferences.</p>
+                <span class="pin__meta">Closes 17 July 2026 · 23:59 CET</span>
                 <span class="pin__cta">Submit a proposal <span class="arrow">→</span></span>
             </div>
         </a>
 
-        <!-- 02 · Workshop event 26 May 2026 -->
-        <a class="pin pin--event" href="program.html" data-cat="workshop" data-tags="workshop" data-when="2026-05-26">
+        <!-- 02 · THIRD WAY featured quote -->
+        <div class="pin pin--quote" data-cat="about" data-tags="about">
+            <div class="pin__body">
+                <span class="pin__tag" data-cat="about"><span class="dot"></span>Our position</span>
+                <p class="pin__quote"><span class="mark">“</span>Computer simulation is a third way of doing science — a new way of linking theory and experiment.</p>
+                <p class="pin__cite">CECAM · Charter · since 1969</p>
+            </div>
+        </div>
+
+        <!-- 03 · Workshop · 26 May with image -->
+        <a class="pin pin--image-tall pin--event" href="program.html" data-cat="workshop" data-tags="workshop" data-when="2026-05-26">
+            <div class="pin__img-wrap"><img class="pin__img" src="uploads/molecular-dynamics.jpg" alt="Molecular dynamics visualization of an amorphous system" loading="lazy"></div>
             <div class="pin__body">
                 <div class="pin__top">
                     <span class="pin__tag" data-cat="workshop"><span class="dot"></span>Workshop</span>
@@ -981,7 +1138,7 @@
                 </div>
                 <div class="pin__date"><span class="pin__day">26</span><span class="pin__mon">May 2026</span></div>
                 <h3 class="pin__title">Deep Learning in Materials Science: Interpretation, Generalisation, and the Risk of Overfitting</h3>
-                <p class="pin__desc">A four-day workshop on uncertainty quantification for ML potentials.</p>
+                <p class="pin__desc">A four-day workshop on uncertainty quantification for ML potentials in atomistic simulation.</p>
                 <span class="pin__meta">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                     CECAM-HQ · EPFL · Lausanne
@@ -990,82 +1147,88 @@
             </div>
         </a>
 
-        <!-- 03 · News with image (Lorentz selection) -->
-        <a class="pin pin--news-image" href="news.html" data-cat="news" data-tags="news">
-            <img class="pin__img" src="uploads/sem-instrument.jpg" alt="Scanning electron microscope" loading="lazy">
+        <!-- 04 · News · Lorentz selection with image -->
+        <a class="pin pin--image-top" href="news.html" data-cat="news" data-tags="news">
+            <div class="pin__img-wrap"><img class="pin__img" src="uploads/sem-instrument.jpg" alt="Scanning electron microscope at a research lab" loading="lazy"></div>
             <div class="pin__body">
                 <div class="pin__top">
                     <span class="pin__tag" data-cat="news"><span class="dot"></span>CECAM-Lorentz</span>
                     <span class="pin__when">17 Mar 2026</span>
                 </div>
-                <h3 class="pin__title">2027 CECAM-Lorentz workshop selected: Fracture of Amorphous Materials Across the Scales.</h3>
-                <p class="pin__desc">Congratulations to Maximilian Ries, Sebastian Pfaller and Andrea Giuntoli. Workshop runs 12–16 April 2027.</p>
+                <h3 class="pin__title">2027 Lorentz workshop selected: Fracture of Amorphous Materials Across the Scales.</h3>
+                <p class="pin__desc">Congratulations to Maximilian Ries, Sebastian Pfaller and Andrea Giuntoli. Workshop runs 12–16 April 2027 at EPFL.</p>
                 <span class="pin__cta">Read announcement <span class="arrow">→</span></span>
             </div>
         </a>
 
-        <!-- 04 · Network map pin -->
+        <!-- 05 · CECAM HQ photo pin -->
+        <a class="pin pin--hq pin--image-wide" href="contact.html" data-cat="about" data-tags="about">
+            <div class="pin__img-wrap"><img class="pin__img" src="uploads/cecam-hq.png" alt="CECAM headquarters building at EPFL, Lausanne" loading="lazy"></div>
+            <div class="pin__body">
+                <div class="pin__top">
+                    <span class="pin__tag" data-cat="about"><span class="dot"></span>Headquarters</span>
+                </div>
+                <h3 class="pin__title">Where it happens — EPFL Lausanne.</h3>
+                <p class="pin__desc">Avenue de Forel 3, BCH 3103 — at the heart of EPFL on the shores of Lake Geneva, anchoring the network since 2003.</p>
+                <span class="pin__meta">helpdesk@cecam.org</span>
+                <span class="pin__cta">Visit headquarters <span class="arrow">→</span></span>
+            </div>
+        </a>
+
+        <!-- 06 · Network map -->
         <a class="pin pin--network" href="about.html" data-cat="about" data-tags="about">
             <div class="pin__body">
                 <span class="pin__tag" data-cat="about"><span class="dot"></span>The network</span>
-                <h3 class="pin__title">22 nodes across Europe, anchored at EPFL.</h3>
+                <h3 class="pin__title">21 nodes — Europe, Israel, China and the US.</h3>
                 <div class="pin__map" aria-hidden="true">
                     <svg viewBox="0 0 280 180" xmlns="http://www.w3.org/2000/svg">
-                        <!-- soft continent shape -->
-                        <path d="M40,75 Q55,42 95,38 L150,32 Q205,40 240,72 Q255,108 225,142 L155,150 Q90,150 60,128 Q35,102 40,75 Z"
-                              fill="rgba(15,42,92,0.045)" stroke="rgba(15,42,92,0.12)" stroke-width="1"/>
-                        <!-- connection lines from EPFL -->
+                        <path d="M40,75 Q55,42 95,38 L150,32 Q205,40 240,72 Q255,108 225,142 L155,150 Q90,150 60,128 Q35,102 40,75 Z" fill="rgba(15,42,92,0.045)" stroke="rgba(15,42,92,0.12)" stroke-width="1"/>
                         <g stroke="rgba(15,42,92,0.14)" stroke-width="0.6" fill="none">
-                            <line x1="118" y1="95" x2="100" y2="55"/>
-                            <line x1="118" y1="95" x2="105" y2="68"/>
-                            <line x1="118" y1="95" x2="135" y2="70"/>
-                            <line x1="118" y1="95" x2="148" y2="68"/>
-                            <line x1="118" y1="95" x2="115" y2="80"/>
-                            <line x1="118" y1="95" x2="125" y2="90"/>
-                            <line x1="118" y1="95" x2="130" y2="98"/>
-                            <line x1="118" y1="95" x2="140" y2="115"/>
-                            <line x1="118" y1="95" x2="95" y2="108"/>
-                            <line x1="118" y1="95" x2="155" y2="40"/>
-                            <line x1="118" y1="95" x2="160" y2="82"/>
-                            <line x1="118" y1="95" x2="210" y2="140"/>
+                            <line x1="118" y1="95" x2="100" y2="55"/><line x1="118" y1="95" x2="105" y2="68"/>
+                            <line x1="118" y1="95" x2="135" y2="70"/><line x1="118" y1="95" x2="148" y2="68"/>
+                            <line x1="118" y1="95" x2="115" y2="80"/><line x1="118" y1="95" x2="125" y2="90"/>
+                            <line x1="118" y1="95" x2="130" y2="98"/><line x1="118" y1="95" x2="140" y2="115"/>
+                            <line x1="118" y1="95" x2="95" y2="108"/><line x1="118" y1="95" x2="155" y2="40"/>
+                            <line x1="118" y1="95" x2="160" y2="82"/><line x1="118" y1="95" x2="210" y2="140"/>
                             <line x1="118" y1="95" x2="175" y2="42"/>
                         </g>
-                        <!-- 21 satellite nodes -->
                         <g fill="rgba(15,42,92,0.85)">
-                            <circle cx="100" cy="55" r="2.2"/>
-                            <circle cx="105" cy="68" r="2.2"/>
-                            <circle cx="135" cy="70" r="2.2"/>
-                            <circle cx="148" cy="68" r="2.2"/>
-                            <circle cx="155" cy="40" r="2.2"/>
-                            <circle cx="175" cy="42" r="2.2"/>
-                            <circle cx="115" cy="80" r="2.2"/>
-                            <circle cx="125" cy="90" r="2.2"/>
-                            <circle cx="130" cy="98" r="2.2"/>
-                            <circle cx="105" cy="98" r="2.2"/>
-                            <circle cx="140" cy="115" r="2.2"/>
-                            <circle cx="145" cy="95" r="2.2"/>
-                            <circle cx="95" cy="108" r="2.2"/>
-                            <circle cx="110" cy="115" r="2.2"/>
-                            <circle cx="92" cy="120" r="2.2"/>
-                            <circle cx="160" cy="82" r="2.2"/>
-                            <circle cx="138" cy="55" r="2.2"/>
-                            <circle cx="165" cy="105" r="2.2"/>
-                            <circle cx="180" cy="78" r="2.2"/>
-                            <circle cx="210" cy="140" r="2.2"/>
+                            <circle cx="100" cy="55" r="2.2"/><circle cx="105" cy="68" r="2.2"/>
+                            <circle cx="135" cy="70" r="2.2"/><circle cx="148" cy="68" r="2.2"/>
+                            <circle cx="155" cy="40" r="2.2"/><circle cx="175" cy="42" r="2.2"/>
+                            <circle cx="115" cy="80" r="2.2"/><circle cx="125" cy="90" r="2.2"/>
+                            <circle cx="130" cy="98" r="2.2"/><circle cx="105" cy="98" r="2.2"/>
+                            <circle cx="140" cy="115" r="2.2"/><circle cx="145" cy="95" r="2.2"/>
+                            <circle cx="95" cy="108" r="2.2"/><circle cx="110" cy="115" r="2.2"/>
+                            <circle cx="92" cy="120" r="2.2"/><circle cx="160" cy="82" r="2.2"/>
+                            <circle cx="138" cy="55" r="2.2"/><circle cx="165" cy="105" r="2.2"/>
+                            <circle cx="180" cy="78" r="2.2"/><circle cx="210" cy="140" r="2.2"/>
                             <circle cx="190" cy="115" r="2.2"/>
                         </g>
-                        <!-- EPFL highlighted -->
                         <circle cx="118" cy="95" r="8" fill="rgba(200,34,44,0.14)"/>
                         <circle cx="118" cy="95" r="3.6" fill="#C8222C"/>
                         <text x="125" y="98" font-family="ui-monospace, monospace" font-size="7.5" fill="#0F2A5C" font-weight="600">EPFL</text>
                     </svg>
                 </div>
-                <p class="pin__desc">From Edinburgh and Daresbury in the north to San Sebastián, Trieste and Tel Aviv — a federated network since 1969.</p>
-                <span class="pin__cta">Explore the network <span class="arrow">→</span></span>
+                <p class="pin__desc">From Edinburgh and Daresbury in the north to San Sebastián, Trieste and Tel Aviv — funded by 29 institutions across 14 countries.</p>
+                <span class="pin__cta">Browse the nodes <span class="arrow">→</span></span>
             </div>
         </a>
 
-        <!-- 05 · School event 14 Sep 2026 -->
+        <!-- 07 · Berni J. Alder Prize (with medal image) -->
+        <a class="pin pin--prize" href="activities.html#alder-prize" data-cat="series" data-tags="series">
+            <div class="pin__img-wrap"><img class="pin__img" src="uploads/alder-prize.png" alt="The Berni J. Alder CECAM Prize medal" loading="lazy"></div>
+            <div class="pin__body">
+                <div class="pin__top">
+                    <span class="pin__tag" data-cat="series"><span class="dot"></span>Prize · since 2001</span>
+                </div>
+                <h3 class="pin__title" style="font-size: 1.18rem; font-weight: 700; letter-spacing: -0.02em;">Berni J. Alder CECAM Prize</h3>
+                <p class="pin__desc">Awarded by CECAM in honour of one of the founders of molecular dynamics, recognising exceptional contributions to microscopic simulation of matter.</p>
+                <span class="pin__cta">Read about the prize <span class="arrow">→</span></span>
+            </div>
+        </a>
+
+        <!-- 08 · School · 14 Sep 2026 -->
         <a class="pin pin--event" href="program.html" data-cat="school" data-tags="school" data-when="2026-09-14">
             <div class="pin__body">
                 <div class="pin__top">
@@ -1083,42 +1246,47 @@
             </div>
         </a>
 
-        <!-- 06 · Series · CECAM Lectures -->
+        <!-- 09 · Series · CECAM Lectures -->
         <a class="pin pin--series" href="activities.html#cecam-lectures" data-cat="series" data-tags="series">
             <div class="pin__body">
                 <div class="pin__top">
                     <span class="pin__tag" data-cat="series"><span class="dot"></span>Series · since 2015</span>
                 </div>
                 <h3 class="pin__title">CECAM Lectures</h3>
-                <p class="pin__desc">Invited lectures highlighting developments across computational science — recorded for the community.</p>
-                <span class="pin__cta">View archive <span class="arrow">→</span></span>
+                <p class="pin__desc">Invited lectures highlighting developments across computational science — recorded and archived for the community.</p>
+                <span class="pin__meta">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"/></svg>
+                    Video archive on YouTube
+                </span>
+                <span class="pin__cta">View recordings <span class="arrow">→</span></span>
             </div>
         </a>
 
-        <!-- 07 · News with image (Flagship call) -->
-        <a class="pin pin--news-image" href="news.html" data-cat="news" data-tags="news call">
-            <img class="pin__img" src="uploads/protein-structure.png" alt="Protein structure visualization" loading="lazy" style="aspect-ratio: 4/5;">
+        <!-- 10 · News · Flagship call (with protein-structure image) -->
+        <a class="pin pin--image-tall" href="news.html" data-cat="news" data-tags="news call">
+            <div class="pin__img-wrap"><img class="pin__img" src="uploads/protein-structure.png" alt="Protein structure visualization" loading="lazy"></div>
             <div class="pin__body">
                 <div class="pin__top">
                     <span class="pin__tag" data-cat="news"><span class="dot"></span>Open call</span>
                     <span class="pin__when">02 Feb 2026</span>
                 </div>
                 <h3 class="pin__title">Flagship 2027–2028 call now open.</h3>
-                <p class="pin__desc">Shape the next two-year program by proposing events in simulation and modelling.</p>
+                <p class="pin__desc">Shape the next two-year program by proposing events in simulation and modelling — across physics, chemistry, materials, biology and ML/AI.</p>
                 <span class="pin__cta">Read announcement <span class="arrow">→</span></span>
             </div>
         </a>
 
-        <!-- 08 · Conference event 5 Oct 2026 -->
-        <a class="pin pin--event" href="program.html" data-cat="conference" data-tags="conference" data-when="2026-10-05">
+        <!-- 11 · Conference · 5 Oct 2026 (with cecam-event image) -->
+        <a class="pin pin--image-top pin--event" href="program.html" data-cat="conference" data-tags="conference" data-when="2026-10-05">
+            <div class="pin__img-wrap"><img class="pin__img" src="uploads/cecam-event.jpg" alt="CECAM event venue" loading="lazy"></div>
             <div class="pin__body">
                 <div class="pin__top">
-                    <span class="pin__tag" data-cat="conference"><span class="dot"></span>Conference</span>
+                    <span class="pin__tag" data-cat="conference"><span class="dot"></span>Psi-k · Conference</span>
                     <span class="pin__when" data-rel="2026-10-05">— —</span>
                 </div>
                 <div class="pin__date"><span class="pin__day">05</span><span class="pin__mon">Oct 2026</span></div>
-                <h3 class="pin__title">Psi-k / CECAM research conference: spin-orbit interaction and electronic structure.</h3>
-                <p class="pin__desc">Recent theoretical and computational developments at the spin-orbit interface.</p>
+                <h3 class="pin__title">Spin-orbit interaction and electronic structure.</h3>
+                <p class="pin__desc">Recent theoretical and computational developments at the spin-orbit / electronic-structure interface.</p>
                 <span class="pin__meta">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
                     San Sebastián · Spain
@@ -1127,19 +1295,33 @@
             </div>
         </a>
 
-        <!-- 09 · Series · Mixed-Gen -->
+        <!-- 12 · Series · Mixed-Gen -->
         <a class="pin pin--series" href="activities.html#mixed-gen" data-cat="series" data-tags="series">
             <div class="pin__body">
                 <div class="pin__top">
                     <span class="pin__tag" data-cat="series"><span class="dot"></span>Series · online</span>
                 </div>
                 <h3 class="pin__title">Mixed-Gen</h3>
-                <p class="pin__desc">Online talks and poster sessions on advanced simulation topics — for simulators young in years or at heart.</p>
+                <p class="pin__desc">Online talks and poster sessions on advanced simulation topics — for simulators young in years, or at heart.</p>
                 <span class="pin__cta">Browse sessions <span class="arrow">→</span></span>
             </div>
         </a>
 
-        <!-- 10 · Workshop event Apr 2027 (CECAM-Lorentz, future) -->
+        <!-- 13 · 50th anniversary (historical, with image) -->
+        <a class="pin pin--anniversary pin--image-top" href="about.html" data-cat="about" data-tags="about">
+            <div class="pin__img-wrap"><img class="pin__img" src="uploads/conference-50years.jpg" alt="CECAM 50th anniversary plenary, SwissTech Convention Center" loading="lazy"></div>
+            <div class="pin__body">
+                <div class="pin__top">
+                    <span class="pin__tag" data-cat="about"><span class="dot"></span>Heritage · 1969</span>
+                </div>
+                <span class="pin__big50">50<span class="sup">+</span></span>
+                <h3 class="pin__title">Fifty-six years of European computational science.</h3>
+                <p class="pin__desc">Founded in Orsay by Carl Moser in 1969 · moved to Lyon in 2003 · anchored at EPFL since 2003.</p>
+                <span class="pin__cta">Our story <span class="arrow">→</span></span>
+            </div>
+        </a>
+
+        <!-- 14 · Lorentz Workshop · Apr 2027 -->
         <a class="pin pin--event" href="program.html" data-cat="workshop" data-tags="workshop" data-when="2027-04-12">
             <div class="pin__body">
                 <div class="pin__top">
@@ -1148,28 +1330,16 @@
                 </div>
                 <div class="pin__date"><span class="pin__day">12</span><span class="pin__mon">Apr 2027</span></div>
                 <h3 class="pin__title">Fracture of Amorphous Materials Across the Scales.</h3>
-                <p class="pin__desc">Selected as the 2027 CECAM-Lorentz workshop. 12–16 April 2027.</p>
+                <p class="pin__desc">The 2027 CECAM-Lorentz workshop · 12–16 April 2027 at CECAM-HQ.</p>
                 <span class="pin__meta">
                     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
-                    CECAM-HQ · EPFL · Lausanne
+                    EPFL · Lausanne
                 </span>
                 <span class="pin__cta">View workshop <span class="arrow">→</span></span>
             </div>
         </a>
 
-        <!-- 11 · How to propose (helpful info) -->
-        <a class="pin" href="about.html" data-cat="about" data-tags="about">
-            <div class="pin__body">
-                <div class="pin__top">
-                    <span class="pin__tag" data-cat="about"><span class="dot"></span>How to</span>
-                </div>
-                <h3 class="pin__title" style="font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em;">How to propose an event</h3>
-                <p class="pin__desc">A short guide to submitting a workshop, school or conference to CECAM — peer-led, selected twice a year.</p>
-                <span class="pin__cta">Read the guide <span class="arrow">→</span></span>
-            </div>
-        </a>
-
-        <!-- 12 · Series · CECAM Webinars -->
+        <!-- 15 · Series · CECAM Webinars -->
         <a class="pin pin--series" href="activities.html#cecam-webinars" data-cat="series" data-tags="series">
             <div class="pin__body">
                 <div class="pin__top">
@@ -1181,7 +1351,73 @@
             </div>
         </a>
 
-        <!-- 13 · News (ESL module, past event) -->
+        <!-- 16 · How to propose -->
+        <a class="pin" href="about.html" data-cat="about" data-tags="about">
+            <div class="pin__body">
+                <div class="pin__top">
+                    <span class="pin__tag" data-cat="about"><span class="dot"></span>How to</span>
+                </div>
+                <h3 class="pin__title" style="font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em;">How to propose an event</h3>
+                <p class="pin__desc">A short guide to submitting a workshop, school or conference — peer-reviewed selection, twice a year. The CECAM program is built proposal by proposal.</p>
+                <span class="pin__cta">Read the guide <span class="arrow">→</span></span>
+            </div>
+        </a>
+
+        <!-- 17 · Numbers pin -->
+        <div class="pin pin--numbers" data-cat="about" data-tags="about">
+            <div class="pin__body">
+                <div class="pin__top">
+                    <span class="pin__tag" data-cat="about"><span class="dot"></span>The network at a glance</span>
+                </div>
+                <div class="pin__numgrid">
+                    <div><span class="pin__num">21</span><span class="pin__numlabel">Nodes</span></div>
+                    <div><span class="pin__num">29</span><span class="pin__numlabel">Funding institutions</span></div>
+                    <div><span class="pin__num">14</span><span class="pin__numlabel">Countries</span></div>
+                </div>
+                <p class="pin__desc">Plus partners in China, Taiwan and the US — funding a peer-led European program in computational science.</p>
+            </div>
+        </div>
+
+        <!-- 18 · Series · MARVEL Classics -->
+        <a class="pin pin--series" href="activities.html#marvel-classics" data-cat="series" data-tags="series">
+            <div class="pin__body">
+                <div class="pin__top">
+                    <span class="pin__tag" data-cat="series"><span class="dot"></span>Series · archive</span>
+                </div>
+                <h3 class="pin__title">MARVEL Classics</h3>
+                <p class="pin__desc">Milestone methods and algorithms in simulation, presented by their originators — a look back at what shaped the field.</p>
+                <span class="pin__cta">View archive <span class="arrow">→</span></span>
+            </div>
+        </a>
+
+        <!-- 19 · Newsletter signup (navy) -->
+        <div class="pin pin--newsletter" data-cat="about" data-tags="about">
+            <div class="pin__body">
+                <div class="pin__top"><span class="pin__tag">Bulletin</span></div>
+                <h3 class="pin__title" style="font-size: 1.2rem; font-weight: 700; letter-spacing: -0.02em;">Subscribe to the CECAM bulletin.</h3>
+                <p class="pin__desc">One email when a flagship call opens, when the program is updated, and when registration opens for major events.</p>
+                <form class="pin__form" action="https://formspree.io/f/REPLACE_ME" method="POST">
+                    <label class="vh" for="bulletin-email">Email address</label>
+                    <input id="bulletin-email" name="email" type="email" placeholder="you@university.eu" required>
+                    <input type="text" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
+                    <button type="submit">Subscribe <span class="arrow">→</span></button>
+                </form>
+            </div>
+        </div>
+
+        <!-- 20 · Series · Mansigh Conversations -->
+        <a class="pin pin--series" href="activities.html#mansigh-conversations" data-cat="series" data-tags="series">
+            <div class="pin__body">
+                <div class="pin__top">
+                    <span class="pin__tag" data-cat="series"><span class="dot"></span>Series · culture</span>
+                </div>
+                <h3 class="pin__title">Mary Ann Mansigh Conversations</h3>
+                <p class="pin__desc">A series of non-strictly-technical conversations on topics of cultural interest to the simulation and modelling community.</p>
+                <span class="pin__cta">View archive <span class="arrow">→</span></span>
+            </div>
+        </a>
+
+        <!-- 21 · News · ESL recap -->
         <a class="pin" href="news.html" data-cat="news" data-tags="news">
             <div class="pin__body">
                 <div class="pin__top">
@@ -1194,92 +1430,44 @@
             </div>
         </a>
 
-        <!-- 14 · Newsletter signup -->
-        <div class="pin pin--newsletter" data-cat="about" data-tags="about">
+        <!-- 22 · Follow CECAM (social) -->
+        <div class="pin pin--social" data-cat="about" data-tags="about">
             <div class="pin__body">
-                <div class="pin__top">
-                    <span class="pin__tag">Bulletin</span>
+                <div class="pin__top"><span class="pin__tag" data-cat="about"><span class="dot"></span>Follow CECAM</span></div>
+                <h3 class="pin__title" style="font-size: 1.1rem; font-weight: 700; letter-spacing: -0.02em;">Stay in the loop.</h3>
+                <div class="pin__sociallist">
+                    <a class="pin__sociallink" href="https://twitter.com/cecam_org" target="_blank" rel="noopener">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M18.244 2H21l-6.55 7.49L22.5 22h-6.852l-4.83-6.272L5.27 22H2.5l7.04-8.05L1.5 2h6.96l4.32 5.71L18.244 2zm-1.18 18h1.79L7.06 4H5.16l11.904 16z"/></svg>
+                        On Twitter / X <span class="handle">@cecam_org</span>
+                    </a>
+                    <a class="pin__sociallink" href="https://bsky.app/profile/cecam.org" target="_blank" rel="noopener">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 10.8c-1.087-2.114-4.046-6.053-6.798-7.995C2.566.944 1.561 1.266.902 1.565.139 1.908 0 3.08 0 3.768c0 .69.378 5.65.624 6.479.815 2.736 3.713 3.66 6.383 3.364.137-.02.276-.039.415-.056-.138.022-.276.04-.415.056-3.912.58-7.387 2.005-2.83 7.078 5.013 5.19 6.87-1.113 7.823-4.308.953 3.195 2.05 9.271 7.733 4.308 4.267-4.308 1.172-6.498-2.74-7.078a8.741 8.741 0 0 1-.415-.056c.14.017.279.036.415.056 2.67.297 5.568-.628 6.383-3.364.246-.828.624-5.79.624-6.478 0-.69-.139-1.861-.902-2.206-.659-.298-1.664-.62-4.3 1.24C16.046 4.748 13.087 8.687 12 10.8z"/></svg>
+                        On Bluesky <span class="handle">@cecam.org</span>
+                    </a>
+                    <a class="pin__sociallink" href="https://www.youtube.com/@CECAMevents" target="_blank" rel="noopener">
+                        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M23.498 6.186a3.016 3.016 0 0 0-2.122-2.136C19.505 3.545 12 3.545 12 3.545s-7.505 0-9.377.505A3.017 3.017 0 0 0 .502 6.186C0 8.07 0 12 0 12s0 3.93.502 5.814a3.016 3.016 0 0 0 2.122 2.136c1.871.505 9.376.505 9.376.505s7.505 0 9.377-.505a3.015 3.015 0 0 0 2.122-2.136C24 15.93 24 12 24 12s0-3.93-.502-5.814zM9.545 15.568V8.432L15.818 12l-6.273 3.568z"/></svg>
+                        Lectures on YouTube <span class="handle">@CECAMevents</span>
+                    </a>
                 </div>
-                <h3 class="pin__title" style="font-size: 1.2rem; font-weight: 700; letter-spacing: -0.02em;">Subscribe to the CECAM bulletin.</h3>
-                <p class="pin__desc">One email when a flagship call opens, when the program is updated, and when registration opens for major events.</p>
-                <form class="pin__form" action="https://formspree.io/f/REPLACE_ME" method="POST">
-                    <label class="vh" for="bulletin-email">Email address</label>
-                    <input id="bulletin-email" name="email" type="email" placeholder="you@university.eu" required>
-                    <input type="text" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
-                    <button type="submit">Subscribe <span class="arrow">→</span></button>
-                </form>
             </div>
         </div>
 
-        <!-- 15 · Series · MARVEL Classics -->
-        <a class="pin pin--series" href="activities.html#marvel-classics" data-cat="series" data-tags="series">
-            <div class="pin__body">
-                <div class="pin__top">
-                    <span class="pin__tag" data-cat="series"><span class="dot"></span>Series · archive</span>
-                </div>
-                <h3 class="pin__title">MARVEL Classics</h3>
-                <p class="pin__desc">Milestone methods and algorithms in simulation, presented by their originators — a look back at what shaped the field.</p>
-                <span class="pin__cta">View archive <span class="arrow">→</span></span>
-            </div>
-        </a>
-
-        <!-- 16 · About blurb -->
+        <!-- 23 · About blurb -->
         <a class="pin" href="about.html" data-cat="about" data-tags="about">
             <div class="pin__body">
-                <div class="pin__top">
-                    <span class="pin__tag" data-cat="about"><span class="dot"></span>About CECAM</span>
-                </div>
-                <h3 class="pin__title" style="font-size: 1.2rem; font-weight: 700; letter-spacing: -0.02em;">A federated European network — fifty years in.</h3>
-                <p class="pin__desc">An organisation devoted to fundamental research on advanced computational methods and their application across physics, chemistry, materials, biology and medicinal chemistry.</p>
-                <span class="pin__cta">Read our story <span class="arrow">→</span></span>
+                <div class="pin__top"><span class="pin__tag" data-cat="about"><span class="dot"></span>Mission</span></div>
+                <h3 class="pin__title" style="font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em;">Fundamental research on advanced computational methods.</h3>
+                <p class="pin__desc">From atomistic and molecular simulation to materials, biology, medicinal chemistry, multiscale modelling, statistical methods, and machine learning — CECAM curates the program that helps the community keep up.</p>
+                <span class="pin__cta">Read the mission <span class="arrow">→</span></span>
             </div>
         </a>
 
-        <!-- 17 · Series · Mansigh Conversations -->
-        <a class="pin pin--series" href="activities.html#mansigh-conversations" data-cat="series" data-tags="series">
-            <div class="pin__body">
-                <div class="pin__top">
-                    <span class="pin__tag" data-cat="series"><span class="dot"></span>Series · culture</span>
-                </div>
-                <h3 class="pin__title">Mansigh Conversations</h3>
-                <p class="pin__desc">The Mary Ann Mansigh series — non-strictly-technical topics of cultural interest to the simulation and modelling community.</p>
-                <span class="pin__cta">View archive <span class="arrow">→</span></span>
-            </div>
-        </a>
-
-        <!-- 18 · Contact / Lausanne HQ -->
-        <a class="pin" href="contact.html" data-cat="about" data-tags="about">
-            <div class="pin__body">
-                <div class="pin__top">
-                    <span class="pin__tag" data-cat="about"><span class="dot"></span>Lausanne HQ</span>
-                </div>
-                <h3 class="pin__title" style="font-size: 1.1rem; font-weight: 700; letter-spacing: -0.02em;">Get in touch with headquarters.</h3>
-                <p class="pin__desc">EPFL CECAM · Avenue de Forel 3, BCH 3103 · 1015 Lausanne, Switzerland.</p>
-                <span class="pin__meta">helpdesk@cecam.org</span>
-                <span class="pin__cta">Contact us <span class="arrow">→</span></span>
-            </div>
-        </a>
-
-        <!-- 19 · Series · Berni J. Alder Prize -->
-        <a class="pin pin--series" href="activities.html#alder-prize" data-cat="series" data-tags="series">
-            <div class="pin__body">
-                <div class="pin__top">
-                    <span class="pin__tag" data-cat="series"><span class="dot"></span>Series · prize</span>
-                </div>
-                <h3 class="pin__title">Berni J. Alder Prize</h3>
-                <p class="pin__desc">Awarded by CECAM to recognise exceptional contributions to microscopic simulation of matter.</p>
-                <span class="pin__cta">Read about the prize <span class="arrow">→</span></span>
-            </div>
-        </a>
-
-        <!-- 20 · Browse program closing pin -->
+        <!-- 24 · Browse program CTA -->
         <a class="pin" href="program.html" data-cat="about" data-tags="about workshop school conference">
             <div class="pin__body">
-                <div class="pin__top">
-                    <span class="pin__tag" data-cat="about"><span class="dot"></span>Full program</span>
-                </div>
+                <div class="pin__top"><span class="pin__tag" data-cat="about"><span class="dot"></span>Full program</span></div>
                 <h3 class="pin__title" style="font-size: 1.15rem; font-weight: 700; letter-spacing: -0.02em;">Browse every CECAM event.</h3>
-                <p class="pin__desc">All workshops, schools and conferences across the network — past, present and scheduled.</p>
+                <p class="pin__desc">All workshops, schools and conferences across the network — past, present and scheduled. Filter by date, type, or node.</p>
                 <span class="pin__cta">Open the program <span class="arrow">→</span></span>
             </div>
         </a>
@@ -1290,11 +1478,9 @@
 
 <script>
     (function () {
-        // ────── live countdown on open-call pins ──────
+        // live countdown on open-call pins
         function daysUntil(iso) {
-            var d  = new Date(iso + 'T23:59:59Z');
-            var ms = d.getTime() - Date.now();
-            return Math.ceil(ms / 86400000);
+            return Math.ceil((new Date(iso + 'T23:59:59Z').getTime() - Date.now()) / 86400000);
         }
         document.querySelectorAll('.pin--call').forEach(function (pin) {
             var iso = pin.dataset.deadline;
@@ -1302,15 +1488,14 @@
             var d = daysUntil(iso);
             var t = pin.querySelector('.pin__countdown .t');
             if (!t) return;
-            if (d > 0)       t.textContent = 'Open · ' + d + ' day' + (d === 1 ? '' : 's') + ' remaining';
+            if (d > 0)        t.textContent = 'Open · ' + d + ' day' + (d === 1 ? '' : 's') + ' remaining';
             else if (d === 0) t.textContent = 'Closes today';
-            else             t.textContent = 'Closed';
+            else              t.textContent = 'Closed';
         });
 
-        // ────── relative-time chip on event pins ──────
+        // relative-time chip on events
         function relWhen(iso) {
-            var d  = new Date(iso + 'T00:00:00Z');
-            var diff = Math.ceil((d.getTime() - Date.now()) / 86400000);
+            var diff = Math.ceil((new Date(iso + 'T00:00:00Z').getTime() - Date.now()) / 86400000);
             if (diff < 0)   return { text: 'Past', cls: '' };
             if (diff < 7)   return { text: 'This week', cls: 'pin__when--soon' };
             if (diff < 14)  return { text: 'Next week', cls: 'pin__when--soon' };
@@ -1326,15 +1511,14 @@
             if (r.cls) el.classList.add(r.cls);
         });
 
-        // ────── filter chips + search ──────
-        var chips   = document.querySelectorAll('.chip');
-        var pins    = document.querySelectorAll('.pin');
-        var search  = document.getElementById('board-search');
-        var empty   = document.getElementById('empty-state');
-        var emptyQ  = document.getElementById('empty-query');
+        // filter chips + search
+        var chips  = document.querySelectorAll('.chip');
+        var pins   = document.querySelectorAll('.pin');
+        var search = document.getElementById('board-search');
+        var empty  = document.getElementById('empty-state');
+        var emptyQ = document.getElementById('empty-query');
         var current = { filter: 'all', query: '' };
 
-        // recount chip counts from actual markup
         var allChip = document.querySelector('.chip[data-filter="all"] .chip__count');
         if (allChip) allChip.textContent = pins.length;
         chips.forEach(function (c) {
@@ -1383,7 +1567,7 @@
             });
         }
 
-        // ────── staggered fade-in ──────
+        // staggered fade-in
         if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
             pins.forEach(function (p) { p.classList.add('in-view'); });
             return;
