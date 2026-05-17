@@ -15,11 +15,11 @@
             --navy:        #0F2A5C;
             --navy-deep:   #081E47;
             --navy-hover:  #15366E;
-            --signal:      #1F6FA8;
-            --signal-bright: #2E7DC1;
-            --signal-soft: #d9e7f3;
-            --pulse:       #DB4B30;
-            --pulse-soft:  #FAE2DC;
+            --signal:      #3E8FC9;
+            --signal-bright: #4A9AD3;
+            --signal-soft: #DBE7F2;
+            --pulse:       #C8232E;
+            --pulse-soft:  #F2DCDD;
             --paper:       #F4EEDE;
             --paper-warm:  #EEE5D0;
             --ink:         #1A1A1A;
@@ -295,15 +295,32 @@
             background: transparent;
             padding: 0;
             border-radius: 0;
-            display: inline-block;
+            display: inline-flex;
+            flex-direction: column;
+            align-items: flex-start;
+            gap: 0.3rem;
             margin-bottom: 1.4rem;
+            text-decoration: none;
         }
-        .footer-wordmark img {
-            height: 42px;
-            width: auto;
-            filter: brightness(0) invert(1);
-            opacity: 0.96;
+        .footer-wordmark__brand {
+            font-family: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            font-weight: 700;
+            font-size: 2.2rem;
+            line-height: 1;
+            letter-spacing: -0.045em;
+            color: var(--paper);
+            text-transform: lowercase;
         }
+        .footer-wordmark__tag {
+            font-family: 'Geist', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+            font-weight: 400;
+            font-size: 0.74rem;
+            color: rgba(246, 244, 238, 0.7);
+            letter-spacing: 0.02em;
+            line-height: 1.4;
+            max-width: 30ch;
+        }
+        .footer-wordmark img { display: none; }
         .footer-meta {
             display: flex;
             flex-wrap: wrap;
@@ -757,9 +774,10 @@
         <div class="container">
             <div class="footer-grid">
                 <div class="footer-col footer-brand">
-                    <div class="footer-wordmark">
-                        <img src="uploads/cecam-wordmark.png" alt="CECAM" width="220" height="42">
-                    </div>
+                    <a class="footer-wordmark" href="index.html" aria-label="CECAM home">
+                        <span class="footer-wordmark__brand">cecam</span>
+                        <span class="footer-wordmark__tag">Centre Européen de Calcul Atomique et Moléculaire</span>
+                    </a>
                     <p style="max-width: 28em;">Fostering fundamental research on computational science for societal benefit, across a federated European network anchored at EPFL.</p>
                     <p style="margin-top: 1.2rem;"><span class="badge badge--open"><span class="pulse-dot" aria-hidden="true"></span> Flagship 2027–2028 call open</span></p>
                 </div>
