@@ -444,493 +444,693 @@
         }
 
         /* component-specific styles are added by individual page templates */
-                /* ──────────────────────── home ──────────────────────── */
-        .hero {
-            position: relative;
-            padding: clamp(3rem, 7vw, 6rem) 0 clamp(4rem, 8vw, 7rem);
-            border-bottom: 1px solid var(--hairline);
-            overflow: hidden;
-        }
-        .hero__grid {
-            display: grid;
-            grid-template-columns: minmax(0, 1fr) minmax(0, 360px);
-            gap: clamp(2rem, 4vw, 4rem);
-            align-items: center;
-            position: relative;
-            z-index: 2;
-        }
-        .hero__year {
-            font-family: 'Geist Mono', monospace;
-            font-size: 0.78rem;
-            letter-spacing: 0.15em;
-            color: var(--muted);
-            text-transform: uppercase;
-            margin-bottom: 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            border-top: 1px solid var(--hairline);
-            padding-top: 1rem;
-            max-width: 36rem;
-        }
-        .hero h1 {
-            font-size: clamp(2.7rem, 7.5vw, 5rem);
-            line-height: 0.98;
-            font-weight: 500;
-            letter-spacing: -0.022em;
-            margin-bottom: 1.5rem;
-            color: var(--navy);
-            max-width: 14ch;
-        }
-        .hero h1 em { font-style: italic; font-weight: 400; color: var(--signal); }
-        .hero__sub {
-            font-family: 'Instrument Serif', serif;
-            font-weight: 400;
-            font-size: clamp(1.15rem, 1.6vw, 1.35rem);
-            line-height: 1.5;
-            color: var(--ink-soft);
-            max-width: 38em;
-            margin-bottom: 2rem;
-        }
-        .hero__cta { display: flex; gap: 1rem; flex-wrap: wrap; align-items: center; }
-        .hero__mark {
-            position: relative;
-            justify-self: end;
-        }
-        .hero__mark img {
-            width: 100%;
-            max-width: 360px;
-            height: auto;
-            display: block;
-            opacity: 0.94;
-        }
-        .hero__mark-caption {
-            font-family: 'Geist Mono', monospace;
-            font-size: 0.72rem;
-            letter-spacing: 0.18em;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-top: 1rem;
-            text-align: right;
-            max-width: 360px;
-            margin-left: auto;
-        }
+        /* ──────────────────────── home (Lausanne Field Notes) ──────────────────────── */
 
-        /* Tickers — small stats strip under hero */
-        .hero__ticker {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 1.5rem;
-            margin-top: clamp(3rem, 6vw, 4.5rem);
-            padding-top: 2rem;
-            border-top: 1px solid var(--hairline);
+        /* paper grain — adds warmth and depth */
+        .field {
             position: relative;
-            z-index: 2;
+            isolation: isolate;
         }
-        .hero__ticker > div { display: flex; flex-direction: column; gap: 0.4rem; }
-        .hero__ticker .num {
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(2rem, 3.4vw, 2.75rem);
-            font-weight: 500;
-            line-height: 1;
-            color: var(--navy);
-            letter-spacing: -0.02em;
-        }
-        .hero__ticker .label {
-            font-size: 0.825rem;
-            color: var(--ink-soft);
-            line-height: 1.45;
-            max-width: 12em;
-        }
-
-        /* Open-call ribbon */
-        .ribbon {
-            background: var(--navy);
-            color: var(--paper);
-            padding: clamp(2.5rem, 5vw, 4rem) 0;
-            position: relative;
-            overflow: hidden;
-        }
-        .ribbon::before {
+        .field::before {
             content: "";
             position: absolute;
             inset: 0;
-            background: radial-gradient(circle at 90% 30%, rgba(46,125,193,0.18) 0%, transparent 55%);
             pointer-events: none;
+            z-index: 0;
+            background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='200' height='200'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.06 0 0 0 0 0.16 0 0 0 0 0.36 0 0 0 0.045 0'/></filter><rect width='200' height='200' filter='url(%23n)'/></svg>");
+            mix-blend-mode: multiply;
+            opacity: 0.55;
         }
-        .ribbon__grid {
-            position: relative;
-            display: grid;
-            grid-template-columns: 1fr auto;
-            gap: 3rem;
-            align-items: center;
-        }
-        .ribbon__eyebrow {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.7rem;
-            color: var(--paper);
-            opacity: 0.95;
-            font-size: 0.82rem;
-            font-weight: 600;
-            letter-spacing: 0.15em;
-            text-transform: uppercase;
-            margin-bottom: 1rem;
-        }
-        .ribbon h2 {
-            color: var(--paper);
-            font-size: clamp(1.6rem, 3vw, 2.25rem);
-            line-height: 1.15;
-            margin-bottom: 1rem;
-            max-width: 24ch;
-        }
-        .ribbon__deadline {
-            font-family: 'Geist Mono', monospace;
-            font-size: 0.9rem;
-            color: rgba(246, 244, 238, 0.85);
-            letter-spacing: 0.04em;
-        }
-        .ribbon__deadline strong { color: var(--paper); font-weight: 500; }
 
-        /* Section header pattern */
-        .sec-head {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-end;
-            gap: 2rem;
-            margin-bottom: 2.5rem;
-            border-top: 1px solid var(--navy);
-            padding-top: 1.5rem;
-        }
-        .sec-head__title { flex: 1; }
-        .sec-head h2 {
-            font-size: clamp(1.8rem, 3.4vw, 2.4rem);
-            margin: 0.5rem 0 0;
-            max-width: 18ch;
-        }
-        .sec-head__meta {
-            font-family: 'Geist Mono', monospace;
-            font-size: 0.78rem;
-            letter-spacing: 0.12em;
-            color: var(--muted);
+        /* running dispatch strip at top — like a journal header */
+        .dispatch {
+            font-family: 'Geist Mono', ui-monospace, monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.14em;
             text-transform: uppercase;
-            padding-bottom: 0.4rem;
-            white-space: nowrap;
-        }
-        .section { padding: var(--section-y) 0; }
-        .section--tight { padding: var(--section-y-sm) 0; }
-
-        /* Featured news grid */
-        .news-grid {
-            display: grid;
-            grid-template-columns: 1.45fr 1fr;
-            gap: clamp(1.5rem, 3vw, 2.5rem);
-        }
-        .news-feature {
-            display: flex;
-            flex-direction: column;
-            text-decoration: none;
-            color: inherit;
-        }
-        .news-feature__img {
-            aspect-ratio: 16 / 10;
-            background: var(--paper-warm);
-            overflow: hidden;
-            border: 1px solid var(--hairline);
-            position: relative;
-        }
-        .news-feature__img img,
-        .news-feature__img .placeholder {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            display: block;
-            transition: transform 600ms cubic-bezier(0.22, 1, 0.36, 1);
-        }
-        .news-feature:hover .news-feature__img img { transform: scale(1.04); }
-        .news-feature__img .placeholder {
-            display: grid;
-            place-items: center;
-            background:
-              radial-gradient(circle at 30% 30%, rgba(46,125,193,0.18) 0%, transparent 50%),
-              radial-gradient(circle at 70% 70%, rgba(15,42,92,0.12) 0%, transparent 55%),
-              var(--paper-warm);
-            color: var(--navy);
-            font-family: 'Instrument Serif', serif;
-            font-size: 3rem;
-            font-style: italic;
-            opacity: 0.7;
-        }
-        .news-feature__body { padding: 1.5rem 0 0; display: flex; flex-direction: column; gap: 0.75rem; }
-        .news-feature__body .meta {
-            font-family: 'Geist Mono', monospace;
-            font-size: 0.75rem;
-            letter-spacing: 0.12em;
-            color: var(--muted);
-            text-transform: uppercase;
-        }
-        .news-feature h3 {
-            font-family: 'Instrument Serif', serif;
-            font-weight: 500;
-            font-size: clamp(1.4rem, 2.6vw, 1.95rem);
-            line-height: 1.18;
-            color: var(--navy);
-            margin: 0;
-            letter-spacing: -0.01em;
-        }
-        .news-feature p {
             color: var(--ink-soft);
-            font-size: 1rem;
-            line-height: 1.55;
-            margin: 0;
+            border-bottom: 1px solid var(--hairline);
+            background: var(--paper);
         }
+        .dispatch__inner {
+            max-width: var(--container);
+            margin: 0 auto;
+            padding: 0.65rem var(--gutter);
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .dispatch span { display: inline-flex; align-items: center; gap: 0.5rem; }
+        .dispatch .dot { width: 4px; height: 4px; background: currentColor; border-radius: 50%; opacity: 0.55; }
+        .dispatch .live { color: var(--pulse); }
+        .dispatch .live .pulse-dot { width: 6px; height: 6px; }
 
-        .news-side { display: flex; flex-direction: column; gap: 2rem; }
-        .news-card {
-            display: grid;
-            grid-template-columns: 1fr;
-            gap: 1rem;
-            text-decoration: none;
-            color: inherit;
-            padding-bottom: 2rem;
+        /* ─── HERO ─── */
+        .hero-v2 {
+            position: relative;
+            padding: clamp(3.5rem, 8vw, 8rem) 0 clamp(4rem, 9vw, 8rem);
+            overflow: hidden;
             border-bottom: 1px solid var(--hairline);
         }
-        .news-card:last-child { border-bottom: 0; padding-bottom: 0; }
-        .news-card__img {
-            aspect-ratio: 16 / 9;
-            background: var(--paper-warm);
-            overflow: hidden;
-            border: 1px solid var(--hairline);
-        }
-        .news-card__img img { width: 100%; height: 100%; object-fit: cover; transition: transform 500ms ease; }
-        .news-card:hover .news-card__img img { transform: scale(1.04); }
-        .news-card .meta {
-            font-family: 'Geist Mono', monospace;
-            font-size: 0.72rem;
-            letter-spacing: 0.12em;
-            color: var(--muted);
-            text-transform: uppercase;
-        }
-        .news-card h4 {
-            font-family: 'Instrument Serif', serif;
-            font-weight: 500;
-            font-size: 1.2rem;
-            line-height: 1.25;
-            color: var(--navy);
-            margin: 0.25rem 0 0.4rem;
-        }
-        .news-card p { font-size: 0.9rem; color: var(--ink-soft); margin: 0; }
+        .hero-v2 .container { position: relative; z-index: 3; }
 
-        /* Upcoming program — three event cards */
-        .event-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.25rem;
+        .hero-v2__canvas {
+            position: absolute;
+            inset: 0;
+            z-index: 1;
+            opacity: 0.85;
+            pointer-events: none;
         }
-        .event-card {
-            background: rgba(255,255,255,0.5);
-            border: 1px solid var(--hairline);
-            border-radius: var(--radius);
-            padding: 1.6rem 1.6rem 1.4rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            text-decoration: none;
-            color: inherit;
-            min-height: 280px;
-            transition: border-color 220ms ease, transform 220ms ease, background 220ms ease;
+        .hero-v2__grid {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 260px);
+            gap: clamp(2rem, 5vw, 5rem);
+            align-items: start;
+        }
+        .hero-v2__eyebrow {
+            font-family: 'Geist Mono', ui-monospace, monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--signal);
+            display: inline-flex;
+            align-items: center;
+            gap: 0.8rem;
+            margin-bottom: clamp(1.5rem, 3vw, 2.5rem);
+        }
+        .hero-v2__eyebrow::before {
+            content: "";
+            width: 2.2rem;
+            height: 1px;
+            background: var(--signal);
+            opacity: 0.7;
+        }
+
+        .hero-v2 h1 {
+            font-family: 'Instrument Serif', serif;
+            font-weight: 400;
+            font-size: clamp(3.8rem, 11.5vw, 10.5rem);
+            line-height: 0.92;
+            letter-spacing: -0.035em;
+            color: var(--navy);
+            margin: 0 0 clamp(2rem, 3.5vw, 3rem);
+            max-width: 12ch;
+        }
+        .hero-v2 h1 em {
+            font-style: italic;
+            color: var(--signal);
             position: relative;
         }
-        .event-card:hover {
-            border-color: var(--hairline-strong);
-            background: rgba(255,255,255,0.9);
+        .hero-v2 h1 .word {
+            display: inline-block;
+            opacity: 0;
+            transform: translateY(0.22em);
+            animation: heroWord 900ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
         }
-        .event-card__top {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            gap: 1rem;
+        .hero-v2 h1 .word:nth-child(1) { animation-delay: 80ms; }
+        .hero-v2 h1 .word:nth-child(2) { animation-delay: 200ms; }
+        .hero-v2 h1 .word:nth-child(3) { animation-delay: 320ms; }
+        .hero-v2 h1 .word:nth-child(4) { animation-delay: 440ms; }
+        .hero-v2 h1 .word:nth-child(5) { animation-delay: 560ms; }
+        .hero-v2 h1 .word:nth-child(6) { animation-delay: 680ms; }
+        @keyframes heroWord {
+            0%   { opacity: 0; transform: translateY(0.22em); filter: blur(6px); }
+            60%  { opacity: 1; filter: blur(0); }
+            100% { opacity: 1; transform: translateY(0); filter: blur(0); }
         }
-        .event-card__dates {
-            font-family: 'Geist Mono', monospace;
-            font-size: 0.78rem;
-            letter-spacing: 0.06em;
+
+        .hero-v2__sub {
+            font-family: 'Geist', sans-serif;
+            font-size: clamp(1.05rem, 1.4vw, 1.2rem);
+            line-height: 1.55;
             color: var(--ink-soft);
-            text-align: right;
-            line-height: 1.35;
-        }
-        .event-card__dates strong { display: block; font-size: 1.4rem; font-weight: 500; color: var(--navy); letter-spacing: -0.01em; }
-        .event-card h3 {
-            font-family: 'Instrument Serif', serif;
-            font-weight: 500;
-            font-size: 1.35rem;
-            line-height: 1.2;
-            color: var(--navy);
-            margin: 0;
-            flex: 1;
+            max-width: 36em;
+            margin: 0 0 clamp(2rem, 3vw, 2.5rem);
             letter-spacing: -0.005em;
         }
-        .event-card__venue {
-            margin-top: auto;
-            font-size: 0.88rem;
-            color: var(--ink-soft);
-            line-height: 1.5;
+        .hero-v2__cta { display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: center; }
+
+        /* margin annotations — like footnotes in a manuscript */
+        .field-notes {
+            display: flex;
+            flex-direction: column;
+            gap: 1.4rem;
             padding-top: 1rem;
             border-top: 1px solid var(--hairline);
         }
-        .event-card__venue strong { color: var(--navy); font-weight: 500; }
-
-        /* Activities grid (3x2) */
-        .activities-grid {
+        .field-notes__item {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 1.25rem;
+            grid-template-columns: 1.8rem 1fr;
+            gap: 0.8rem;
+            font-family: 'Geist Mono', ui-monospace, monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+            color: var(--muted);
+            line-height: 1.45;
         }
-        .activity-tile {
-            background: rgba(255,255,255,0.45);
-            border: 1px solid var(--hairline);
-            border-radius: var(--radius);
-            padding: 1.5rem 1.5rem 1.5rem;
-            text-decoration: none;
-            color: inherit;
-            display: flex;
-            flex-direction: column;
-            gap: 0.9rem;
-            min-height: 220px;
-            transition: background-color 220ms ease, border-color 220ms ease;
+        .field-notes__num { color: var(--signal); font-weight: 500; }
+        .field-notes__body strong {
+            display: block;
+            font-family: 'Instrument Serif', serif;
+            font-weight: 400;
+            font-size: 2rem;
+            line-height: 1;
+            letter-spacing: -0.02em;
+            color: var(--navy);
+            text-transform: none;
+            margin-bottom: 0.35rem;
+            font-style: italic;
         }
-        .activity-tile:hover { background: rgba(46,125,193,0.06); border-color: var(--hairline-strong); }
-        .activity-tile__icon {
-            width: 36px;
-            height: 36px;
-            color: var(--signal);
+
+        /* ─── REFINED RIBBON ─── */
+        .ribbon-v2 {
+            background: var(--navy);
+            color: var(--paper);
+            position: relative;
+            overflow: hidden;
+            border-bottom: 1px solid rgba(246,244,238,0.08);
+        }
+        .ribbon-v2::before {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background:
+              radial-gradient(circle at 85% 20%, rgba(46,125,193,0.22) 0%, transparent 50%),
+              radial-gradient(circle at 15% 100%, rgba(200,34,44,0.10) 0%, transparent 55%);
+        }
+        .ribbon-v2__inner {
+            position: relative;
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 3rem;
+            padding: clamp(2.5rem, 5vw, 4rem) 0;
+            align-items: center;
+        }
+        .ribbon-v2__chip {
             display: inline-flex;
             align-items: center;
-            justify-content: center;
-        }
-        .activity-tile h3 {
-            font-family: 'Instrument Serif', serif;
+            gap: 0.7rem;
+            font-family: 'Geist Mono', monospace;
+            font-size: 0.72rem;
             font-weight: 500;
-            font-size: 1.2rem;
-            line-height: 1.2;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--paper);
+            opacity: 0.92;
+            margin-bottom: 1.1rem;
+        }
+        .ribbon-v2 h2 {
+            font-family: 'Instrument Serif', serif;
+            color: var(--paper);
+            font-size: clamp(1.7rem, 3.5vw, 2.7rem);
+            line-height: 1.08;
+            letter-spacing: -0.018em;
+            margin: 0 0 1rem;
+            max-width: 22ch;
+            font-weight: 400;
+        }
+        .ribbon-v2 h2 em { color: rgba(217, 231, 243, 1); font-style: italic; }
+        .ribbon-v2__deadline {
+            font-family: 'Geist Mono', monospace;
+            font-size: 0.85rem;
+            color: rgba(246, 244, 238, 0.78);
+            letter-spacing: 0.04em;
+        }
+        .ribbon-v2__deadline strong { color: var(--paper); font-weight: 500; }
+
+        /* ─── SECTION CHAPTER MARKERS ─── */
+        .chapter {
+            padding: clamp(4rem, 8vw, 7rem) 0 clamp(1rem, 2vw, 1.5rem);
+        }
+        .chapter--tight { padding-top: clamp(2.5rem, 5vw, 4rem); }
+        .chapter__head {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 2rem;
+            align-items: end;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--navy);
+            margin-bottom: clamp(2.5rem, 5vw, 4rem);
+        }
+        .chapter__num {
+            font-family: 'Geist Mono', monospace;
+            font-size: 0.78rem;
+            letter-spacing: 0.14em;
+            color: var(--signal);
+            text-transform: uppercase;
+            margin: 0 0 1rem;
+        }
+        .chapter__title {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(2.2rem, 5vw, 3.6rem);
+            line-height: 1.0;
+            letter-spacing: -0.028em;
             color: var(--navy);
             margin: 0;
+            font-weight: 400;
+            max-width: 22ch;
         }
-        .activity-tile p {
-            font-size: 0.9rem;
-            color: var(--ink-soft);
-            margin: 0;
-            line-height: 1.5;
+        .chapter__title em { font-style: italic; color: var(--signal); }
+        .chapter__meta {
+            font-family: 'Geist Mono', monospace;
+            font-size: 0.74rem;
+            letter-spacing: 0.14em;
+            color: var(--muted);
+            text-transform: uppercase;
+            white-space: nowrap;
+            padding-bottom: 0.4rem;
         }
-        .activity-tile__more {
-            margin-top: auto;
+        .chapter__meta a { color: var(--navy); border-bottom: 1px solid var(--hairline-strong); padding-bottom: 1px; }
+        .chapter__meta a:hover { color: var(--signal); border-color: var(--signal); }
+
+        /* ─── BULLETIN (news as table of contents) ─── */
+        .bulletin { display: grid; gap: 0; }
+        .bulletin__item {
+            display: grid;
+            grid-template-columns: 5rem minmax(0, 1fr) minmax(0, 320px);
+            gap: clamp(1rem, 3vw, 2.5rem);
+            padding: clamp(1.5rem, 3vw, 2.2rem) 0;
+            border-top: 1px solid var(--hairline);
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            transition: background-color 320ms ease;
+            align-items: start;
+        }
+        .bulletin__item:last-child { border-bottom: 1px solid var(--hairline); }
+        .bulletin__item:hover { background: rgba(46,125,193,0.04); }
+        .bulletin__item:hover .bulletin__title { color: var(--signal); }
+        .bulletin__num {
+            font-family: 'Geist Mono', monospace;
             font-size: 0.78rem;
             letter-spacing: 0.1em;
-            text-transform: uppercase;
             color: var(--signal);
-            font-weight: 600;
+            font-weight: 500;
+            padding-top: 0.4rem;
         }
-
-        /* About-tease */
-        .about-tease {
-            display: grid;
-            grid-template-columns: 1fr 0.85fr;
-            gap: clamp(2.5rem, 5vw, 4.5rem);
-            align-items: center;
+        .bulletin__body { display: flex; flex-direction: column; gap: 0.5rem; }
+        .bulletin__meta {
+            font-family: 'Geist Mono', monospace;
+            font-size: 0.72rem;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: var(--muted);
         }
-        .about-tease__copy h2 {
-            font-size: clamp(1.8rem, 3vw, 2.4rem);
-            line-height: 1.15;
-            margin-bottom: 1.5rem;
-            max-width: 16ch;
+        .bulletin__title {
+            font-family: 'Instrument Serif', serif;
+            font-weight: 400;
+            font-size: clamp(1.5rem, 2.6vw, 2.1rem);
+            line-height: 1.1;
+            letter-spacing: -0.015em;
+            color: var(--navy);
+            margin: 0;
+            transition: color 220ms ease;
+            max-width: 22ch;
         }
-        .about-tease__copy p { font-size: 1.05rem; color: var(--ink-soft); line-height: 1.65; max-width: 36em; }
-        .about-tease__image {
-            position: relative;
+        .bulletin__title em { font-style: italic; color: var(--signal); }
+        .bulletin__excerpt {
+            font-size: 0.95rem;
+            color: var(--ink-soft);
+            line-height: 1.55;
+            margin: 0.4rem 0 0;
+            max-width: 42em;
         }
-        .about-tease__image img {
-            width: 100%;
-            aspect-ratio: 4 / 5;
-            object-fit: cover;
-            border-radius: var(--radius);
-        }
-        .about-tease__caption {
+        .bulletin__more {
             font-family: 'Geist Mono', monospace;
             font-size: 0.72rem;
             letter-spacing: 0.12em;
             text-transform: uppercase;
+            color: var(--signal);
+            margin-top: 0.6rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.45rem;
+        }
+        .bulletin__more .arrow { transition: transform 200ms ease; }
+        .bulletin__item:hover .bulletin__more .arrow { transform: translateX(4px); }
+        .bulletin__thumb {
+            aspect-ratio: 4 / 3;
+            background: var(--paper-warm);
+            overflow: hidden;
+            position: relative;
+            border: 1px solid var(--hairline);
+        }
+        .bulletin__thumb img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: transform 700ms cubic-bezier(0.22, 1, 0.36, 1), filter 700ms;
+            filter: saturate(0.95);
+        }
+        .bulletin__item:hover .bulletin__thumb img { transform: scale(1.04); filter: saturate(1.05); }
+
+        /* ─── TIMELINE (events horizontal strip) ─── */
+        .timeline {
+            position: relative;
+            padding-top: 1rem;
+        }
+        .timeline__axis {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 1px;
+            background: var(--hairline);
+        }
+        .timeline__grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: clamp(1.5rem, 4vw, 3rem);
+        }
+        .timeline__event {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding-top: 2rem;
+            text-decoration: none;
+            color: inherit;
+            position: relative;
+            min-height: 320px;
+        }
+        .timeline__event::before {
+            content: "";
+            position: absolute;
+            top: -5px;
+            left: 0;
+            width: 9px;
+            height: 9px;
+            background: var(--navy);
+            border-radius: 50%;
+            transition: background 200ms ease, transform 200ms ease;
+        }
+        .timeline__event:hover::before { background: var(--signal); transform: scale(1.35); }
+        .timeline__month {
+            font-family: 'Geist Mono', monospace;
+            font-size: 0.74rem;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
             color: var(--muted);
-            margin-top: 0.85rem;
+        }
+        .timeline__date {
+            font-family: 'Instrument Serif', serif;
+            font-weight: 400;
+            font-size: clamp(2.6rem, 4.6vw, 3.4rem);
+            line-height: 0.95;
+            letter-spacing: -0.025em;
+            color: var(--navy);
+            margin: 0.2rem 0 0.4rem;
+            font-style: italic;
+        }
+        .timeline__event h3 {
+            font-family: 'Instrument Serif', serif;
+            font-weight: 400;
+            font-size: clamp(1.2rem, 2vw, 1.45rem);
+            line-height: 1.2;
+            letter-spacing: -0.012em;
+            color: var(--navy);
+            margin: 0.6rem 0 0;
+        }
+        .timeline__event:hover h3 { color: var(--signal); }
+        .timeline__venue {
+            margin-top: auto;
+            padding-top: 1.2rem;
+            border-top: 1px solid var(--hairline);
+            font-family: 'Geist', sans-serif;
+            font-size: 0.88rem;
+            line-height: 1.5;
+            color: var(--ink-soft);
+        }
+        .timeline__venue strong { color: var(--navy); font-weight: 500; display: block; margin-bottom: 0.2rem; }
+
+        /* ─── PERIODIC TABLE (activities) ─── */
+        .periodic {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 0;
+            border: 1px solid var(--hairline-strong);
+        }
+        .element {
+            position: relative;
+            padding: 1.4rem 1.3rem 1.3rem;
+            border-right: 1px solid var(--hairline-strong);
+            border-bottom: 1px solid var(--hairline-strong);
+            background: var(--paper);
+            text-decoration: none;
+            color: inherit;
+            display: flex;
+            flex-direction: column;
+            gap: 0.65rem;
+            min-height: 230px;
+            transition: background-color 280ms ease, color 280ms ease;
+            overflow: hidden;
+        }
+        .element:nth-child(6n) { border-right: 0; }
+        .element:last-child { border-right: 0; }
+        .element::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background: var(--navy);
+            opacity: 0;
+            transition: opacity 280ms ease;
+            z-index: 0;
+        }
+        .element > * { position: relative; z-index: 1; }
+        .element:hover { color: var(--paper); }
+        .element:hover::after { opacity: 1; }
+        .element:hover .element__num,
+        .element:hover .element__symbol,
+        .element:hover .element__name,
+        .element:hover .element__desc,
+        .element:hover .element__more { color: var(--paper); }
+
+        .element__num {
+            font-family: 'Geist Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            color: var(--muted);
+        }
+        .element__symbol {
+            font-family: 'Instrument Serif', serif;
+            font-weight: 400;
+            font-size: 3.2rem;
+            line-height: 1;
+            letter-spacing: -0.04em;
+            color: var(--navy);
+            margin: -0.2rem 0 0.5rem;
+        }
+        .element__symbol em { font-style: italic; color: var(--signal); }
+        .element:hover .element__symbol em { color: rgba(217, 231, 243, 1); }
+        .element__name {
+            font-family: 'Geist', sans-serif;
+            font-weight: 600;
+            font-size: 0.95rem;
+            line-height: 1.25;
+            color: var(--navy);
+            letter-spacing: -0.005em;
+        }
+        .element__desc {
+            font-family: 'Geist', sans-serif;
+            font-size: 0.82rem;
+            line-height: 1.5;
+            color: var(--ink-soft);
+            margin: 0;
+        }
+        .element__more {
+            margin-top: auto;
+            font-family: 'Geist Mono', monospace;
+            font-size: 0.66rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--signal);
+            padding-top: 0.6rem;
         }
 
-        /* Newsletter strip */
-        .newsletter {
-            background: var(--paper-warm);
-            padding: var(--section-y-sm) 0;
-            border-top: 1px solid var(--hairline);
-            border-bottom: 1px solid var(--hairline);
-        }
-        .newsletter__inner {
+        /* ─── ABOUT (pull-quote treatment) ─── */
+        .pull {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: 1fr 0.7fr;
+            gap: clamp(2.5rem, 6vw, 6rem);
+            align-items: center;
+        }
+        .pull__quote {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(1.8rem, 3.4vw, 2.7rem);
+            line-height: 1.18;
+            letter-spacing: -0.018em;
+            color: var(--navy);
+            font-weight: 400;
+            margin: 0;
+            position: relative;
+            max-width: 22ch;
+        }
+        .pull__quote em { font-style: italic; color: var(--signal); }
+        .pull__quote::before {
+            content: "❝";
+            position: absolute;
+            left: -1.2rem;
+            top: -1.1rem;
+            font-size: 4rem;
+            line-height: 1;
+            color: var(--signal);
+            opacity: 0.45;
+            font-style: italic;
+        }
+        .pull__body {
+            margin-top: 1.6rem;
+            font-family: 'Geist', sans-serif;
+            font-size: 1rem;
+            line-height: 1.7;
+            color: var(--ink-soft);
+            max-width: 36em;
+        }
+        .pull__cite {
+            margin-top: 1.4rem;
+            font-family: 'Geist Mono', monospace;
+            font-size: 0.74rem;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+        .pull__image {
+            position: relative;
+        }
+        .pull__image img {
+            width: 100%;
+            aspect-ratio: 3 / 4;
+            object-fit: cover;
+            display: block;
+            border-radius: var(--radius);
+            filter: saturate(0.92) contrast(1.04);
+        }
+        .pull__image-cap {
+            font-family: 'Geist Mono', monospace;
+            font-size: 0.7rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-top: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* ─── BULLETIN SUBSCRIBE (slim strip) ─── */
+        .subscribe {
+            margin-top: clamp(4rem, 7vw, 6rem);
+            border-top: 1px solid var(--navy);
+            border-bottom: 1px solid var(--navy);
+            padding: clamp(2rem, 4vw, 3.5rem) 0;
+        }
+        .subscribe__inner {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
             gap: clamp(2rem, 4vw, 4rem);
             align-items: center;
         }
-        .newsletter h2 {
-            font-size: clamp(1.6rem, 2.8vw, 2.2rem);
-            margin: 0 0 0.75rem;
+        .subscribe__title {
+            font-family: 'Instrument Serif', serif;
+            font-weight: 400;
+            font-size: clamp(1.7rem, 3vw, 2.3rem);
+            line-height: 1.05;
+            letter-spacing: -0.022em;
+            color: var(--navy);
+            margin: 0 0 0.6rem;
             max-width: 14ch;
         }
-        .newsletter p { color: var(--ink-soft); margin: 0; max-width: 36em; }
-        .newsletter form {
-            display: flex;
-            gap: 0.5rem;
+        .subscribe__title em { font-style: italic; color: var(--signal); }
+        .subscribe__body {
+            font-family: 'Geist', sans-serif;
+            font-size: 0.95rem;
+            color: var(--ink-soft);
+            margin: 0;
+            line-height: 1.55;
+            max-width: 38em;
         }
-        .newsletter input[type="email"] {
+        .subscribe form {
+            display: flex;
+            gap: 0.55rem;
+            align-items: stretch;
+        }
+        .subscribe input[type="email"] {
             flex: 1;
+            min-width: 0;
             background: var(--paper);
             border: 1px solid var(--hairline-strong);
             color: var(--ink);
-            padding: 0.95rem 1.05rem;
-            border-radius: var(--radius);
+            padding: 1rem 1.1rem;
             font-size: 16px;
-            font-family: inherit;
-            min-height: 52px;
+            font-family: 'Geist Mono', monospace;
+            letter-spacing: 0.04em;
+            border-radius: var(--radius);
+            min-height: 56px;
         }
-        .newsletter input[type="email"]:focus {
+        .subscribe input[type="email"]:focus {
             outline: none;
             border-color: var(--signal);
             box-shadow: 0 0 0 3px rgba(46,125,193,0.18);
         }
-        .newsletter button {
+        .subscribe input[type="email"]::placeholder { color: var(--muted); }
+        .subscribe button {
             background: var(--navy);
             color: var(--paper);
             border: 1px solid var(--navy);
-            padding: 0.95rem 1.4rem;
-            border-radius: var(--radius);
-            font-size: 0.95rem;
+            padding: 0 1.6rem;
+            font-family: 'Geist Mono', monospace;
+            font-size: 0.78rem;
             font-weight: 500;
-            min-height: 52px;
-            transition: background-color 180ms ease;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            border-radius: var(--radius);
+            min-height: 56px;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: background 180ms ease;
         }
-        .newsletter button:hover { background: var(--navy-hover); }
+        .subscribe button:hover { background: var(--navy-hover); }
 
-        @media (max-width: 980px) {
-            .hero__grid { grid-template-columns: 1fr; }
-            .hero__mark { justify-self: start; max-width: 240px; }
-            .hero__mark-caption { text-align: left; margin-left: 0; max-width: 240px; }
-            .hero__ticker { grid-template-columns: repeat(2, 1fr); gap: 1.25rem 2rem; }
-            .news-grid { grid-template-columns: 1fr; }
-            .event-grid { grid-template-columns: 1fr; }
-            .activities-grid { grid-template-columns: repeat(2, 1fr); }
-            .about-tease { grid-template-columns: 1fr; }
-            .about-tease__image img { aspect-ratio: 3 / 2; }
-            .newsletter__inner { grid-template-columns: 1fr; }
-            .ribbon__grid { grid-template-columns: 1fr; }
+        /* ─── REVEAL ANIMATIONS ─── */
+        .reveal { opacity: 0; transform: translateY(18px); transition: opacity 700ms ease, transform 700ms ease; }
+        .reveal.in-view { opacity: 1; transform: translateY(0); }
+        .reveal--stagger > * { opacity: 0; transform: translateY(18px); transition: opacity 700ms ease, transform 700ms ease; }
+        .reveal--stagger.in-view > * { opacity: 1; transform: translateY(0); }
+        .reveal--stagger.in-view > *:nth-child(1) { transition-delay: 60ms; }
+        .reveal--stagger.in-view > *:nth-child(2) { transition-delay: 140ms; }
+        .reveal--stagger.in-view > *:nth-child(3) { transition-delay: 220ms; }
+        .reveal--stagger.in-view > *:nth-child(4) { transition-delay: 300ms; }
+        .reveal--stagger.in-view > *:nth-child(5) { transition-delay: 380ms; }
+        .reveal--stagger.in-view > *:nth-child(6) { transition-delay: 460ms; }
+
+        @media (prefers-reduced-motion: reduce) {
+            .hero-v2 h1 .word { animation: none; opacity: 1; transform: none; }
+            .reveal, .reveal--stagger > * { opacity: 1; transform: none; }
         }
-        @media (max-width: 560px) {
-            .activities-grid { grid-template-columns: 1fr; }
-            .sec-head { flex-direction: column; align-items: flex-start; gap: 0.5rem; }
-            .newsletter form { flex-direction: column; }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 1080px) {
+            .periodic { grid-template-columns: repeat(3, 1fr); }
+            .element:nth-child(6n) { border-right: 1px solid var(--hairline-strong); }
+            .element:nth-child(3n) { border-right: 0; }
+        }
+        @media (max-width: 960px) {
+            .hero-v2__grid { grid-template-columns: 1fr; }
+            .field-notes { display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.4rem 2rem; }
+            .pull { grid-template-columns: 1fr; }
+            .pull__image { max-width: 380px; }
+            .bulletin__item { grid-template-columns: 3rem minmax(0, 1fr); }
+            .bulletin__thumb { grid-column: 1 / -1; max-width: 100%; }
+            .timeline__grid { grid-template-columns: 1fr; }
+            .subscribe__inner { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 640px) {
+            .periodic { grid-template-columns: repeat(2, 1fr); }
+            .element:nth-child(3n) { border-right: 1px solid var(--hairline-strong); }
+            .element:nth-child(2n) { border-right: 0; }
+            .chapter__head { grid-template-columns: 1fr; }
+            .chapter__meta { justify-self: start; padding-bottom: 0; }
+            .subscribe form { flex-direction: column; }
+            .hero-v2 h1 { font-size: clamp(3.2rem, 13vw, 5rem); max-width: none; }
+            .dispatch__inner { gap: 0.8rem; }
         }
     </style>
     </head>
@@ -957,105 +1157,174 @@
     </header>
 
     <main id="main">
-        <section class="hero">
-    <div class="container">
-        <div class="hero__grid">
-            <div class="hero__copy">
-                <div class="hero__year">
-                    <span>EST. 1969 · LAUSANNE</span>
-                    <span>50 YEARS / 22 NODES</span>
-                </div>
-                <h1>A European home for atomistic and molecular <em>simulation.</em></h1>
-                <p class="hero__sub">CECAM convenes the workshops, schools and conferences that shape computational science across Europe — proposed by researchers, funded by the network, hosted at EPFL and partner nodes from Edinburgh to Rome.</p>
-                <div class="hero__cta">
-                    <a class="btn" href="program.html">Browse program <span class="arrow" aria-hidden="true">→</span></a>
-                    <a class="btn btn--ghost" href="about.html">What is CECAM <span class="arrow" aria-hidden="true">→</span></a>
-                </div>
-            </div>
-            <div class="hero__mark" aria-hidden="true">
-                <img src="uploads/cecam-mark-large.png" alt="" width="360" height="320">
-                <p class="hero__mark-caption">Centre Européen de Calcul Atomique et Moléculaire</p>
-            </div>
-        </div>
+<div class="dispatch">
+    <div class="dispatch__inner">
+        <span><span class="dot"></span> Lausanne · 46.518° N · 6.566° E</span>
+        <span>Field bulletin № 47 · 2026</span>
+        <span class="live"><span class="pulse-dot" aria-hidden="true"></span> Flagship 2027–2028 call open</span>
+    </div>
+</div>
 
-        <div class="hero__ticker">
+<section class="hero-v2 field" aria-labelledby="hero-h">
+    <canvas class="hero-v2__canvas" id="constellation" aria-hidden="true"></canvas>
+    <div class="container">
+        <div class="hero-v2__grid">
             <div>
-                <span class="num">22</span>
-                <span class="label">Nodes across Europe and beyond</span>
+                <p class="hero-v2__eyebrow">Est. 1969 · 22 nodes · EPFL anchored</p>
+                <h1 id="hero-h">
+                    <span class="word">Europe&rsquo;s</span>
+                    <span class="word">home</span>
+                    <span class="word">for</span>
+                    <span class="word"><em>atomistic</em></span>
+                    <span class="word">simulation.</span>
+                </h1>
+                <p class="hero-v2__sub">CECAM convenes the workshops, schools and conferences that shape computational atomic and molecular science across Europe — proposed by researchers, funded by the network, hosted at EPFL and partner nodes from Edinburgh to Rome.</p>
+                <div class="hero-v2__cta">
+                    <a class="btn" href="/program">Browse program <span class="arrow" aria-hidden="true">→</span></a>
+                    <a class="btn btn--ghost" href="/about">What is CECAM <span class="arrow" aria-hidden="true">→</span></a>
+                </div>
+            </div>
+
+            <aside class="field-notes reveal">
+                <div class="field-notes__item">
+                    <span class="field-notes__num">§1</span>
+                    <div class="field-notes__body">
+                        <strong>22</strong>
+                        Nodes across the European network
+                    </div>
+                </div>
+                <div class="field-notes__item">
+                    <span class="field-notes__num">§2</span>
+                    <div class="field-notes__body">
+                        <strong>57</strong>
+                        Years of computational science, since 1969
+                    </div>
+                </div>
+                <div class="field-notes__item">
+                    <span class="field-notes__num">§3</span>
+                    <div class="field-notes__body">
+                        <strong>1969</strong>
+                        Founded in Orsay · anchored at EPFL since 2003
+                    </div>
+                </div>
+                <div class="field-notes__item">
+                    <span class="field-notes__num">§4</span>
+                    <div class="field-notes__body">
+                        <strong>open</strong>
+                        Peer-led calls — anyone can propose
+                    </div>
+                </div>
+            </aside>
+        </div>
+    </div>
+</section>
+
+<section class="ribbon-v2 field" aria-labelledby="ribbon-h">
+    <div class="container">
+        <div class="ribbon-v2__inner">
+            <div>
+                <p class="ribbon-v2__chip"><span class="pulse-dot" aria-hidden="true"></span> Open call · Flagship 2027–2028</p>
+                <h2 id="ribbon-h">Help us shape the next two years of European <em>computational science.</em></h2>
+                <p class="ribbon-v2__deadline">Propose a workshop, school, or conference in the broad area of simulation and modelling. <strong>Closes 17 July 2026.</strong></p>
             </div>
             <div>
-                <span class="num">50+</span>
-                <span class="label">Years of European computational science, since 1969</span>
-            </div>
-            <div>
-                <span class="num">1969</span>
-                <span class="label">Founded in Orsay, anchored at EPFL since 2003</span>
-            </div>
-            <div>
-                <span class="num">∞</span>
-                <span class="label">Open peer-led calls — anyone can propose a workshop</span>
+                <a class="btn btn--paper" href="/program#flagship">Submit a proposal <span class="arrow" aria-hidden="true">→</span></a>
             </div>
         </div>
     </div>
 </section>
 
-<section class="ribbon" aria-labelledby="ribbon-h">
+<section class="chapter">
     <div class="container">
-        <div class="ribbon__grid">
+        <header class="chapter__head reveal">
             <div>
-                <p class="ribbon__eyebrow"><span class="pulse-dot" aria-hidden="true"></span> Open call · Flagship 2027–2028</p>
-                <h2 id="ribbon-h">Help us shape the next two years of European computational science.</h2>
-                <p class="ribbon__deadline">Propose a workshop, school, or conference in the broad area of simulation and modelling. <strong>Closes 17 July 2026.</strong></p>
+                <p class="chapter__num">§ 02 · From the network</p>
+                <h2 class="chapter__title">What&rsquo;s <em>happening</em> at CECAM.</h2>
             </div>
-            <div>
-                <a class="btn btn--paper" href="program.html#flagship">Submit a proposal <span class="arrow" aria-hidden="true">→</span></a>
-            </div>
-        </div>
-    </div>
-</section>
+            <p class="chapter__meta"><a href="/news">All news →</a></p>
+        </header>
 
-<section class="section">
-    <div class="container">
-        <div class="sec-head">
-            <div class="sec-head__title">
-                <p class="eyebrow eyebrow--bare">News from the network</p>
-                <h2>What's happening at CECAM.</h2>
-            </div>
-            <div class="sec-head__meta">All news <a class="link-arrow" href="news.html" style="margin-left: 0.5rem;"><span class="arrow" aria-hidden="true">→</span></a></div>
-        </div>
-
-        <div class="news-grid">
-            <a class="news-feature" href="news.html">
-                <div class="news-feature__img">
-                    <img src="uploads/molecular-dynamics.jpg" alt="Molecular dynamics visualization of an amorphous system" loading="lazy">
+        <div class="bulletin reveal--stagger">
+            <a class="bulletin__item" href="/news">
+                <span class="bulletin__num">01</span>
+                <div class="bulletin__body">
+                    <span class="bulletin__meta">17 Mar 2026 · CECAM-Lorentz selection</span>
+                    <h3 class="bulletin__title">The 2027 CECAM-Lorentz workshop has been selected: <em>Fracture of Amorphous Materials Across the Scales.</em></h3>
+                    <p class="bulletin__excerpt">Congratulations to Maximilian Ries, Sebastian Pfaller and Andrea Giuntoli. The workshop will take place at CECAM-HQ, EPFL, Lausanne on 12–16 April 2027.</p>
+                    <span class="bulletin__more">Read announcement <span class="arrow" aria-hidden="true">→</span></span>
                 </div>
-                <div class="news-feature__body">
-                    <div class="meta">17 Mar 2026 · CECAM-Lorentz selection</div>
-                    <h3>The 2027 CECAM-Lorentz workshop has been selected: <em>Fracture of Amorphous Materials Across the Scales.</em></h3>
-                    <p>Congratulations to Maximilian Ries, Sebastian Pfaller and Andrea Giuntoli. The workshop will take place at CECAM-HQ, EPFL, Lausanne on 12–16 April 2027.</p>
-                    <span class="link-arrow">Read the announcement <span class="arrow" aria-hidden="true">→</span></span>
+                <div class="bulletin__thumb">
+                    <img src="/uploads/molecular-dynamics.jpg" alt="Molecular dynamics visualization of an amorphous system" loading="lazy">
                 </div>
             </a>
 
-            <div class="news-side">
-                <a class="news-card" href="news.html">
-                    <div class="news-card__img">
-                        <img src="uploads/sem-instrument.jpg" alt="Scanning electron microscope at a research lab" loading="lazy">
-                    </div>
-                    <div>
-                        <div class="meta">02 Feb 2026 · Open call</div>
-                        <h4>Flagship 2027–2028 call open until 17 July 2026.</h4>
-                        <p>Shape the next two-year program by proposing events in simulation and modelling.</p>
+            <a class="bulletin__item" href="/news">
+                <span class="bulletin__num">02</span>
+                <div class="bulletin__body">
+                    <span class="bulletin__meta">02 Feb 2026 · Open call</span>
+                    <h3 class="bulletin__title">Flagship <em>2027–2028</em> call open until 17 July 2026.</h3>
+                    <p class="bulletin__excerpt">Shape the next two-year program by proposing events in simulation and modelling — workshops, schools, conferences.</p>
+                    <span class="bulletin__more">Read announcement <span class="arrow" aria-hidden="true">→</span></span>
+                </div>
+                <div class="bulletin__thumb">
+                    <img src="/uploads/sem-instrument.jpg" alt="Scanning electron microscope at a research lab" loading="lazy">
+                </div>
+            </a>
+
+            <a class="bulletin__item" href="/news">
+                <span class="bulletin__num">03</span>
+                <div class="bulletin__body">
+                    <span class="bulletin__meta">12 Jan 2026 · Event</span>
+                    <h3 class="bulletin__title">ESL module integration into <em>electronic-structure</em> codes, 17–28 Feb at CECAM-HQ.</h3>
+                    <p class="bulletin__excerpt">A two-week event for developers of electronic-structure software to integrate Electronic Structure Library components.</p>
+                    <span class="bulletin__more">Read announcement <span class="arrow" aria-hidden="true">→</span></span>
+                </div>
+                <div class="bulletin__thumb">
+                    <img src="/uploads/protein-structure.png" alt="Protein structure visualization" loading="lazy">
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="chapter chapter--tight">
+    <div class="container">
+        <header class="chapter__head reveal">
+            <div>
+                <p class="chapter__num">§ 03 · Coming up</p>
+                <h2 class="chapter__title">Next events across the <em>network.</em></h2>
+            </div>
+            <p class="chapter__meta"><a href="/program">Full program →</a></p>
+        </header>
+
+        <div class="timeline reveal--stagger">
+            <div class="timeline__axis"></div>
+            <div class="timeline__grid">
+                <a class="timeline__event" href="/program">
+                    <span class="timeline__month">May 2026 · Workshop</span>
+                    <span class="timeline__date">26</span>
+                    <h3>Deep Learning in Materials Science: Interpretation, Generalisation, and the Risk of Overfitting</h3>
+                    <div class="timeline__venue">
+                        <strong>CECAM-HQ, EPFL · Lausanne</strong>
+                        Four-day workshop on uncertainty quantification for ML potentials.
                     </div>
                 </a>
-                <a class="news-card" href="news.html">
-                    <div class="news-card__img">
-                        <img src="uploads/protein-structure.png" alt="Protein structure visualization" loading="lazy">
+                <a class="timeline__event" href="/program">
+                    <span class="timeline__month">Sept 2026 · School</span>
+                    <span class="timeline__date">14</span>
+                    <h3>Picking Flowers: Hands-on FLEUR for first-principles simulations</h3>
+                    <div class="timeline__venue">
+                        <strong>Forschungszentrum Jülich</strong>
+                        Five-day school on the full-potential linearised augmented plane-wave method.
                     </div>
-                    <div>
-                        <div class="meta">12 Jan 2026 · Event</div>
-                        <h4>ESL module integration into electronic-structure codes, 17–28 Feb at CECAM-HQ.</h4>
-                        <p>A two-week event for developers of electronic-structure software.</p>
+                </a>
+                <a class="timeline__event" href="/program">
+                    <span class="timeline__month">Oct 2026 · Conference</span>
+                    <span class="timeline__date">05</span>
+                    <h3>Psi-k / CECAM research conference: spin-orbit interaction and electronic structure</h3>
+                    <div class="timeline__venue">
+                        <strong>San Sebastián · Spain</strong>
+                        Recent theoretical and computational developments at the spin-orbit interface.
                     </div>
                 </a>
             </div>
@@ -1063,153 +1332,210 @@
     </div>
 </section>
 
-<section class="section" style="padding-top: 0;">
+<section class="chapter chapter--tight">
     <div class="container">
-        <div class="sec-head">
-            <div class="sec-head__title">
-                <p class="eyebrow eyebrow--bare">Coming up</p>
-                <h2>Next events across the network.</h2>
+        <header class="chapter__head reveal">
+            <div>
+                <p class="chapter__num">§ 04 · Recurring series</p>
+                <h2 class="chapter__title">Six <em>elements</em>, year-round.</h2>
             </div>
-            <div class="sec-head__meta">Full program <a class="link-arrow" href="program.html" style="margin-left: 0.5rem;"><span class="arrow" aria-hidden="true">→</span></a></div>
-        </div>
+            <p class="chapter__meta"><a href="/activities">All activities →</a></p>
+        </header>
 
-        <div class="event-grid">
-            <a class="event-card" href="program.html">
-                <div class="event-card__top">
-                    <span class="badge badge--workshop">Workshop</span>
-                    <span class="event-card__dates"><strong>26 May</strong>2026</span>
-                </div>
-                <h3>Deep Learning in Materials Science: Interpretation, Generalisation, and the Risk of Overfitting</h3>
-                <div class="event-card__venue">
-                    <strong>CECAM-HQ, EPFL, Lausanne</strong><br>
-                    A four-day workshop on uncertainty quantification for ML potentials.
-                </div>
+        <div class="periodic reveal--stagger">
+            <a class="element" href="/activities#mixed-gen">
+                <span class="element__num">01 · ONLINE</span>
+                <span class="element__symbol">M<em>g</em></span>
+                <h3 class="element__name">Mixed-Gen</h3>
+                <p class="element__desc">Online talks and poster sessions for simulators young in years — or at heart.</p>
+                <span class="element__more">Explore →</span>
             </a>
-
-            <a class="event-card" href="program.html">
-                <div class="event-card__top">
-                    <span class="badge badge--school">School</span>
-                    <span class="event-card__dates"><strong>14 Sep</strong>2026</span>
-                </div>
-                <h3>Picking Flowers: Hands-on FLEUR for first-principles simulations</h3>
-                <div class="event-card__venue">
-                    <strong>Forschungszentrum Jülich</strong><br>
-                    Five-day school on the full-potential linearised augmented plane-wave method.
-                </div>
+            <a class="element" href="/activities#cecam-lectures">
+                <span class="element__num">02 · LECTURES</span>
+                <span class="element__symbol">L<em>c</em></span>
+                <h3 class="element__name">CECAM Lectures</h3>
+                <p class="element__desc">Since April 2015 — invited lectures across computational science, recorded for the community.</p>
+                <span class="element__more">Explore →</span>
             </a>
-
-            <a class="event-card" href="program.html">
-                <div class="event-card__top">
-                    <span class="badge badge--conference">Conference</span>
-                    <span class="event-card__dates"><strong>05 Oct</strong>2026</span>
-                </div>
-                <h3>Psi-k / CECAM research conference: spin-orbit interaction and electronic structure</h3>
-                <div class="event-card__venue">
-                    <strong>San Sebastián, Spain</strong><br>
-                    Recent theoretical and computational developments at the spin-orbit / electronic-structure interface.
-                </div>
+            <a class="element" href="/activities#marvel-classics">
+                <span class="element__num">03 · ARCHIVE</span>
+                <span class="element__symbol">M<em>c</em></span>
+                <h3 class="element__name">MARVEL Classics</h3>
+                <p class="element__desc">Milestone methods and algorithms in simulation, presented by their originators.</p>
+                <span class="element__more">Explore →</span>
+            </a>
+            <a class="element" href="/activities#mansigh-conversations">
+                <span class="element__num">04 · CONVERSATION</span>
+                <span class="element__symbol">M<em>n</em></span>
+                <h3 class="element__name">Mansigh Conversations</h3>
+                <p class="element__desc">The Mary Ann Mansigh series — non-technical topics of cultural interest to our community.</p>
+                <span class="element__more">Explore →</span>
+            </a>
+            <a class="element" href="/activities#cecam-webinars">
+                <span class="element__num">05 · WEBINAR</span>
+                <span class="element__symbol">W<em>b</em></span>
+                <h3 class="element__name">CECAM Webinars</h3>
+                <p class="element__desc">Bite-sized online talks on simulation methods, hosted across the network and archived for later viewing.</p>
+                <span class="element__more">Explore →</span>
+            </a>
+            <a class="element" href="/activities#alder-prize">
+                <span class="element__num">06 · PRIZE</span>
+                <span class="element__symbol">A<em>p</em></span>
+                <h3 class="element__name">Berni J. Alder Prize</h3>
+                <p class="element__desc">Awarded by CECAM to recognise exceptional contributions to microscopic simulation of matter.</p>
+                <span class="element__more">Explore →</span>
             </a>
         </div>
     </div>
 </section>
 
-<section class="section section--tight">
+<section class="chapter">
     <div class="container">
-        <div class="sec-head">
-            <div class="sec-head__title">
-                <p class="eyebrow eyebrow--bare">Recurring activities</p>
-                <h2>Six series, year-round.</h2>
+        <header class="chapter__head reveal">
+            <div>
+                <p class="chapter__num">§ 05 · About</p>
+                <h2 class="chapter__title">A federated <em>European</em> network — fifty years in.</h2>
             </div>
-            <div class="sec-head__meta">All activities <a class="link-arrow" href="activities.html" style="margin-left: 0.5rem;"><span class="arrow" aria-hidden="true">→</span></a></div>
-        </div>
+            <p class="chapter__meta"><a href="/about">Read our story →</a></p>
+        </header>
 
-        <div class="activities-grid">
-            <a class="activity-tile" href="activities.html#mixed-gen">
-                <div class="activity-tile__icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 7.5A2.5 2.5 0 0 1 5.5 5h7A2.5 2.5 0 0 1 15 7.5v4A2.5 2.5 0 0 1 12.5 14H8l-3 3v-3H5.5A2.5 2.5 0 0 1 3 11.5v-4Z"/><path d="M21 12.5a2.5 2.5 0 0 0-2.5-2.5H17"/><path d="M21 12.5v4a2.5 2.5 0 0 1-2.5 2.5H16l3 3v-3"/></svg>
-                </div>
-                <h3>Mixed-Gen</h3>
-                <p>Online talks and poster sessions on advanced simulation and modelling topics — for simulators young in years or at heart.</p>
-                <span class="activity-tile__more">Learn more →</span>
-            </a>
-            <a class="activity-tile" href="activities.html#cecam-lectures">
-                <div class="activity-tile__icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="14" height="10" rx="1"/><path d="M10 16v3M7 19h6"/><path d="M19 9c1 .5 2 2 2 3s-1 2.5-2 3"/></svg>
-                </div>
-                <h3>CECAM Lectures</h3>
-                <p>Since April 2015 — invited lectures highlighting developments across computational science, recorded for the community.</p>
-                <span class="activity-tile__more">Learn more →</span>
-            </a>
-            <a class="activity-tile" href="activities.html#marvel-classics">
-                <div class="activity-tile__icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5a2 2 0 0 1 2-2h6v17H5a2 2 0 0 1-2-2Z"/><path d="M21 5a2 2 0 0 0-2-2h-6v17h6a2 2 0 0 0 2-2Z"/><path d="M12 3v17"/></svg>
-                </div>
-                <h3>MARVEL Classics</h3>
-                <p>Milestone methods and algorithms in simulation, presented by their originators — a different look at what shaped the field.</p>
-                <span class="activity-tile__more">Learn more →</span>
-            </a>
-            <a class="activity-tile" href="activities.html#mansigh-conversations">
-                <div class="activity-tile__icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5h11a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H8l-4 3V7a2 2 0 0 1 0-2Z"/><path d="M9 18h9a2 2 0 0 0 2-2v-6"/></svg>
-                </div>
-                <h3>Mansigh Conversations</h3>
-                <p>The Mary Ann Mansigh series — non-strictly-technical topics of cultural interest to the simulation and modelling community.</p>
-                <span class="activity-tile__more">Learn more →</span>
-            </a>
-            <a class="activity-tile" href="activities.html#cecam-webinars">
-                <div class="activity-tile__icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="13" rx="1.5"/><path d="M10 9.5v5l4-2.5Z" fill="currentColor"/></svg>
-                </div>
-                <h3>CECAM Webinars</h3>
-                <p>Bite-sized online talks on simulation methods, hosted across the network and archived for later viewing.</p>
-                <span class="activity-tile__more">Learn more →</span>
-            </a>
-            <a class="activity-tile" href="activities.html#alder-prize">
-                <div class="activity-tile__icon" aria-hidden="true">
-                    <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M7 3h10v4a5 5 0 0 1-10 0Z"/><path d="M7 5H4a3 3 0 0 0 3 3M17 5h3a3 3 0 0 1-3 3"/><path d="M9 13v2a3 3 0 0 0 6 0v-2"/><path d="M8 21h8M12 17v4"/></svg>
-                </div>
-                <h3>Berni J. Alder Prize</h3>
-                <p>Awarded by CECAM to recognise exceptional contributions to the field of microscopic simulation of matter.</p>
-                <span class="activity-tile__more">Learn more →</span>
-            </a>
-        </div>
-    </div>
-</section>
-
-<section class="section">
-    <div class="container">
-        <div class="about-tease">
-            <div class="about-tease__copy">
-                <p class="eyebrow eyebrow--bare">About CECAM</p>
-                <h2>A federated European network, fifty years in.</h2>
-                <p>CECAM is an organisation devoted to fundamental research on advanced computational methods and their application to frontier problems in physics, chemistry, materials, biology and medicinal chemistry. Over the last twenty years powerful advances in hardware and software have extended atomistic and molecular simulation across the sciences — CECAM curates the program of workshops, schools and conferences that helps the community keep up.</p>
-                <p style="margin-top: 1.4rem;"><a class="link-arrow" href="about.html">Read our story <span class="arrow" aria-hidden="true">→</span></a></p>
+        <div class="pull reveal">
+            <div>
+                <blockquote class="pull__quote">
+                    CECAM curates the program of workshops, schools and conferences that helps the community <em>keep up</em> with computational science.
+                </blockquote>
+                <p class="pull__body">An organisation devoted to fundamental research on advanced computational methods and their application to frontier problems in physics, chemistry, materials, biology and medicinal chemistry. Over the last twenty years powerful advances in hardware and software have extended atomistic and molecular simulation across the sciences — CECAM convenes the peer-led program that helps the European community stay at the frontier.</p>
+                <p class="pull__cite">Charter · since 1969 · Lausanne</p>
             </div>
-            <figure class="about-tease__image" style="margin: 0;">
-                <img src="uploads/conference-50years.jpg" alt="CECAM 50th anniversary plenary session at the SwissTech Convention Center, Lausanne" loading="lazy">
-                <figcaption class="about-tease__caption">50th anniversary plenary · SwissTech Convention Center, Lausanne</figcaption>
+            <figure class="pull__image" style="margin: 0;">
+                <img src="/uploads/conference-50years.jpg" alt="CECAM 50th anniversary plenary session at the SwissTech Convention Center, Lausanne" loading="lazy">
+                <figcaption class="pull__image-cap">Fig. 01 — 50th anniversary plenary · SwissTech Convention Center · Lausanne</figcaption>
             </figure>
         </div>
     </div>
 </section>
 
-<section class="newsletter" aria-labelledby="nl-h">
+<section class="subscribe" aria-labelledby="nl-h">
     <div class="container">
-        <div class="newsletter__inner">
+        <div class="subscribe__inner reveal">
             <div>
-                <h2 id="nl-h">Stay close to the program.</h2>
-                <p>One email when a flagship call opens, when the program is updated, and when registration opens for major schools and conferences. No marketing, no list rental.</p>
+                <h2 class="subscribe__title" id="nl-h">Subscribe to the <em>bulletin.</em></h2>
+                <p class="subscribe__body">One email when a flagship call opens, when the program is updated, and when registration opens for major schools and conferences. No marketing, no list rental.</p>
             </div>
-            <!-- TODO: replace REPLACE_ME with the real Formspree endpoint when deploying -->
             <form action="https://formspree.io/f/REPLACE_ME" method="POST">
                 <label class="vh" for="newsletter-email">Email address</label>
                 <input id="newsletter-email" name="email" type="email" placeholder="you@university.eu" required>
                 <input type="text" name="_hp" tabindex="-1" autocomplete="off" aria-hidden="true" style="position:absolute;left:-9999px;">
-                <button type="submit">Subscribe</button>
+                <button type="submit">Subscribe <span class="arrow" aria-hidden="true">→</span></button>
             </form>
         </div>
     </div>
 </section>
+
+<script>
+    /* ────────── hero constellation: 22 European nodes drifting ────────── */
+    (function () {
+        var c = document.getElementById('constellation');
+        if (!c) return;
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+        var ctx = c.getContext('2d');
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var nodes = [];
+        var COUNT = 22;
+        var W = 0, H = 0;
+
+        function size() {
+            var r = c.getBoundingClientRect();
+            W = r.width; H = r.height;
+            c.width = W * dpr; c.height = H * dpr;
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        function init() {
+            size();
+            nodes = [];
+            for (var i = 0; i < COUNT; i++) {
+                nodes.push({
+                    x: Math.random() * W,
+                    y: Math.random() * H,
+                    vx: (Math.random() - 0.5) * 0.18,
+                    vy: (Math.random() - 0.5) * 0.18,
+                    r: 1.4 + Math.random() * 1.4
+                });
+            }
+        }
+
+        function tick() {
+            ctx.clearRect(0, 0, W, H);
+            // lines between near pairs
+            ctx.lineWidth = 1;
+            for (var i = 0; i < nodes.length; i++) {
+                for (var j = i + 1; j < nodes.length; j++) {
+                    var a = nodes[i], b = nodes[j];
+                    var dx = a.x - b.x, dy = a.y - b.y;
+                    var d2 = dx*dx + dy*dy;
+                    var max = 160 * 160;
+                    if (d2 < max) {
+                        var alpha = (1 - d2 / max) * 0.18;
+                        ctx.strokeStyle = 'rgba(31, 111, 168,' + alpha + ')';
+                        ctx.beginPath();
+                        ctx.moveTo(a.x, a.y);
+                        ctx.lineTo(b.x, b.y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            // dots
+            for (var k = 0; k < nodes.length; k++) {
+                var n = nodes[k];
+                n.x += n.vx; n.y += n.vy;
+                if (n.x < 0 || n.x > W) n.vx *= -1;
+                if (n.y < 0 || n.y > H) n.vy *= -1;
+                ctx.fillStyle = 'rgba(15, 42, 92, 0.55)';
+                ctx.beginPath();
+                ctx.arc(n.x, n.y, n.r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            raf = requestAnimationFrame(tick);
+        }
+
+        var raf;
+        var visible = true;
+        var io = ('IntersectionObserver' in window) ? new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                visible = e.isIntersecting;
+                if (visible && !raf) raf = requestAnimationFrame(tick);
+                else if (!visible) { cancelAnimationFrame(raf); raf = null; }
+            });
+        }, { rootMargin: '40px' }) : null;
+
+        init();
+        raf = requestAnimationFrame(tick);
+        if (io) io.observe(c);
+        window.addEventListener('resize', function () { init(); }, { passive: true });
+    })();
+
+    /* ────────── scroll reveal ────────── */
+    (function () {
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+            document.querySelectorAll('.reveal, .reveal--stagger').forEach(function (el) { el.classList.add('in-view'); });
+            return;
+        }
+        if (!('IntersectionObserver' in window)) {
+            document.querySelectorAll('.reveal, .reveal--stagger').forEach(function (el) { el.classList.add('in-view'); });
+            return;
+        }
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) {
+                    e.target.classList.add('in-view');
+                    io.unobserve(e.target);
+                }
+            });
+        }, { rootMargin: '-60px 0px -60px 0px', threshold: 0.05 });
+        document.querySelectorAll('.reveal, .reveal--stagger').forEach(function (el) { io.observe(el); });
+    })();
+</script>
     </main>
 
     <footer class="site-footer">
