@@ -18,10 +18,10 @@
             --signal:      #1F6FA8;
             --signal-bright: #2E7DC1;
             --signal-soft: #d9e7f3;
-            --pulse:       #C8222C;
-            --pulse-soft:  #f4dcdc;
-            --paper:       #F6F4EE;
-            --paper-warm:  #EEEBE1;
+            --pulse:       #DB4B30;
+            --pulse-soft:  #FAE2DC;
+            --paper:       #F4EEDE;
+            --paper-warm:  #EEE5D0;
             --ink:         #1A1A1A;
             --ink-soft:    #3a3a3a;
             --muted:       #6b6b6b;
@@ -292,13 +292,18 @@
         .footer-col ul { list-style: none; padding: 0; margin: 0; }
         .footer-col li { margin-bottom: 0.5rem; font-size: 0.95rem; }
         .footer-wordmark {
-            background: var(--paper);
-            padding: 1rem 1.25rem;
-            border-radius: var(--radius);
+            background: transparent;
+            padding: 0;
+            border-radius: 0;
             display: inline-block;
-            margin-bottom: 1.25rem;
+            margin-bottom: 1.4rem;
         }
-        .footer-wordmark img { height: 38px; width: auto; }
+        .footer-wordmark img {
+            height: 42px;
+            width: auto;
+            filter: brightness(0) invert(1);
+            opacity: 0.96;
+        }
         .footer-meta {
             display: flex;
             flex-wrap: wrap;

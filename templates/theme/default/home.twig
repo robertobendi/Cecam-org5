@@ -8,22 +8,22 @@
         /* ─────────────────────────────────────── home (rich pinboard) ─── */
 
         :root {
-            --board:        #F7F3E8;
+            --board:        #F4EEDE;
             --card:         #FFFFFF;
             --line:         rgba(15, 42, 92, 0.08);
             --line-strong:  rgba(15, 42, 92, 0.18);
             --tint:         rgba(15, 42, 92, 0.045);
 
-            --cat-call:        #C8222C;
+            --cat-call:        #DB4B30;
             --cat-workshop:    #1F6FA8;
             --cat-school:      #3D6B2A;
             --cat-conference:  #6A3C8A;
             --cat-news:        #A75B30;
-            --cat-series:      #2A6B53;
+            --cat-series:      #2A8A6E;
             --cat-about:       #0F2A5C;
 
             --pin-radius:   14px;
-            --pin-shadow-h: 0 8px 24px rgba(15,42,92,0.10), 0 2px 6px rgba(15,42,92,0.04);
+            --pin-shadow-h: 0 4px 12px rgba(15,42,92,0.06), 0 14px 30px rgba(15,42,92,0.10);
         }
 
         body { background: var(--board); }
@@ -43,25 +43,34 @@
             height: 100%;
             object-fit: cover;
             z-index: 0;
-            filter: saturate(0.92) contrast(1.04);
-            transform: scale(1.04);
-            animation: heroDrift 24s ease-in-out infinite alternate;
+            filter: saturate(0.32) contrast(1.18) brightness(0.62);
+            transform: scale(1.06);
+            animation: heroDrift 30s ease-in-out infinite alternate;
         }
         @keyframes heroDrift {
-            0%   { transform: scale(1.04) translateX(0); }
-            100% { transform: scale(1.06) translateX(-1%); }
+            0%   { transform: scale(1.06) translateX(0); }
+            100% { transform: scale(1.08) translateX(-1.2%); }
         }
         .brand-hero__veil {
             position: absolute;
             inset: 0;
             z-index: 1;
             background:
-              linear-gradient(180deg, rgba(15,42,92,0.18) 0%, rgba(15,42,92,0.45) 55%, rgba(8,30,71,0.82) 100%),
-              linear-gradient(90deg, rgba(8,30,71,0.30) 0%, transparent 55%);
+              linear-gradient(180deg, rgba(11,31,71,0.55) 0%, rgba(8,22,55,0.78) 60%, rgba(5,15,40,0.94) 100%),
+              radial-gradient(circle at 80% 20%, rgba(219,75,48,0.10) 0%, transparent 45%);
+        }
+        .brand-hero__particles {
+            position: absolute;
+            inset: 0;
+            z-index: 2;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            opacity: 0.55;
         }
         .brand-hero__content {
             position: relative;
-            z-index: 2;
+            z-index: 3;
             max-width: var(--container);
             margin: 0 auto;
             padding: clamp(2rem, 5vw, 3.5rem) var(--gutter) clamp(2.2rem, 5vw, 3.5rem);
@@ -611,6 +620,7 @@
 <section class="brand-hero">
     <img class="brand-hero__bg" src="/uploads/epfl-aerial-panorama.jpg" alt="" aria-hidden="true">
     <div class="brand-hero__veil" aria-hidden="true"></div>
+    <canvas class="brand-hero__particles" id="hero-particles" aria-hidden="true"></canvas>
     <div class="brand-hero__content">
         <p class="brand-hero__eyebrow"><span class="dot"></span>Live · Flagship 2027–2028 call open</p>
         <h1>A <span class="accent">third way</span> of doing science. Since 1969.</h1>
@@ -909,9 +919,9 @@
                     <span class="pin__tag" data-cat="about"><span class="dot"></span>The network at a glance</span>
                 </div>
                 <div class="pin__numgrid">
-                    <div><span class="pin__num">21</span><span class="pin__numlabel">Nodes</span></div>
-                    <div><span class="pin__num">29</span><span class="pin__numlabel">Funding institutions</span></div>
-                    <div><span class="pin__num">14</span><span class="pin__numlabel">Countries</span></div>
+                    <div><span class="pin__num" data-value="21">0</span><span class="pin__numlabel">Nodes</span></div>
+                    <div><span class="pin__num" data-value="29">0</span><span class="pin__numlabel">Funding institutions</span></div>
+                    <div><span class="pin__num" data-value="14">0</span><span class="pin__numlabel">Countries</span></div>
                 </div>
                 <p class="pin__desc">Plus partners in China, Taiwan and the US — funding a peer-led European program in computational science.</p>
             </div>
@@ -1016,6 +1026,131 @@
 </section>
 
 <script>
+    // ────── hero atom-particles (subtle molecular network) ──────
+    (function () {
+        var c = document.getElementById('hero-particles');
+        if (!c) return;
+        if (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+        var ctx = c.getContext('2d');
+        var dpr = Math.min(window.devicePixelRatio || 1, 2);
+        var W = 0, H = 0;
+        var particles = [];
+        var COUNT = 52;
+        var MAX_DIST = 138;
+        var raf = null;
+        var visible = true;
+
+        function size() {
+            var r = c.getBoundingClientRect();
+            W = r.width;
+            H = r.height;
+            if (W < 2 || H < 2) return;
+            c.width = Math.round(W * dpr);
+            c.height = Math.round(H * dpr);
+            ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+        }
+
+        function init() {
+            size();
+            particles = [];
+            for (var i = 0; i < COUNT; i++) {
+                particles.push({
+                    x: Math.random() * W,
+                    y: Math.random() * H,
+                    vx: (Math.random() - 0.5) * 0.22,
+                    vy: (Math.random() - 0.5) * 0.22,
+                    r: 1 + Math.random() * 1.2
+                });
+            }
+        }
+
+        function tick() {
+            ctx.clearRect(0, 0, W, H);
+            ctx.lineWidth = 0.85;
+            for (var i = 0; i < particles.length; i++) {
+                for (var j = i + 1; j < particles.length; j++) {
+                    var a = particles[i], b = particles[j];
+                    var dx = a.x - b.x, dy = a.y - b.y;
+                    var d2 = dx * dx + dy * dy;
+                    if (d2 < MAX_DIST * MAX_DIST) {
+                        var alpha = (1 - d2 / (MAX_DIST * MAX_DIST)) * 0.40;
+                        ctx.strokeStyle = 'rgba(255, 232, 205,' + alpha + ')';
+                        ctx.beginPath();
+                        ctx.moveTo(a.x, a.y);
+                        ctx.lineTo(b.x, b.y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            for (var k = 0; k < particles.length; k++) {
+                var p = particles[k];
+                p.x += p.vx; p.y += p.vy;
+                if (p.x < 0 || p.x > W) p.vx *= -1;
+                if (p.y < 0 || p.y > H) p.vy *= -1;
+                ctx.fillStyle = 'rgba(255, 240, 220, 0.82)';
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+                ctx.fill();
+            }
+            raf = requestAnimationFrame(tick);
+        }
+
+        if ('IntersectionObserver' in window) {
+            var heroIo = new IntersectionObserver(function (entries) {
+                entries.forEach(function (e) {
+                    visible = e.isIntersecting;
+                    if (visible && !raf) raf = requestAnimationFrame(tick);
+                    else if (!visible && raf) { cancelAnimationFrame(raf); raf = null; }
+                });
+            }, { rootMargin: '40px' });
+            heroIo.observe(c);
+        }
+
+        init();
+        raf = requestAnimationFrame(tick);
+
+        var resizeTimer;
+        window.addEventListener('resize', function () {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(init, 200);
+        }, { passive: true });
+    })();
+
+    // ────── count-up animation on numbers pin ──────
+    (function () {
+        var pin = document.querySelector('.pin--numbers');
+        if (!pin) return;
+        var reduced = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        var nums = pin.querySelectorAll('.pin__num[data-value]');
+        if (reduced || !('IntersectionObserver' in window)) {
+            nums.forEach(function (n) { n.textContent = n.dataset.value; });
+            return;
+        }
+        function ease(t) { return 1 - Math.pow(1 - t, 3); }
+        function run(el) {
+            var target = parseInt(el.dataset.value, 10) || 0;
+            var start = performance.now();
+            var dur = 1200;
+            function step(t) {
+                var p = Math.min((t - start) / dur, 1);
+                el.textContent = Math.round(target * ease(p));
+                if (p < 1) requestAnimationFrame(step);
+                else el.textContent = target;
+            }
+            requestAnimationFrame(step);
+        }
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) {
+                    io.unobserve(e.target);
+                    nums.forEach(run);
+                }
+            });
+        }, { threshold: 0.45 });
+        io.observe(pin);
+    })();
+
     (function () {
         // live countdown on open-call pins
         function daysUntil(iso) {
